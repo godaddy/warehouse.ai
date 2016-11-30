@@ -56,7 +56,7 @@
     "once": "^1.3.2",
     "readable-stream": "^2.0.2",
     "semver": "^5.0.1",
-    "slay": "^0.6.0",
+    "slay": "^1.0.0",
     "slay-config": "^2.1.0",
     "slay-log": "^2.1.0",
     "stringify-stream": "^1.0.3",
