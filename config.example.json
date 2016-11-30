@@ -1,0 +1,68 @@
+{
+  "http": 8080,
+  "bffs": {
+    "prefix": "wrhs",
+    "cdn": {
+      "prod": {
+        "pkgcloud": {
+          "provider": "amazon",
+          "endpoint": "aws.amazon.net",
+          "keyId": "fake",
+          "key": "fake",
+          "forcePathBucket": true
+        },
+        "url": "https://mycloudfrontURL.com"
+      },
+      "test": {
+        "pkgcloud": {
+          "provider": "amazon",
+          "endpoint": "aws.amazon.net",
+          "keyId": "fake",
+          "key": "fake",
+          "forcePathBucket": true
+        },
+        "url": "https://mycloudfrontURL.com"
+      },
+      "dev": {
+        "pkgcloud": {
+          "provider": "amazon",
+          "endpoint": "aws.amazon.net",
+          "keyId": "fake",
+          "key": "fake",
+          "forcePathBucket": true
+        },
+        "url": "https://mycloudfrontURL.com/"
+      }
+    }
+  },
+  "npm": {
+    "debugChildren": true,
+    "urls": {
+      "read": "http://registry.npmjs.org",
+      "write": {
+        "default": "http://localhost:8081"
+      }
+    }
+  },
+  "builder": {
+    "url": {
+      "hostname": "127.0.0.1",
+      "protocol": "http",
+      "port": 1337
+    }
+  },
+  "database": {
+    "config": {
+      "keyspace": "warehouse_dev",
+      "user": "cassandra",
+      "password": "cassandra",
+      "hosts": [
+        "127.0.0.1"
+      ],
+      "keyspaceOptions": {
+        "class": "SimpleStrategy",
+        "replication_factor": 1
+      }
+    }
+  }
+}

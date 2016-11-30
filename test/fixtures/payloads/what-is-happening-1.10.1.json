@@ -1,0 +1,44 @@
+{
+  "_id": "what-is-happening",
+  "name": "what-is-happening",
+  "description": "everything is happening",
+  "dist-tags": {
+    "latest": "1.10.1"
+  },
+  "versions": {
+    "1.10.1": {
+      "name": "what-is-happening",
+      "version": "1.10.1",
+      "description": "everything is happening",
+      "main": "index.js",
+      "keywords": [
+        "idk anymore"
+      ],
+      "check": "something",
+      "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+      },
+      "author": "",
+      "license": "ISC",
+      "readme": "ERROR: No README data found!",
+      "_id": "what-is-happening@1.10.1",
+      "_shasum": "2ad40a9a4ec124f339db1a09599e861ba254f3c8",
+      "_from": ".",
+      "_npmVersion": "3.9.6",
+      "_nodeVersion": "4.4.3",
+      "_npmUser": {},
+      "dist": {
+        "shasum": "2ad40a9a4ec124f339db1a09599e861ba254f3c8",
+        "tarball": "http://registry.npmjs.org/what-is-happening/-/what-is-happening-1.10.1.tgz"
+      }
+    }
+  },
+  "readme": "ERROR: No README data found!",
+  "_attachments": {
+    "what-is-happening-1.10.1.tgz": {
+      "content_type": "application/octet-stream",
+      "data": "H4sIAAAAAAAAA+2TT0/CMBTAOfMpXnqAi4x2jC3BeDIePHsUD832YHWsXdoiEMJ3t11REmPiQdBo9ru8vf+va1/D84ovcdwEGT0bJXtnhlKaJgl4maXTVtI46J5k6r7ZhLIsibNsSnvUKXHq/Oce5DPWxnLtRvlunXAWeJd/hH0fgEheI5kB2ZTcjoQZlbxpUAq5JFfe/YLaCCV9BIsYjVgwF2hyLRp7dKEL29nSZYEw8KFEzUUbJGSBW/fIgrXC3UbpwjjPo9OdRRQVcLmrlUbiLE9tWF5iXvlso2psO4T00N5n70O2RWPbUfJSwZzcaa30DKQC7wDTYC4WAos5gcEAcCssMN/l0Fbja1sq7dND9ZXIUZr2v9w/3JL+of/bd3UJjns/fruYS/T4Yv/phJ72f5L6/Y9ZRrv9/wlqVaxXGOG2UdoauIHhxi6G1//yrXd0dHR0nHgFZcwJogAMAAA=",
+      "length": 353
+    }
+  }
+}

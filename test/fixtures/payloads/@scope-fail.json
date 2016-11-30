@@ -1,0 +1,40 @@
+{
+  "_id": "@scope/fail",
+  "name": "@scope/fail",
+  "description": "idk man, what is happening",
+  "dist-tags": {
+    "latest": "1.0.0"
+  },
+  "versions": {
+    "1.0.0": {
+      "name": "@scope/fail",
+      "version": "1.0.0",
+      "description": "idk man, what is happening",
+      "main": "index.js",
+      "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+      },
+      "author": "",
+      "license": "ISC",
+      "readme": "ERROR: No README data found!",
+      "_id": "@scope/fail@1.0.0",
+      "_shasum": "c251e10d01fcc448056aee099776b01d1c574a89",
+      "_from": ".",
+      "_npmVersion": "3.9.6",
+      "_nodeVersion": "4.4.3",
+      "_npmUser": {},
+      "dist": {
+        "shasum": "c251e10d01fcc448056aee099776b01d1c574a89",
+        "tarball": "http://registry.npmjs.org/@scope/fail/-/@scope/fail-1.0.0.tgz"
+      }
+    }
+  },
+  "readme": "ERROR: No README data found!",
+  "_attachments": {
+    "@scope/fail-1.0.0.tgz": {
+      "content_type": "application/octet-stream",
+      "data": "H4sIAAAAAAAAA+2UsU7DMBCGO/cpTh7apUrsJk2lSkhIiIGZtYvlXBvTxLZsByqhvjt2XWBBYqBQQPmWk+8/X85JfhsudnyLuUkxe3Bajc4MpbQqS4hxWS2Okc7TOlIsGIxYQdmyLArGqhGNiyLo5x7kI3rnuQ2jfLVPOgu8xT/C8xiAKN4hWQG5dkIbzDdctmQWhUe0TmoVNZbRjKZsjU5YafxJkfUOOq5m8NRwD9JBw41BJdU2lXdcpjpV4z78YCmbWrggxBFCwqPzsQxFo2FNbq3VdgVKQxTAGRRyI7FeE5hMAPfSAyNh5+HYjfe+0TZuT91bKVC546Hu7m/I+DC+9Iv+pZx8n79+nO94xif+pyV9939YBf/PWcUG//8Ena77FjPcG229gyuYxjsggtDhdLDNwMDAwD/lBYLFAYIADAAA",
+      "length": 324
+    }
+  }
+}

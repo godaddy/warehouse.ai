@@ -1,0 +1,8 @@
+#!/usr/bin/env node
+
+require('../lib').start(function (err, app) {
+  if (err) {
+    return app.log.error('Error starting warehouse', err);
+  }
+  app.log.info('Warehouse started on %s', app.config.get('http'));
+});
