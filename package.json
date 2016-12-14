@@ -3,6 +3,9 @@
   "version": "1.3.0",
   "description": "Modular front-end development through checks, automatic builds, and CDNs.",
   "main": "index.js",
+  "bin": {
+    "warehouse": "bin/server"
+  },
   "scripts": {
     "start": "./bin/server",
     "cover": "istanbul cover ./node_modules/.bin/_mocha test/",
