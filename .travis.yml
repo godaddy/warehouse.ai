@@ -1,0 +1,9 @@
+sudo: false
+language: node_js
+node_js:
+  - "6"
+  - "4"
+services:
+  - cassandra
+before_install:
+  - "npm install -g npm@3"
