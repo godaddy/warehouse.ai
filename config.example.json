@@ -1,5 +1,8 @@
 {
   "http": 8080,
+  "cors": {
+    "methods": ["GET"]
+  },
   "bffs": {
     "prefix": "wrhs",
     "cdn": {

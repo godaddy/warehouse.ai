@@ -34,6 +34,7 @@
   "author": "GoDaddy.com Operating Company LLC",
   "license": "MIT",
   "dependencies": {
+    "access-control": "^1.0.0",
     "async": "^1.4.1",
     "bffs": "^4.0.0",
     "body-parser": "^1.13.2",
