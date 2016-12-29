@@ -102,7 +102,7 @@ describe.skip('/assets/*', function () {
     });
   });
 
-  it('serves gzip responses', function (next) {
+  it.skip('serves gzip responses', function (next) {
     request({
       url: address(app, { pathname: 'assets/3x4mp311d.js' }),
       headers: {

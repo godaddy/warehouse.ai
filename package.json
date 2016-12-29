@@ -36,7 +36,7 @@
   "dependencies": {
     "access-control": "^1.0.0",
     "async": "^1.4.1",
-    "bffs": "^4.0.0",
+    "bffs": "^5.0.0",
     "body-parser": "^1.13.2",
     "carpenterd-api-client": "^1.3.0",
     "commenting": "^1.0.0",
@@ -49,7 +49,7 @@
     "failure": "1.1.x",
     "gjallarhorn": "^1.2.1",
     "http-proxy": "^1.11.1",
-    "hyperquest": "^1.2.0",
+    "hyperquest": "~1.3.0",
     "ioredis": "^1.9.0",
     "json-try-parse": "^1.0.0",
     "lodash.merge": "~3.3.2",
