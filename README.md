@@ -270,6 +270,7 @@ They are [documented individually in warehouse-models](https://github.com/wareho
 {
   npm: {
     urls: {
+      "auth-argument-factory": "/path/to/custom-auth.js",
       read: 'http://your.target-registry.com',
       write: 'http://your.target-registry.com'
     },
@@ -290,6 +291,10 @@ They are [documented individually in warehouse-models](https://github.com/wareho
   }
 }
 ```
+
+#### npm.auth-argument-factory
+
+Warehouse has the ability to use [passport-npm](https://github.com/godaddy/passport-npm) to check authorization when connecting via `npm`. An example of this can be found in the [tests for npm auth](https://github.com/godaddy/warehouse.ai/blob/master/test/integration/npm/econn.test.js).
 
 ## Local development environment
 
