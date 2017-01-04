@@ -70,8 +70,11 @@ exports.carpenter = {
  * expect
  *
  * @param {Object} options - configurable options for this app
+ * @returns {Object} mocked app
  */
 exports.App = function App(options) {
+  if (this instanceof App !== true) return new App(options);
+
   this.options = options || {};
 
   this.config = {};
@@ -82,4 +85,6 @@ exports.App = function App(options) {
   this.config.set = (key, val) => {
     this.options[key] = val;
   };
+
+  return this;
 };

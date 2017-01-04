@@ -10,6 +10,8 @@ var assume = require('assume'),
     request = require('request'),
     mocks = require('./mocks'),
     helpers = require('./helpers'),
+    fs = require('fs'),
+    tmp = require('tmp'),
     spawn = require('child_process').spawn;
 
 var dirs = helpers.dirs;
@@ -204,3 +206,77 @@ exports.spawnNpmTags = function (action, name, tag, port) {
 
   return child;
 };
+
+// creates a new server to test against
+// takes starting npmrc copies to a tmp file
+// runs npm command w/ args against tmp file userconfig
+// - has blank globalconfig
+// npmrc files can use variables:
+// - $PORT : testing server port
+// - $TOKEN : the generatedToken
+const blank = path.join(__dirname, 'fixtures', 'npm-auth', 'blank.npmrc');
+exports.testNPM = function testNPM(registry, options, cb) {
+  options = options || {};
+  const teardown = options.teardown;
+  const expected =  options.expected || {};
+  const stdinFile =  options.stdinFile || blank;
+  const command = options.command;
+  const expectedExit =  options.expectedExit || 0;
+  const args =  options.args || [];
+  const startingNpmrc =  options.startingNpmrc || blank;
+  const expectedNpmrc =  options.expectedNpmrc || blank;
+
+  function interpolate(buf) {
+    return buf.toString().replace(/\$(?:$|PORT|TOKEN)/g, (token) => {
+      return {
+        $: '$',
+        PORT: 8090,
+        TOKEN: expected.generatedToken
+      }[token.slice(1)];
+    });
+  }
+
+  tmp.file((tmpConfigErr, tmpNpmrc, fd, cleanup) => {
+    assume(tmpConfigErr).to.be.falsey();
+    teardown(() => cleanup());
+    tmp.dir({
+      unsafeCleanup: true
+    }, (tmpCacheErr, tmpNpmcache, cleanup) => {
+      assume(tmpCacheErr).to.be.falsey();
+      teardown(() => cleanup());
+      let expectedBody;
+      try {
+        fs.writeFileSync(tmpNpmrc, interpolate(fs.readFileSync(startingNpmrc))); // eslint-disable-line no-sync
+        expectedBody = interpolate(fs.readFileSync(expectedNpmrc)); // eslint-disable-line no-sync
+      } catch (e) {
+        return void cb(e);
+      }
+      const pid = spawn('npm', [
+          `--registry=http://127.0.0.1:8090`,
+          `--userconfig=${tmpNpmrc}`,
+          `--globalconfig=${blank}`,
+          `--loglevel=silent`,
+          `--cache=${tmpNpmcache}`,
+          command
+        ].concat(args), {
+          // npm demands stdout/err be a tty
+          stdio: ['pipe', 'inherit', 'inherit'],
+          env: {
+            PATH: process.env.PATH// eslint-disable-line no-process-env
+          }
+        });
+      fs.createReadStream(stdinFile).pipe(pid.stdin);
+      pid.on('exit', (code) => {
+        assume(code).equals(expectedExit);
+        let foundBody;
+        try {
+          foundBody = fs.readFileSync(tmpNpmrc).toString(); // eslint-disable-line no-sync
+        } catch (e) {
+          return void cb(e);
+        }
+        assume(foundBody).equals(expectedBody);
+        cb(null);
+      });
+    });
+  });
+}
