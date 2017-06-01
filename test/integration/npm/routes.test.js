@@ -230,7 +230,6 @@ describe('npm routes', function () {
       it('serves 304 with the correct etag (GET /:pkg)', function (done) {
         helpers.etagFor('my-package-0.0.1', function (err, etag) {
           assume(err).is.falsey();
-          console.log(etag);
           request({
             uri: 'http://localhost:8092/my-package',
             headers: { 'if-none-match': etag },
