@@ -66,7 +66,7 @@
     "slay-config": "^2.1.0",
     "slay-log": "^2.1.0",
     "stringify-stream": "^1.0.3",
-    "warehouse-models": "^5.1.1",
+    "warehouse-models": "~5.5.0",
     "winston": "^2.2.0",
     "zipline": "^1.0.0"
   },
