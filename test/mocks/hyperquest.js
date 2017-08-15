@@ -1,7 +1,7 @@
 'use strict';
 
 var stream = require('stream'),
-    util = require('util');
+  util = require('util');
 
 /**
  * A proper, simple mock for the request module when

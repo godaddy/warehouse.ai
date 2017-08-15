@@ -1,11 +1,11 @@
 'use strict';
 
 var fs = require('fs'),
-    path = require('path'),
-    async = require('async'),
-    etag = require('etag'),
-    extend = require('extend'),
-    registry = require('../lib');
+  path = require('path'),
+  async = require('async'),
+  etag = require('etag'),
+  extend = require('extend'),
+  registry = require('../lib');
 
 /**
  * @property {defaultStart} Object
@@ -23,7 +23,7 @@ var defaultAppOpts = {
   npm: {
     urls: {
       write: {
-        default: 'http://localhost:8091',
+        'default': 'http://localhost:8091',
         '@good': 'http://localhost:8091'
       }
     }

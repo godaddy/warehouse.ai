@@ -1,12 +1,12 @@
 'use strict';
 
 var path = require('path'),
-    macros = require('../../macros'),
-    helpers = require('../../helpers'),
-    assume = require('assume');
+  macros = require('../../macros'),
+  helpers = require('../../helpers'),
+  assume = require('assume');
 
 const npmrc = name => {
-  return path.join(__dirname, '..', '..', 'fixtures', 'npm-auth', `${name}.npmrc`)
+  return path.join(__dirname, '..', '..', 'fixtures', 'npm-auth', `${name}.npmrc`);
 };
 
 describe('npm auth', function () {
@@ -34,7 +34,7 @@ describe('npm auth', function () {
     });
     afterEach(() => {
       teardowns.forEach(fn => fn());
-    })
+    });
     it('handles basic auth', function (done) {
       macros.testNPM(context.registry, {
         teardown,

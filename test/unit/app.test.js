@@ -1,7 +1,7 @@
 'use strict';
 
 var assume = require('assume'),
-    registry = require('../../lib');
+  registry = require('../../lib');
 
 var App = registry.App;
 

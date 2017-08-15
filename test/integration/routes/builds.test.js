@@ -1,17 +1,17 @@
-/*eslint no-sync: 0*/
-/*eslint max-nested-callbacks: 0*/
+/* eslint no-sync: 0*/
+/* eslint max-nested-callbacks: 0*/
 'use strict';
 
 var fs = require('fs'),
-    url = require('url'),
-    path = require('path'),
-    zlib = require('zlib'),
-    http = require('http'),
-    hock = require('hock'),
-    async = require('async'),
-    assume = require('assume'),
-    request = require('request'),
-    helpers = require('../../helpers');
+  url = require('url'),
+  path = require('path'),
+  zlib = require('zlib'),
+  http = require('http'),
+  hock = require('hock'),
+  async = require('async'),
+  assume = require('assume'),
+  request = require('request'),
+  helpers = require('../../helpers');
 
 function address(app, properties) {
   const socket = app.servers.http.address();
@@ -27,20 +27,20 @@ function address(app, properties) {
 //
 describe.skip('/builds/*', function () {
   var content = path.join(__dirname, 'builds.test.js'),
-      gzip = path.join(require('os').tmpdir(), 'build.test.js'),
-      spec = { name: 'pancake', version: '0.0.1', env: 'test' },
-      publishOptions = {
-        files: [{
-          content: content,
-          compressed: gzip,
-          fingerprint: '3x4mp311d',
-          filename: 'builds.test.js',
-          extension: '.js'
-        }]
-      },
-      mock = hock.createHock(),
-      carpenter,
-      app;
+    gzip = path.join(require('os').tmpdir(), 'build.test.js'),
+    spec = { name: 'pancake', version: '0.0.1', env: 'test' },
+    publishOptions = {
+      files: [{
+        content: content,
+        compressed: gzip,
+        fingerprint: '3x4mp311d',
+        filename: 'builds.test.js',
+        extension: '.js'
+      }]
+    },
+    mock = hock.createHock(),
+    carpenter,
+    app;
 
   fs.writeFileSync(gzip, zlib.gzipSync(fs.readFileSync(content)));
 
