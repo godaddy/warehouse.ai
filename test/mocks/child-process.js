@@ -1,7 +1,7 @@
 'use strict';
 
 var EventEmitter = require('events').EventEmitter,
-    util = require('util');
+  util = require('util');
 
 /**
  * @function fork

@@ -1,11 +1,11 @@
 'use strict';
 
 var assume = require('assume'),
-    url = require('url'),
-    path = require('path'),
-    hyperquest = require('hyperquest'),
-    concat = require('concat-stream'),
-    registry = require('../../lib');
+  url = require('url'),
+  path = require('path'),
+  hyperquest = require('hyperquest'),
+  concat = require('concat-stream'),
+  registry = require('../../lib');
 
 function address(app, properties) {
   const socket = app.servers.http.address();

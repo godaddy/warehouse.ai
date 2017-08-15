@@ -1,10 +1,10 @@
-/*eslint no-sync: 0*/
+/* eslint no-sync: 0*/
 'use strict';
 
 var url = require('url'),
-    assume = require('assume'),
-    request = require('request'),
-    helpers = require('../../helpers');
+  assume = require('assume'),
+  request = require('request'),
+  helpers = require('../../helpers');
 
 function address(app, properties) {
   const socket = app.servers.http.address();

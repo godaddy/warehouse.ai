@@ -27,5 +27,5 @@ exports.createPassportNPMOptions = () => {
       err.status = 403;
       return void done(err);
     }
-  }
-}
+  };
+};

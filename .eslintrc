@@ -1,6 +1,7 @@
 {
-  "extends": "./node_modules/godaddy-style/dist/.eslintrc",
+  "extends": "godaddy",
   "rules": {
-    "strict": 0
+    "strict": 0,
+    "no-shadow": 0
   }
 }

@@ -1,10 +1,10 @@
 'use strict';
 
 var join = require('path').join,
-    concat = require('concat-stream'),
-    datastarHelpers = require('datastar-test-tools').helpers,
-    datastarMocks = require('datastar-test-tools').mocks,
-    wrhs = require('warehouse-models');
+  concat = require('concat-stream'),
+  datastarHelpers = require('datastar-test-tools').helpers,
+  datastarMocks = require('datastar-test-tools').mocks,
+  wrhs = require('warehouse-models');
 
 var proxyquire = require('proxyquire').noPreserveCache();
 
@@ -35,7 +35,7 @@ exports.models = function () {
 exports.publisher = function (opts) {
   opts = opts || {};
   var Publisher = proxyquire(join(lib, 'npm', 'publisher'), {
-    'child_process': exports.childProcess,
+    child_process: exports.childProcess,
     hyperquest: exports.hyperquest({
       response: opts.response,
       created: opts.onHttpProxy
