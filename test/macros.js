@@ -8,6 +8,7 @@ var assume = require('assume'),
   concat = require('concat-stream'),
   extend = require('extend'),
   request = require('request'),
+  url = require('url'),
   mocks = require('./mocks'),
   helpers = require('./helpers'),
   fs = require('fs'),
@@ -111,6 +112,11 @@ exports.publishOk = function (context, opts) {
     path: '/my-package'
   }, opts || {});
 
+  if (options.auth) {
+    const parsed = url.parse(options.publishUrl);
+    parsed.auth = `${options.auth.user}:${options.auth.password}`;
+    options.publishUrl = url.format(parsed);
+  }
   return function shouldPublish(done) {
     var app = context.app;
     var registry = context.registry;

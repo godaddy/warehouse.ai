@@ -29,7 +29,12 @@ describe('npm auth', function () {
         teardown(helpers.cleanupPublish.bind(helpers, context.app));
         context.app = result.app;
         context.registry = result.registry;
-        macros.publishOk(context)(done);
+        macros.publishOk(context, {
+          auth: {
+            user: 'basic_user',
+            password: 'basic_pass'
+          }
+        })(done);
       });
     });
     afterEach(() => {
