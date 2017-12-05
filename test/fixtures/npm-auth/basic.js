@@ -1,5 +1,5 @@
 'use strict';
-exports.createPassportNPMOptions = () => {
+exports.createPassportOptions = () => {
   return {
     authenticate(data, done) {
       if (data.name === 'basic_user' &&

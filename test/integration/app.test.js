@@ -10,7 +10,7 @@ var assume = require('assume'),
 function address(app, properties) {
   const socket = app.servers.http.address();
   return url.format(Object.assign({
-    hostname: socket.address,
+    hostname: '127.0.0.1',
     port: socket.port,
     protocol: 'http'
   }, properties || {}));
@@ -23,7 +23,12 @@ describe('App (integration)', function () {
       ensure: true,
       config: {
         file: configFile,
-        overrides: { http: 0 }
+        overrides: {
+          http: {
+            hostname: '127.0.0.1',
+            port: 0
+          }
+        }
       }
     }, function (err, app) {
       assume(err).equals(null);
@@ -42,7 +47,12 @@ describe('App (integration)', function () {
       log: { level: 'critical' },
       config: {
         file: configFile,
-        overrides: { http: 0 }
+        overrides: {
+          http: {
+            hostname: '127.0.0.1',
+            port: 0
+          }
+        }
       }
     }, function (err, app) {
       assume(err).equals(null);
