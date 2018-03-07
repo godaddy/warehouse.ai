@@ -63,59 +63,69 @@ describe.skip('/assets/*', function () {
     assume(app.bffs).is.a('object');
   });
 
-  it('serves a safe 404 for css files', function (next) {
-    request(address(app, {
-      pathname: 'assets/ishouldexist.css'
-    }), function (err, res, body) {
-      assume(err).doesnt.exist();
-      assume(res.statusCode).equals(404);
-      assume(res.headers['content-type']).equals('text/css; charset=utf-8');
-      assume(body.toString()).includes('* Build not found');
-
-      next();
-    });
+  describe('/assets/files/*', function () {
+    it('serves files for a given build');
+    it('responds with a 404 when appropriate');
+    it('accepts a filter to match filenames');
+    it('ignores case in filter parameters');
+    it('responds with 400 when filter is greater than 50 chars');
   });
 
-  it('serves a safe 404 for js files', function (next) {
-    request(address(app, {
-      pathname: 'assets/ishouldexist.js'
-    }), function (err, res, body) {
-      assume(err).doesnt.exist();
-      assume(res.statusCode).equals(404);
-      assume(res.headers['content-type']).equals('application/javascript; charset=utf-8');
-      assume(body.toString()).includes('* Build not found');
+  describe('/assets/:hash', function () {
+    it('serves a safe 404 for css files', function (next) {
+      request(address(app, {
+        pathname: 'assets/ishouldexist.css'
+      }), function (err, res, body) {
+        assume(err).doesnt.exist();
+        assume(res.statusCode).equals(404);
+        assume(res.headers['content-type']).equals('text/css; charset=utf-8');
+        assume(body.toString()).includes('* Build not found');
 
-      next();
+        next();
+      });
     });
-  });
 
-  it('serves the specified build', function (next) {
-    request(address(app, {
-      pathname: 'assets/3x4mp311d.js'
-    }), function (err, res, body) {
-      assume(err).doesnt.exist();
-      assume(res.statusCode).equals(200);
-      assume(res.headers['content-type']).includes('application/javascript');
-      assume(body).deep.equals(fs.readFileSync(content, 'utf8'));
+    it('serves a safe 404 for js files', function (next) {
+      request(address(app, {
+        pathname: 'assets/ishouldexist.js'
+      }), function (err, res, body) {
+        assume(err).doesnt.exist();
+        assume(res.statusCode).equals(404);
+        assume(res.headers['content-type']).equals('application/javascript; charset=utf-8');
+        assume(body.toString()).includes('* Build not found');
 
-      next();
+        next();
+      });
     });
-  });
 
-  it.skip('serves gzip responses', function (next) {
-    request({
-      url: address(app, { pathname: 'assets/3x4mp311d.js' }),
-      headers: {
-        'Accept-Encoding': 'gzip'
-      }
-    }, function (err, res, body) {
-      assume(err).doesnt.exist();
-      assume(res.statusCode).equals(200);
-      assume(res.headers['content-type']).includes('application/javascript');
-      assume(res.headers['content-encoding']).equals('gzip');
-      assume(body).deep.equals(fs.readFileSync(gzip, 'utf8'));
+    it('serves the specified build', function (next) {
+      request(address(app, {
+        pathname: 'assets/3x4mp311d.js'
+      }), function (err, res, body) {
+        assume(err).doesnt.exist();
+        assume(res.statusCode).equals(200);
+        assume(res.headers['content-type']).includes('application/javascript');
+        assume(body).deep.equals(fs.readFileSync(content, 'utf8'));
 
-      next();
+        next();
+      });
+    });
+
+    it.skip('serves gzip responses', function (next) {
+      request({
+        url: address(app, { pathname: 'assets/3x4mp311d.js' }),
+        headers: {
+          'Accept-Encoding': 'gzip'
+        }
+      }, function (err, res, body) {
+        assume(err).doesnt.exist();
+        assume(res.statusCode).equals(200);
+        assume(res.headers['content-type']).includes('application/javascript');
+        assume(res.headers['content-encoding']).equals('gzip');
+        assume(body).deep.equals(fs.readFileSync(gzip, 'utf8'));
+
+        next();
+      });
     });
   });
 });
