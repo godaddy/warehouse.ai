@@ -38,7 +38,7 @@ describe('/assets/*', function () {
       }, {
         content: cssContent,
         compressed: cssGzip,
-        fingerprint: '3x4mp311d',
+        fingerprint: '3x4mp311e',
         filename: 'my-styles.css',
         extension: '.css'
       }]
@@ -146,7 +146,7 @@ describe('/assets/*', function () {
     });
   });
 
-  describe.skip('/assets/:hash', function () {
+  describe('/assets/:hash', function () {
     it('serves a safe 404 for css files', function (next) {
       request(address(app, {
         pathname: 'assets/ishouldexist.css'
