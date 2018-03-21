@@ -21,6 +21,7 @@ describe('App (integration)', function () {
     registry.start({
       log: { level: 'critical' },
       ensure: true,
+      auth: false,
       config: {
         file: configFile,
         overrides: {
@@ -45,6 +46,7 @@ describe('App (integration)', function () {
   it('should proxy to npm for "/"', function (done) {
     registry.start({
       log: { level: 'critical' },
+      auth: false,
       config: {
         file: configFile,
         overrides: {

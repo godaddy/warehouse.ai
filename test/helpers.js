@@ -77,6 +77,7 @@ exports.start = function (opts, callback) {
 
   registry.start({
     ensure: true,
+    auth: opts.auth,
     config: {
       file: path.join(__dirname, '..', 'config.example.json'),
       overrides: extend(true, {}, defaultStart, opts)
