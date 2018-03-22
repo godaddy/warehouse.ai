@@ -14,6 +14,7 @@ describe('npm routes', function () {
     helpers.integrationSetup({
       app: {
         http: 8092,
+        auth: false,
         npm: {
           urls: {
             read: 'http://npm.host.invalid',
