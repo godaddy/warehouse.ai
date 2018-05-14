@@ -25,7 +25,6 @@ var defaultAppOpts = {
     prefix: process.env.WRHS_TEST_AWS_PREFIX,
     cdn: {
       prod: {
-        subdomain: true,
         url: process.env.WRHS_TEST_AWS_PROD_URL,
         pkgcloud: {
           keyId: process.env.WRHS_TEST_AWS_KEY_ID,
@@ -37,7 +36,6 @@ var defaultAppOpts = {
         }
       },
       test: {
-        subdomain: true,
         url: process.env.WRHS_TEST_AWS_TEST_URL,
         pkgcloud: {
           keyId: process.env.WRHS_TEST_AWS_KEY_ID,
@@ -49,7 +47,6 @@ var defaultAppOpts = {
         }
       },
       dev: {
-        subdomain: true,
         url: process.env.WRHS_TEST_AWS_DEV_URL,
         pkgcloud: {
           keyId: process.env.WRHS_TEST_AWS_KEY_ID,
