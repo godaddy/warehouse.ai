@@ -22,7 +22,7 @@ function address(app, properties) {
 // TODO: Need testing config for publishing to s3 to store encrypted with
 // travis
 //
-describe.skip('/assets/*', function () {
+describe('/assets/*', function () {
   var jsContent = path.join(__dirname, 'builds.test.js'),
     jsGzip = path.join(require('os').tmpdir(), 'build.test.js'),
     cssContent = path.join(__dirname, '..', '..', 'fixtures', 'payloads', 'my-styles.css'),
@@ -49,7 +49,7 @@ describe.skip('/assets/*', function () {
   fs.writeFileSync(cssGzip, zlib.gzipSync(fs.readFileSync(cssContent)));
 
   before(function (next) {
-    helpers.start({ http: 0 }, function (err, ret) {
+    helpers.appIntegrationSetup({ http: 0 }, function (err, ret) {
       assume(err).is.falsey();
       app = ret;
       next();

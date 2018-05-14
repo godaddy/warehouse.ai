@@ -1,3 +1,4 @@
+/* eslint {no-process-env: 0} */
 'use strict';
 
 var fs = require('fs'),
@@ -20,6 +21,47 @@ var defaultStart = {
 //
 var defaultAppOpts = {
   http: 8090,
+  bffs: {
+    prefix: process.env.WRHS_TEST_AWS_PREFIX,
+    cdn: {
+      prod: {
+        subdomain: true,
+        url: process.env.WRHS_TEST_AWS_PROD_URL,
+        pkgcloud: {
+          keyId: process.env.WRHS_TEST_AWS_KEY_ID,
+          key: process.env.WRHS_TEST_AWS_KEY,
+          provider: 'amazon',
+          endpoint: 's3.amazonaws.com',
+          region: 'us-west-1',
+          forcePathBucket: false
+        }
+      },
+      test: {
+        subdomain: true,
+        url: process.env.WRHS_TEST_AWS_TEST_URL,
+        pkgcloud: {
+          keyId: process.env.WRHS_TEST_AWS_KEY_ID,
+          key: process.env.WRHS_TEST_AWS_KEY,
+          provider: 'amazon',
+          endpoint: 's3.amazonaws.com',
+          region: 'us-west-1',
+          forcePathBucket: false
+        }
+      },
+      dev: {
+        subdomain: true,
+        url: process.env.WRHS_TEST_AWS_DEV_URL,
+        pkgcloud: {
+          keyId: process.env.WRHS_TEST_AWS_KEY_ID,
+          key: process.env.WRHS_TEST_AWS_KEY,
+          provider: 'amazon',
+          endpoint: 's3.amazonaws.com',
+          region: 'us-west-1',
+          forcePathBucket: false
+        }
+      }
+    }
+  },
   npm: {
     urls: {
       write: {
@@ -109,6 +151,23 @@ exports.integrationSetup = function (opts, callback) {
     app: async.apply(exports.start, opts.app),
     registry: async.apply(mocks.registry, opts.registry)
   }, callback);
+};
+
+/**
+ * @function appIntegrationSetup
+ *  @param {Object} opts Options for app integration setup
+ *  @param {function} callback Continuation when setup
+ * Simple helper to do integration for the app-only
+ * @returns {undefined}
+ */
+exports.appIntegrationSetup = function (opts, callback) {
+  if (!callback && typeof opts === 'function') {
+    callback = opts;
+    opts = defaultAppOpts;
+  }
+  opts = extend(true, {}, defaultAppOpts, opts);
+
+  exports.start(opts, callback);
 };
 
 /**
