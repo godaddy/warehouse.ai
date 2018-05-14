@@ -1,4 +1,4 @@
-/* eslint no-undefined: 0 */
+/* eslint no-undefined: 0, no-process-env: 0 */
 'use strict';
 
 var path = require('path'),

@@ -25,7 +25,7 @@ function address(app, properties) {
 // TODO: Need testing config for publishing to s3 to store encrypted with
 // travis
 //
-describe.skip('/builds/*', function () {
+describe('/builds/*', function () {
   var content = path.join(__dirname, 'builds.test.js'),
     gzip = path.join(require('os').tmpdir(), 'build.test.js'),
     spec = { name: 'pancake', version: '0.0.1', env: 'test' },
@@ -45,7 +45,7 @@ describe.skip('/builds/*', function () {
   fs.writeFileSync(gzip, zlib.gzipSync(fs.readFileSync(content)));
 
   before(function (next) {
-    helpers.start({ http: 0 }, function (err, ret) {
+    helpers.appIntegrationSetup({ http: 0, auth: false }, function (err, ret) {
       assume(err).is.falsey();
       app = ret;
 
