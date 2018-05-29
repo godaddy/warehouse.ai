@@ -74,7 +74,7 @@ describe('npm/publisher.js', function () {
     });
 
     var parsed = url.parse(req.uri);
-    assume(req.headers.host).equals(parsed.host)
+    assume(req.headers.host).equals(parsed.host);
   });
 
   //
