@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "./bin/server",
-    "cover": "nyc ./node_modules/.bin/_mocha test/",
+    "cover": "nyc mocha test/",
     "pretest": "npm run eslint",
     "test": "npm run cover && npm run report",
     "report": "nyc report --reporter=lcov",
