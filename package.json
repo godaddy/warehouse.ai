@@ -1,6 +1,6 @@
 {
   "name": "warehouse.ai",
-  "version": "1.9.2",
+  "version": "2.0.0",
   "description": "Modular front-end development through checks, automatic builds, and CDNs.",
   "main": "./lib/index.js",
   "bin": {
@@ -9,12 +9,10 @@
   "scripts": {
     "start": "./bin/server",
     "cover": "nyc ./node_modules/.bin/_mocha test/",
-    "pretest": "npm run lint",
+    "pretest": "npm run eslint",
     "test": "npm run cover && npm run report",
     "report": "nyc report --reporter=lcov",
-    "eslint": "godaddy-js-style-eslint -c .eslintrc lib/ test/",
-    "jscs": "godaddy-js-style-jscs lib/ test/",
-    "lint": "npm run jscs && npm run eslint",
+    "eslint": "eslint-godaddy -c .eslintrc lib/ test/",
     "sandbox": "npm-registry-echo"
   },
   "repository": {
@@ -36,6 +34,8 @@
   "dependencies": {
     "access-control": "^1.0.0",
     "async": "^1.4.1",
+    "authboot": "^1.0.0",
+    "basic-auth": "^2.0.0",
     "bffs": "^5.0.0",
     "body-parser": "~1.17.2",
     "carpenterd-api-client": "^1.3.0",
@@ -76,11 +76,11 @@
     "babel-eslint": "^6.1.2",
     "datastar-test-tools": "~1.0.0",
     "diagnostics": "~1.1.0",
-    "eslint": "~3.19.0",
+    "eslint": "^4.4.1",
+    "eslint-config-godaddy-react": "^2.0.0",
     "eslint-plugin-json": "^1.2.0",
-    "eslint-plugin-mocha": "^2.0.0",
-    "eslint-plugin-react": "^4.1.0",
-    "godaddy-style": "~3.2.1",
+    "eslint-plugin-mocha": "^4.11.0",
+    "eslint-plugin-react": "^7.1.0",
     "hock": "^1.2.0",
     "mocha": "^2.2.5",
     "npm": "~2.14.5",

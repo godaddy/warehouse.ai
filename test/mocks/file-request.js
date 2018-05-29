@@ -1,7 +1,7 @@
 'use strict';
 
 var fs = require('fs'),
-    concat = require('concat-stream');
+  concat = require('concat-stream');
 
 /**
  * @constructor FileRequest

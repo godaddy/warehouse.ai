@@ -1,12 +1,12 @@
 'use strict';
 
 var path = require('path'),
-    macros = require('../../macros'),
-    helpers = require('../../helpers'),
-    assume = require('assume');
+  macros = require('../../macros'),
+  helpers = require('../../helpers'),
+  assume = require('assume');
 
 const npmrc = name => {
-  return path.join(__dirname, '..', '..', 'fixtures', 'npm-auth', `${name}.npmrc`)
+  return path.join(__dirname, '..', '..', 'fixtures', 'npm-auth', `${name}.npmrc`);
 };
 
 describe('npm auth', function () {
@@ -29,12 +29,17 @@ describe('npm auth', function () {
         teardown(helpers.cleanupPublish.bind(helpers, context.app));
         context.app = result.app;
         context.registry = result.registry;
-        macros.publishOk(context)(done);
+        macros.publishOk(context, {
+          auth: {
+            user: 'basic_user',
+            password: 'basic_pass'
+          }
+        })(done);
       });
     });
     afterEach(() => {
       teardowns.forEach(fn => fn());
-    })
+    });
     it('handles basic auth', function (done) {
       macros.testNPM(context.registry, {
         teardown,

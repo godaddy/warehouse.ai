@@ -1,5 +1,5 @@
 'use strict';
-exports.createPassportNPMOptions = () => {
+exports.createPassportOptions = () => {
   return {
     authenticate(data, done) {
       if (data.name === 'basic_user' &&
@@ -27,5 +27,5 @@ exports.createPassportNPMOptions = () => {
       err.status = 403;
       return void done(err);
     }
-  }
-}
+  };
+};

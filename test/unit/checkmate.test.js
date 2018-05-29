@@ -1,10 +1,10 @@
-/* eslint no-undefined: 0 */
+/* eslint no-undefined: 0, no-process-env: 0 */
 'use strict';
 
 var path = require('path'),
-    fork = require('child_process').fork,
-    assume = require('assume'),
-    concat = require('concat-stream');
+  fork = require('child_process').fork,
+  assume = require('assume'),
+  concat = require('concat-stream');
 
 var checkmate = require.resolve(path.join(__dirname, '..', '..', 'lib', 'checkmate'));
 var checksDir = path.join(__dirname, '..', 'fixtures', 'checks');

@@ -306,7 +306,7 @@ npm start
 
 ### Running tests
 
-All tests are written with `mocha` and `istanbul`. They can be run with `npm`:
+Running the tests will require a running cassandra instance on your local machine. All tests are written with `mocha` and `istanbul`. They can be run with `npm`:
 
 ``` bash
 npm test

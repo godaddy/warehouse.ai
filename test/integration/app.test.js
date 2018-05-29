@@ -1,16 +1,16 @@
 'use strict';
 
 var assume = require('assume'),
-    url = require('url'),
-    path = require('path'),
-    hyperquest = require('hyperquest'),
-    concat = require('concat-stream'),
-    registry = require('../../lib');
+  url = require('url'),
+  path = require('path'),
+  hyperquest = require('hyperquest'),
+  concat = require('concat-stream'),
+  registry = require('../../lib');
 
 function address(app, properties) {
   const socket = app.servers.http.address();
   return url.format(Object.assign({
-    hostname: socket.address,
+    hostname: '127.0.0.1',
     port: socket.port,
     protocol: 'http'
   }, properties || {}));
@@ -21,9 +21,15 @@ describe('App (integration)', function () {
     registry.start({
       log: { level: 'critical' },
       ensure: true,
+      auth: false,
       config: {
         file: configFile,
-        overrides: { http: 0 }
+        overrides: {
+          http: {
+            hostname: '127.0.0.1',
+            port: 0
+          }
+        }
       }
     }, function (err, app) {
       assume(err).equals(null);
@@ -40,9 +46,15 @@ describe('App (integration)', function () {
   it('should proxy to npm for "/"', function (done) {
     registry.start({
       log: { level: 'critical' },
+      auth: false,
       config: {
         file: configFile,
-        overrides: { http: 0 }
+        overrides: {
+          http: {
+            hostname: '127.0.0.1',
+            port: 0
+          }
+        }
       }
     }, function (err, app) {
       assume(err).equals(null);

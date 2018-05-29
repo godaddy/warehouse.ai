@@ -1,18 +1,19 @@
-/*eslint no-process-env: 0*/
+/* eslint no-process-env: 0*/
 'use strict';
 
 var assume = require('assume'),
-    path = require('path'),
-    async = require('async'),
-    hyperquest = require('hyperquest'),
-    concat = require('concat-stream'),
-    extend = require('extend'),
-    request = require('request'),
-    mocks = require('./mocks'),
-    helpers = require('./helpers'),
-    fs = require('fs'),
-    tmp = require('tmp'),
-    spawn = require('child_process').spawn;
+  path = require('path'),
+  async = require('async'),
+  hyperquest = require('hyperquest'),
+  concat = require('concat-stream'),
+  extend = require('extend'),
+  request = require('request'),
+  url = require('url'),
+  mocks = require('./mocks'),
+  helpers = require('./helpers'),
+  fs = require('fs'),
+  tmp = require('tmp'),
+  spawn = require('child_process').spawn;
 
 var dirs = helpers.dirs;
 /**
@@ -25,7 +26,7 @@ var dirs = helpers.dirs;
 exports.notInvoked = function (msg) {
   msg = msg || 'Error callback invoked';
   return function onError(err) {
-    /*eslint no-undefined: 0*/
+    /* eslint no-undefined: 0*/
     var errorMsg = msg + ' (dumping inner stack):\n' + (err || {}).stack;
     assume(err).equals(undefined, errorMsg);
     assume(false).equals(true, msg);
@@ -111,6 +112,11 @@ exports.publishOk = function (context, opts) {
     path: '/my-package'
   }, opts || {});
 
+  if (options.auth) {
+    const parsed = url.parse(options.publishUrl);
+    parsed.auth = `${options.auth.user}:${options.auth.password}`;
+    options.publishUrl = url.format(parsed);
+  }
   return function shouldPublish(done) {
     var app = context.app;
     var registry = context.registry;
@@ -252,19 +258,19 @@ exports.testNPM = function testNPM(registry, options, cb) {
         return void cb(e);
       }
       const pid = spawn('npm', [
-          `--registry=http://127.0.0.1:8090`,
-          `--userconfig=${tmpNpmrc}`,
-          `--globalconfig=${blank}`,
-          `--loglevel=silent`,
-          `--cache=${tmpNpmcache}`,
-          command
-        ].concat(args), {
-          // npm demands stdout/err be a tty
-          stdio: ['pipe', 'inherit', 'inherit'],
-          env: {
-            PATH: process.env.PATH// eslint-disable-line no-process-env
-          }
-        });
+        `--registry=http://127.0.0.1:8090`,
+        `--userconfig=${tmpNpmrc}`,
+        `--globalconfig=${blank}`,
+        `--loglevel=silent`,
+        `--cache=${tmpNpmcache}`,
+        command
+      ].concat(args), {
+        // npm demands stdout/err be a tty
+        stdio: ['pipe', 'inherit', 'inherit'],
+        env: {
+          PATH: process.env.PATH// eslint-disable-line no-process-env
+        }
+      });
       fs.createReadStream(stdinFile).pipe(pid.stdin);
       pid.on('exit', (code) => {
         assume(code).equals(expectedExit);
@@ -279,4 +285,4 @@ exports.testNPM = function testNPM(registry, options, cb) {
       });
     });
   });
-}
+};

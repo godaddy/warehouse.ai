@@ -1,14 +1,14 @@
-/*eslint no-process-env: 0*/
+/* eslint no-process-env: 0*/
 'use strict';
 
 var path = require('path'),
-    url = require('url'),
-    assume = require('assume'),
-    concat = require('concat-stream'),
-    diagnostics = require('diagnostics'),
-    mocks = require('../../mocks'),
-    macros = require('../../macros'),
-    dirs = require('../../helpers').dirs;
+  url = require('url'),
+  assume = require('assume'),
+  concat = require('concat-stream'),
+  diagnostics = require('diagnostics'),
+  mocks = require('../../mocks'),
+  macros = require('../../macros'),
+  dirs = require('../../helpers').dirs;
 
 var Publisher = mocks.publisher();
 var FileRequest = mocks.FileRequest;

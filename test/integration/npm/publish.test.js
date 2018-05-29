@@ -1,19 +1,19 @@
-/*eslint no-process-env: 0*/
-/*eslint no-console: 0*/
+/* eslint no-process-env: 0*/
+/* eslint no-console: 0*/
 'use strict';
 
 var path = require('path'),
-    async = require('async'),
-    sinon = require('sinon'),
-    assume = require('assume'),
-    mocks = require('../../mocks'),
-    macros = require('../../macros'),
-    concat = require('concat-stream'),
-    helpers = require('../../helpers'),
-    hyperquest = require('hyperquest');
+  async = require('async'),
+  sinon = require('sinon'),
+  assume = require('assume'),
+  mocks = require('../../mocks'),
+  macros = require('../../macros'),
+  concat = require('concat-stream'),
+  helpers = require('../../helpers'),
+  hyperquest = require('hyperquest');
 
 var FileRequest = mocks.FileRequest,
-    dirs = helpers.dirs;
+  dirs = helpers.dirs;
 
 //
 // Enhance assume with sinon.
@@ -110,7 +110,7 @@ describe('npm publish', function () {
       assume(pack.description).equals('A kind of package');
       assume(pack.distTags).deep.equals({ latest: '0.0.1' });
       assume(pack.peerDependencies).deep.equals({
-        'react': '*'
+        react: '*'
       });
 
       done();

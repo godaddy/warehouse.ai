@@ -3,7 +3,7 @@
 'use strict';
 
 var http = require('http'),
-    concat = require('concat-stream');
+  concat = require('concat-stream');
 
 var hasScope = /^@/;
 
@@ -125,8 +125,8 @@ Registry.prototype.cacheRequest = function (req, res) {
   var self = this;
   req.pipe(concat({ encoding: 'string' }, function (data) {
     var parsed = JSON.parse(data),
-        name = req.url.substr(1),
-        file = name + '-' + parsed['dist-tags'].latest + '.tgz';
+      name = req.url.substr(1),
+      file = name + '-' + parsed['dist-tags'].latest + '.tgz';
 
     if (hasScope.test(name)) {
       file = file.replace('%2F', '/');

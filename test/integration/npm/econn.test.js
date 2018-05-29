@@ -1,19 +1,20 @@
 'use strict';
 
 var async = require('async'),
-    assume = require('assume'),
-    request = require('request'),
-    mocks = require('../../mocks'),
-    helpers = require('../../helpers');
+  assume = require('assume'),
+  request = require('request'),
+  mocks = require('../../mocks'),
+  helpers = require('../../helpers');
 
 describe('npm routes', function () {
   var app,
-      registry;
+    registry;
 
   before(function (done) {
     helpers.integrationSetup({
       app: {
         http: 8092,
+        auth: false,
         npm: {
           urls: {
             read: 'http://npm.host.invalid',

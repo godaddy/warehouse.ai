@@ -1,17 +1,17 @@
-/*eslint max-nested-callbacks: 0*/
+/* eslint max-nested-callbacks: 0*/
 'use strict';
 
 var async = require('async'),
-    assume = require('assume'),
-    request = require('request'),
-    mocks = require('../../mocks'),
-    macros = require('../../macros'),
-    helpers = require('../../helpers');
+  assume = require('assume'),
+  request = require('request'),
+  mocks = require('../../mocks'),
+  macros = require('../../macros'),
+  helpers = require('../../helpers');
 
 describe('npm routes', function () {
   var name = 'my-package',
-      registry,
-      app;
+    registry,
+    app;
 
   before(function (done) {
     helpers.integrationSetup({
@@ -220,7 +220,7 @@ describe('npm routes', function () {
           assume(body.description).equals('A kind of package');
           assume(body['dist-tags']).deep.equals({ latest: '0.0.1' });
           assume(body.versions['0.0.1'].peerDependencies).deep.equals({
-            'react': '*'
+            react: '*'
           });
 
           done();
