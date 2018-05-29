@@ -23,6 +23,7 @@ function address(app, properties) {
 // travis
 //
 describe('/assets/*', function () {
+  this.timeout(12E4);
   var jsContent = path.join(__dirname, 'builds.test.js'),
     jsGzip = path.join(require('os').tmpdir(), 'build.test.js'),
     cssContent = path.join(__dirname, '..', '..', 'fixtures', 'payloads', 'my-styles.css'),
