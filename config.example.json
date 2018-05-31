@@ -41,7 +41,7 @@
   "npm": {
     "debugChildren": true,
     "urls": {
-      "read": "http://registry.npmjs.org",
+      "read": "https://registry.npmjs.org",
       "write": {
         "default": "http://localhost:8081"
       }
