@@ -1,0 +1,6 @@
+graph LR
+A(npm publish) -->|publish tarball| B(<br>warehouse.ai<br><br>)
+B --> C(<br>carpenterd<br><br>)
+C -->|enqueue build|D{NSQ}
+E(<br>carpenterd-worker<br><br>) --> |subscribe| D
+E --> |write to bucket| F{S3 compatibile CDN}
