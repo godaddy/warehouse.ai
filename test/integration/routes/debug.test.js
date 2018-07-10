@@ -19,7 +19,7 @@ describe('?debug=*', function () {
   var app;
 
   before(function (next) {
-    helpers.start({ http: 0 }, function (err, ret) {
+    helpers.start({ http: 0, auth: false }, function (err, ret) {
       assume(err).is.falsey();
       app = ret;
       next();
