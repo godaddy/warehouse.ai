@@ -1,4 +1,5 @@
 {
+  "auth": false,
   "http": 8080,
   "cors": {
     "methods": ["GET"]

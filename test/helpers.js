@@ -20,6 +20,7 @@ var defaultStart = {
 // Default options to start slay with
 //
 var defaultAppOpts = {
+  auth: false,
   http: 8090,
   bffs: {
     prefix: process.env.WRHS_TEST_AWS_PREFIX,
@@ -82,6 +83,7 @@ var defaultAppOpts = {
 };
 
 var defaultRegOpts = {
+  auth: false,
   http: 8091
 };
 
