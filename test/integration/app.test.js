@@ -79,7 +79,7 @@ describe('App (integration)', function () {
     });
   });
 
-  it.only('should log query params', function (done) {
+  it('should log query params', function (done) {
     var logs = [];
     registry.start({
       log: { level: 'critical' },
@@ -104,9 +104,24 @@ describe('App (integration)', function () {
         pathname: 'assets/files/pancake/test/0.0.1'
       }), function (err, res, body) {
         assume(err).doesnt.exist();
-        assume(res.statusCode).equals(200);
+        // we never created this package, so we expect a 404
+        assume(res.statusCode).equals(404);
 
-        assume(logs.length).is.greaterThan(0);
+        var requestLogs = logs
+          .filter(l => l[0] === 'Request Served for wrhs')
+          .map(l => l[1]);
+
+        requestLogs.forEach(log => {
+          assume(log.request).exists();
+          assume(log.remote).exists();
+          assume(log.date).exists();
+          assume(log.referrer).exists();
+          assume(log['user-agent']).exists();
+          assume(log.env).exists();
+          assume(log.package).exists();
+          assume(log.version).exists();
+          assume(log.hash).exists();
+        });
 
         app.close(done);
       });
