@@ -101,12 +101,9 @@ describe('App (integration)', function () {
       assume(app.log).is.an('object');
 
       sinon.stub(app.log, 'info').callsFake((...msg) => logs.push(msg));
-      request(address(app, {
-        pathname: 'assets/files/pancake/test/0.0.1'
-      }), function (err, res) {
+      request(address(app, { pathname: 'healthcheck' }), function (err, res) {
         assume(err).doesnt.exist();
-        // we never created this package, so we expect a 404
-        assume(res.statusCode).equals(404);
+        assume(res.statusCode).equals(200);
 
         var requestLogs = logs
           .filter(l => l[0] === 'Request Served for wrhs')
