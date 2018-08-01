@@ -80,6 +80,10 @@ describe('App (integration)', function () {
     });
   });
 
+  afterEach(function () {
+    sinon.restore();
+  });
+
   it('should log query params', function (done) {
     var logs = [];
     registry.start({
@@ -101,8 +105,8 @@ describe('App (integration)', function () {
       assume(app.log).is.an('object');
 
       sinon.stub(app.log, 'info').callsFake((...msg) => logs.push(msg));
-      request(address(app, { pathname: 'healthcheck' }), function (err, res) {
-        assume(err).doesnt.exist();
+      request(address(app, { pathname: 'healthcheck' }), function (healthCheckErr, res) {
+        assume(healthCheckErr).doesnt.exist();
         assume(res.statusCode).equals(200);
 
         var requestLogs = logs
