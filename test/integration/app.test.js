@@ -1,3 +1,4 @@
+/* eslint {max-nested-callbacks: 0} */
 'use strict';
 
 var assume = require('assume'),
@@ -102,7 +103,7 @@ describe('App (integration)', function () {
       sinon.stub(app.log, 'info').callsFake((...msg) => logs.push(msg));
       request(address(app, {
         pathname: 'assets/files/pancake/test/0.0.1'
-      }), function (err, res, body) {
+      }), function (err, res) {
         assume(err).doesnt.exist();
         // we never created this package, so we expect a 404
         assume(res.statusCode).equals(404);
