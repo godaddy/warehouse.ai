@@ -34,7 +34,6 @@ function validatePackage(pkg, expectation) {
 
 describe('/packages/*', function () {
   const context = {};
-  const spec = { name: 'pancake', version: '0.0.1', env: 'test' };
   let app;
 
   before(function (next) {
@@ -53,19 +52,6 @@ describe('/packages/*', function () {
       }
 
       next();
-    });
-  });
-
-  afterEach(function (next) {
-    app.bffs.unpublish(spec, function () {
-      async.each(app.bffs.envs, function (env, next) {
-        var mine = JSON.parse(JSON.stringify(spec));
-
-        mine.name = mine.name + ':all';
-        mine.env = env;
-
-        app.bffs.unpublish(mine, next);
-      }, next);
     });
   });
 
