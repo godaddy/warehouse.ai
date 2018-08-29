@@ -134,4 +134,20 @@ describe('/packages/*', function () {
       });
     });
   });
+
+  it('/packages/:pkg returns 404 if it can\'t find the package', function (next) {
+    request(address(app, { pathname: 'packages/@bad%2Fname' }), function (err, res, body) {
+      try {
+        body = JSON.parse(body);
+      } catch (e) {
+        return next(e);
+      }
+
+      assume(err).to.be.falsey();
+      assume(res.statusCode).equals(404);
+      assume(body.message).equals('Package not found');
+
+      next();
+    });
+  });
 });
