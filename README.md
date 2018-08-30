@@ -233,6 +233,13 @@ POST /checks/:pkg/run                 # Run checks ad-hoc for a package
 GET  /checks/:pkg/stats               # Get stats for checks run
 ```
 
+### Packages API
+```scala
+GET  /packages/                       # Get information about all packages
+GET  /packages/:pkg                   # Get information about a specific package
+POST /packages/search                 # Search for packages (if redis is configured)
+```
+
 ### Environment-specific installation
 
 Warehouse allows for installation against a specific `dist-tag` via the `REGISTRY-ENVIRONMENT` header. Although `npm` does not allow for headers to be set directly, [carpenter] sets these headers internally during it's install process.
