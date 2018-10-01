@@ -323,4 +323,3 @@ npm test
 
 [carpenterd]: https://github.com/godaddy/carpenterd
 [carpenterd-identify]: https://github.com/godaddy/carpenterd#identification-of-build-system-type
-[fittingclass]: https://github.secureserver.net/warehouse/fitting#classification
