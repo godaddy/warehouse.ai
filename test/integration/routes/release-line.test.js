@@ -51,7 +51,7 @@ describe('/release-line/*', function () {
         json: true,
         uri: address(app, { pathname: 'release-line/pkg/1.0.0' })
       });
-    } catch(ex) {
+    } catch (ex) {
       assume(ex.message).contains('404');
     }
   });
