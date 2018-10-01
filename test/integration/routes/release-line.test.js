@@ -71,8 +71,6 @@ describe('/release-line/*', function () {
       assume(body.version).equals(version);
       assume(body.dependents).is.an('object');
       assume(Object.keys(body.dependents)).has.length(0);
-    } catch (ex) {
-      throw ex;
     } finally {
       await app.release.delete({ pkg, version });
     }
