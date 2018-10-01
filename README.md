@@ -240,6 +240,11 @@ GET  /packages/:pkg                   # Get information about a specific package
 POST /packages/search                 # Search for packages (if redis is configured)
 ```
 
+### Release Line API
+```scala
+GET /release-line/:pkg/:version?      # Get release line for specified package and version (or latest if not defined)
+```
+
 ### Environment-specific installation
 
 Warehouse allows for installation against a specific `dist-tag` via the `REGISTRY-ENVIRONMENT` header. Although `npm` does not allow for headers to be set directly, [carpenter] sets these headers internally during it's install process.
