@@ -8,5 +8,12 @@
     },
     "concurrency": 10,
     "cleanup": false
+  },
+  "dependentBuilds": {
+    "retries": {
+      "times": 3,
+      "interval": 5
+    },
+    "limit": 2
   }
 }
