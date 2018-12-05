@@ -12,21 +12,52 @@ var async = require('async'),
 
 describe('npm routes', function () {
   var registry,
-    app;
-
-  var jsContent = path.join(__dirname, 'routes.test.js'),
-    jsGzip = path.join(require('os').tmpdir(), 'routes.test.js'),
+    app,
+    jsContent = path.join(__dirname, 'routes.rollback.test.js'),
+    jsGzip = path.join(require('os').tmpdir(), 'routes.rollback.test.js'),
     publishOptions = {
       files: [{
         content: jsContent,
         compressed: jsGzip,
         fingerprint: '3x4mp311d',
-        filename: 'routes.test.js',
+        filename: 'routes.rollback.test.js',
         extension: '.js'
       }]
-    };
+    },
+    cleanupWork = [];
 
   fs.writeFileSync(jsGzip, zlib.gzipSync(fs.readFileSync(jsContent)));
+
+  function publishOne({ name, version }) {
+    cleanupWork.unshift(helpers.cleanupPublish(app, {
+      name,
+      file: path.join(helpers.dirs.payloads, `${name}-${version}.json`)
+    }));
+    return macros.publishOk({
+      app: app,
+      registry: registry
+    }, {
+      file: path.join(helpers.dirs.payloads, `${name}-${version}.json`),
+      publishUrl: `http://localhost:8092/${name}`,
+      id: `${name}@${version}`,
+      path: `/${name}`
+    });
+  }
+
+  function createRelease(opts) {
+    cleanupWork.unshift(async.asyncify(app.release.delete.bind(app.release, opts)));
+    return async.asyncify(app.release.create.bind(app.release, opts));
+  }
+
+  function createDep(opts) {
+    cleanupWork.unshift(async.asyncify(app.release.dependent.remove.bind(app.release.dependent, opts)));
+    return async.asyncify(app.release.dependent.add.bind(app.release.dependent, opts));
+  }
+
+  function createBuild(opts) {
+    cleanupWork.unshift(app.bffs.unpublish.bind(app.bffs, opts));
+    return app.bffs.publish.bind(app.bffs, opts, publishOptions);
+  }
 
   before(function (done) {
     helpers.integrationSetup({
@@ -50,26 +81,6 @@ describe('npm routes', function () {
       app = result.app;
       app.carpenter = app.publisher.carpenter = mocks.carpenter;
 
-      function publishOne({ name, version }) {
-        return macros.publishOk({
-          app: app,
-          registry: registry
-        }, {
-          file: path.join(helpers.dirs.payloads, `${name}-${version}.json`),
-          publishUrl: `http://localhost:8092/${name}`,
-          id: `${name}@${version}`,
-          path: `/${name}`
-        });
-      }
-
-      function createRelease(opts) {
-        return async.asyncify(app.release.create.bind(app.release, opts));
-      }
-
-      function createDep(opts) {
-        return async.asyncify(app.release.dependent.add.bind(app.release.dependent, opts));
-      }
-
       async.series([
         publishOne({ name: 'parent-package', version: '0.0.1' }),
         publishOne({ name: 'parent-package', version: '0.0.2' }),
@@ -82,12 +93,20 @@ describe('npm routes', function () {
         createRelease({ version: '0.0.2', pkg: 'child-package' }),
         createDep({ pkg: 'parent-package', version: '0.0.1', dependent: 'child-package', dependentVersion: '0.0.1' }),
         createDep({ pkg: 'parent-package', version: '0.0.2', dependent: 'child-package', dependentVersion: '0.0.2' }),
-        app.bffs.publish.bind(app.bffs, { name: 'parent-package', version: '0.0.1', env: 'test' }, publishOptions),
-        app.bffs.publish.bind(app.bffs, { name: 'parent-package', version: '0.0.2', env: 'test' }, publishOptions),
-        app.bffs.publish.bind(app.bffs, { name: 'child-package', version: '0.0.1', env: 'test' }, publishOptions),
-        app.bffs.publish.bind(app.bffs, { name: 'child-package', version: '0.0.2', env: 'test' }, publishOptions)
+        createBuild({ name: 'parent-package', version: '0.0.1', env: 'test' }, publishOptions),
+        createBuild({ name: 'parent-package', version: '0.0.2', env: 'test' }, publishOptions),
+        createBuild({ name: 'child-package', version: '0.0.1', env: 'test' }, publishOptions),
+        createBuild({ name: 'child-package', version: '0.0.2', env: 'test' }, publishOptions)
       ], done);
     });
+  });
+
+  after(function (done) {
+    async.series([
+      ...cleanupWork,
+      app.close.bind(app),
+      registry.close.bind(registry)
+    ], done);
   });
 
   // TODO: undo all that work in `after`
@@ -154,14 +173,5 @@ describe('npm routes', function () {
         ], done);
       }, 100);
     });
-  });
-
-
-  after(function (done) {
-    async.series([
-      helpers.cleanupPublish(app),
-      app.close.bind(app),
-      registry.close.bind(registry)
-    ], done);
   });
 });
