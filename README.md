@@ -88,7 +88,7 @@ npm c set strict-ssl false
 The act of rolling back to a previous version takes two forms in the Warehouse:
 
 1. **Rolling back a top-level module:** if a module has no dependents (i.e. nothing depends on a given module) then that module is considered "top-level". In this case a rollback in a specific environment will use the previous build of the version being rolled back to with no other side-effects.
-2. **Rolling back a module depended on by other modules:** if a module has dependents (i.e. other modules depend on a given module) then rolling back to a previous version in a specific environment will **trigger builds for all dependent modules.**
+2. **Rolling back a module depended on by other modules:** if a module has dependents (i.e. other modules depend on a given module) then rolling back to a previous version in a specific environment will roll back the top level module and all dependent modules to the version they were on for the given release-line.
 
 Rollback is performed using `npm dist-tag`. For example if `my-module` has a production version of 1.0.5:
 
