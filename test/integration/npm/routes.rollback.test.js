@@ -109,8 +109,6 @@ describe('npm routes', function () {
     ], done);
   });
 
-  // TODO: undo all that work in `after`
-
   it('can rollback release-lines', function (done) {
     macros.addDistTag({
       method: 'POST',
