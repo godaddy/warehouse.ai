@@ -1,4 +1,4 @@
-/* eslint max-nested-callbacks: 0*/
+/* eslint max-nested-callbacks: 0, no-sync: 0 */
 'use strict';
 
 var async = require('async'),
@@ -119,7 +119,6 @@ describe('npm routes', function () {
           done();
         });
       });
-
     });
 
     describe('npm CLI', function () {

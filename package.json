@@ -65,6 +65,7 @@
     "passport": "0.3.2",
     "passport-npm": "2.0.0",
     "readable-stream": "~2.2.11",
+    "retryme": "^1.1.0",
     "semver": "^5.0.1",
     "slay": "~1.0.2",
     "slay-config": "^2.1.0",
