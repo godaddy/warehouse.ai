@@ -183,8 +183,8 @@ exports.etagFor = function (file, callback) {
 
     var payload = data.slice(0, data.indexOf('_attachments"')) +
       '_attachments":{}}';
-
-    callback(null, etag(payload));
+    const tag = etag(payload);
+    callback(null, tag);
   });
 };
 

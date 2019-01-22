@@ -4,6 +4,8 @@ var join = require('path').join,
   concat = require('concat-stream'),
   datastarHelpers = require('datastar-test-tools').helpers,
   datastarMocks = require('datastar-test-tools').mocks,
+  ndjson = require('ndjson'),
+  readonly = require('read-only-stream'),
   wrhs = require('warehouse-models');
 
 var proxyquire = require('proxyquire').noPreserveCache();
@@ -19,6 +21,22 @@ exports.registry = require('registry-mock');
 exports.models = function () {
   var datastar = datastarHelpers.connectDatastar({ mock: true }, datastarMocks.datastar());
   return wrhs(datastar);
+};
+
+exports.carpenterBuildResponse = function ({ error } = {}) {
+  return () => {
+    const stream = ndjson.serialize();
+
+    stream.write({
+      event: error ? 'error' : 'info',
+      id: 'blah',
+      message: 'things'
+    });
+
+    stream.end();
+
+    return readonly(stream);
+  };
 };
 
 /**
