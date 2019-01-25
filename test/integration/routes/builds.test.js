@@ -6,12 +6,15 @@ var fs = require('fs'),
   url = require('url'),
   path = require('path'),
   zlib = require('zlib'),
-  http = require('http'),
-  hock = require('hock'),
   async = require('async'),
   assume = require('assume'),
   request = require('request'),
-  helpers = require('../../helpers');
+  macros = require('../../macros'),
+  helpers = require('../../helpers'),
+  mocks = require('../../mocks'),
+  nock = require('nock'),
+  sinon = require('sinon'),
+  req = require('request-promise-native');
 
 function address(app, properties) {
   const socket = app.servers.http.address();
@@ -26,6 +29,7 @@ function address(app, properties) {
 // travis
 //
 describe('/builds/*', function () {
+  this.timeout(3E4);
   var content = path.join(__dirname, 'builds.test.js'),
     gzip = path.join(require('os').tmpdir(), 'build.test.js'),
     spec = { name: 'pancake', version: '0.0.1', env: 'test' },
@@ -38,26 +42,53 @@ describe('/builds/*', function () {
         extension: '.js'
       }]
     },
-    mock = hock.createHock(),
-    carpenter,
+    name = 'my-package',
+    mock = nock('http://127.0.0.1:1337'),
+    registry,
     app;
+
+
 
   fs.writeFileSync(gzip, zlib.gzipSync(fs.readFileSync(content)));
 
-  before(function (next) {
-    helpers.appIntegrationSetup({ http: 0, auth: false }, function (err, ret) {
+  before(function (done) {
+    helpers.integrationSetup({
+      app: {
+        log: { level: 'critical' },
+        http: { host: '0.0.0.0', port: 0 },
+        auth: false,
+        npm: {
+          urls: {
+            read: 'http://localhost:8002',
+            write: {
+              default: 'http://localhost:8002'
+            }
+          }
+        }
+      },
+      registry: {
+        http: 8002
+      }
+    }, function (err, ret) {
       assume(err).is.falsey();
-      app = ret;
+      app = ret.app;
+      registry = ret.registry;
 
-      carpenter = http.createServer(mock.handler);
-      carpenter.listen(1337, next);
+      macros.publishOk({
+        app,
+        registry
+      }, {
+        publishUrl: address(app, { pathname: name })
+      })(done);
     });
   });
 
   after(function (next) {
-    app.close(function () {
-      carpenter.close(next);
-    });
+    async.series([
+      helpers.cleanupPublish(app),
+      app.close.bind(app),
+      registry.close.bind(registry)
+    ], next);
   });
 
   beforeEach(function (next) {
@@ -190,4 +221,53 @@ describe('/builds/*', function () {
       });
     });
   });
+
+  it('PATCH /builds/:pkg/:env/:version gives 400 with bad version', async () => {
+    try {
+      await req({
+        method: 'PATCH',
+        uri: address(app, {
+          pathname: `builds/${name}/test/what`
+        })
+      });
+    } catch (ex) {
+      assume(ex.statusCode).equals(400);
+    }
+  });
+
+  it('PATCH /builds/:pkg/:env/:version generates a build similar to dist-tag', async () => {
+    mock.post('/v2/build')
+      .reply(200, mocks.carpenterBuildResponse());
+
+    const spy = sinon.spy(app.manager, 'build');
+    const res = await req({
+      method: 'PATCH',
+      uri: address(app, {
+        pathname: `builds/${name}/test/0.0.1`
+      }),
+      resolveWithFullResponse: true
+    });
+    assume(res.statusCode).equals(204);
+    assume(spy.callCount).equals(1);
+    assume(spy.args[0][0].promote).equals(false);
+  });
+
+  it('PATCH /builds/:pkg/:env/:version with promote query string generates a build and passes promote: true', async () => {
+    mock.post('/v2/build')
+      .reply(200, mocks.carpenterBuildResponse());
+
+    const spy = sinon.spy(app.manager, 'promoteOrBuild');
+    const res = await req({
+      method: 'PATCH',
+      uri: address(app, {
+        pathname: `builds/${name}/test/0.0.1`,
+        query: { promote: true }
+      }),
+      resolveWithFullResponse: true
+    });
+    assume(res.statusCode).equals(204);
+    assume(spy.callCount).equals(1);
+    assume(spy.args[0][0].promote).equals(true);
+  });
+
 });

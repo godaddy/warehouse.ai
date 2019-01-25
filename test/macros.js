@@ -122,7 +122,6 @@ exports.publishOk = function (context, opts) {
     var registry = context.registry;
     var json = require(options.file);
     var request = new mocks.FileRequest({ file: options.file });
-
     //
     // Make sure our test widget is deleted from cache and is not a left-over of
     // some other failed test.
