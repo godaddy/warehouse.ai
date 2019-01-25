@@ -256,7 +256,7 @@ describe('/builds/*', function () {
     mock.post('/v2/build')
       .reply(200, mocks.carpenterBuildResponse());
 
-    const spy = sinon.spy(app.manager, 'rollbackOrBuild');
+    const spy = sinon.spy(app.manager, 'promoteOrBuild');
     const res = await req({
       method: 'PATCH',
       uri: address(app, {

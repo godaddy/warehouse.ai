@@ -79,7 +79,7 @@ describe('/promote/*', function () {
 
   it('PATCH /promote/:pkg/:env/:version calls rollback to do a promote, this should change', async () => {
 
-    const spy = sinon.spy(app.manager, 'rollback');
+    const spy = sinon.spy(app.manager, 'promote');
     const res = await req({
       method: 'PATCH',
       uri: address(app, {
@@ -95,7 +95,7 @@ describe('/promote/*', function () {
     mock.post('/v2/build')
       .reply(200, mocks.carpenterBuildResponse());
 
-    const spy = sinon.spy(app.manager, 'rollbackOrBuild');
+    const spy = sinon.spy(app.manager, 'promoteOrBuild');
     const res = await req({
       method: 'PATCH',
       uri: address(app, {
