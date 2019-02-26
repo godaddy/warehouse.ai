@@ -43,7 +43,7 @@ function spawnWith(data) {
 
 describe('checkmate', function () {
   it('provides a descriptive message for no check', function (done) {
-    var context = spawnWith({ payload: { ok: true }});
+    var context = spawnWith({ payload: { ok: true } });
 
     context.child.on('exit', function (code, signal) {
       assume(code).equals(0);

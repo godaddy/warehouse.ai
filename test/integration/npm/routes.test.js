@@ -159,9 +159,8 @@ describe('npm routes', function () {
         npm.once('close', function (code) {
           assume(code).to.equal(1);
 
-          assume(expected).to.include('npm ERR!');
-          assume(expected).to.include('http request GET http://localhost:8092/-/package/unknown-widget/dist-tags');
-          assume(expected).to.include('No dist-tags found for unknown-widget');
+          assume(expected).to.include('npm ERR! 404 Not Found - GET http://localhost:8092/-/package/unknown-widget/dist-tags');
+          assume(expected).to.include('\'unknown-widget@999.0.0 \' is not in the npm registry.');
 
           done();
         });
