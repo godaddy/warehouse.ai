@@ -9,7 +9,7 @@
   "scripts": {
     "start": "./bin/server",
     "cover": "nyc mocha test/",
-    "pretest": "npm run eslint",
+    "posttest": "npm run eslint",
     "test": "npm run cover && npm run report",
     "report": "nyc report --reporter=lcov",
     "eslint": "eslint-godaddy -c .eslintrc lib/ test/",
@@ -32,7 +32,7 @@
   "author": "GoDaddy.com Operating Company LLC",
   "license": "MIT",
   "dependencies": {
-    "@wrhs/release-line": "^1.1.0",
+    "@wrhs/release-line": "^1.1.1",
     "access-control": "^1.0.0",
     "async": "^1.4.1",
     "authboot": "^2.0.1",
@@ -90,7 +90,7 @@
     "eslint-plugin-react": "^7.1.0",
     "mocha": "^5.2.0",
     "nock": "^10.0.6",
-    "npm": "^6.5.0",
+    "npm": "^6.8.0",
     "npm-registry-couchapp": "~2.6.13",
     "nyc": "^11.8.0",
     "proxyquire": "~1.8.0",
