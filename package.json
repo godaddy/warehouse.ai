@@ -9,14 +9,14 @@
   "scripts": {
     "start": "./bin/server",
     "cover": "nyc mocha test/",
-    "prepublishOnly": "npm run docs",
-    "pretest": "npm run docs",
+    "prepublishOnly": "npm run swagger",
+    "pretest": "npm run swagger",
     "test": "npm run cover && npm run report",
     "posttest": "npm run eslint",
     "report": "nyc report --reporter=lcov",
     "eslint": "eslint-godaddy -c .eslintrc lib/ test/",
     "sandbox": "npm-registry-echo",
-    "docs": "swagger-jsdoc -d lib/swagger.js -o lib/swagger.json"
+    "swagger": "swagger-jsdoc -d lib/swagger.js -o lib/swagger.json"
   },
   "repository": {
     "type": "git",
