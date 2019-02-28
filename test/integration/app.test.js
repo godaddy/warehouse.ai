@@ -122,7 +122,6 @@ describe('App (integration)', function () {
           assume(log.env).exists();
           assume(log.package).exists();
           assume(log.version).exists();
-          assume(log.hash).exists();
         });
 
         app.close(done);

@@ -31,9 +31,9 @@ describe('?debug=*', function () {
     app.close(next);
   });
 
-  it('serves a JSON response for ?debug=* safe 404 for css files', function (next) {
+  it('serves a JSON response for ?debug=* safe 404', function (next) {
     var uri = address(app, {
-      pathname: 'assets/ishouldexist.css',
+      pathname: '/assets/files/not-a-package/dev/3.2.1-beta',
       query: { debug: '*' }
     });
 
