@@ -3,6 +3,7 @@ dist: trusty
 language: node_js
 node_js:
 - '8'
+- '10'
 services:
 - cassandra
 before_install: 
