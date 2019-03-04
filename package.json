@@ -9,11 +9,14 @@
   "scripts": {
     "start": "./bin/server",
     "cover": "nyc mocha test/",
-    "posttest": "npm run eslint",
+    "prepublishOnly": "npm run swagger",
+    "pretest": "npm run swagger",
     "test": "npm run cover && npm run report",
+    "posttest": "npm run eslint",
     "report": "nyc report --reporter=lcov",
     "eslint": "eslint-godaddy -c .eslintrc lib/ test/",
-    "sandbox": "npm-registry-echo"
+    "sandbox": "npm-registry-echo",
+    "swagger": "swagger-jsdoc -d lib/swagger.js -o lib/swagger.json"
   },
   "repository": {
     "type": "git",
@@ -72,6 +75,7 @@
     "slay-config": "^2.1.0",
     "slay-log": "^2.1.0",
     "stringify-stream": "^1.0.3",
+    "swagger-ui-express": "^4.0.2",
     "tinythen": "^1.0.1",
     "warehouse-models": "^5.9.1",
     "winston": "~2.3.1",
@@ -99,6 +103,7 @@
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5",
     "sinon": "^7.2.4",
+    "swagger-jsdoc": "^3.2.7",
     "tmp": "0.0.31"
   }
 }

@@ -1,12 +1,11 @@
 # Warehouse
 
-A storage and developer workflow engine for enforcing arbitrary checks on ontologies of npm packages.
+A storage and developer workflow engine for npm packages.
 
 ## Motivation
 
 The goal of the Warehouse is to support modular UI development by:
 
-- Guaranteeing new modules from `npm publish` conform to a set of [Checks](#checks) configurable by `tag` values in the `package.json`.
 - Serving [fully built assets](#builds) (e.g. JavaScript, CSS, etc) for published modules through [a CDN target](#cdn-support).
 - Decoupling [upgrade and rollback](#upgrade-and-rollback) of individual dependencies across multiple environments through use of `npm dist-tag`.
 - Automatically [updating built assets](#auto-update-of-builds) when new versions of dependent modules are published.
@@ -19,13 +18,9 @@ In other words the Warehouse is designed to give as many programmatic guarantees
   - [Releasing code](#releasing-code)
   - [Rolling back to previous versions](#rolling-back-to-previous-versions)
   - [Auto-update of builds](#auto-update-of-builds)
-- [Checks](#checks)
-  - [Writing a new check](#writing-a-new-check)
-  - [Checks, suites, and package.json `tags`](#checks-suites-and-packagejson-tags)
 - [API Documentation](#api-documentation)
   - [`npm` wire protocol](#npm-wire-protocol)
   - [Assets & Builds](#assets--builds-api)
-  - [Checks](#checks-api)
 - [Warehouse.ai Internals](#warehouseai-internals)
   - [Data Models](#data-models)
   - [Config options](#config-options)
@@ -142,48 +137,6 @@ Then the build the Warehouse returns for your module _will include those depende
 
 ![](assets/package-versions.png)
 
-## Checks
-
-> Stability: 2 – **Stable**
-
-Checks are always part of a suite of checks or ["check suite"](#checks-suites-and-packagejson-tags). Checks are a way to ensure that a set of modules conform to a set of requirements programmatically. For example:
-
-- Must depend on `react@0.13.x`.
-- File specified for `main` in a `package.json` must exist in the package.
-- Jenkins build for `master` of this module must be passing and have the same `git` SHA.
-
-### Writing a new Check
-
-Who are checks designed to be written by? You! Me! Developers! Checks are meant to be an accessible way to add more programmatic guarantees about modules being published.
-
-A Check is simply a function which is given a [package buffer](https://github.com/indexzero/npm-package-buffer) and a callback to execute when complete. For example, we could check to see if `examples.js` is defined on a given package.
-
-**check-examples-exists.js**
-``` js
-module.exports = function (buffer, next) {
-  console.log(buffer.pkg);   // JSON parsed package.json contents.
-  console.log(buffer.files); // Fully-read file contents for all files.
-
-  if (!buffer.files['examples.js']) {
-    return next(new Error('Missing required examples.js file'));
-  }
-
-  next();
-};
-```
-
-Now that we've written our check we need to expose it in a check suite. We can do this in one of two ways:
-
-1. **Add to an existing check suite:** to add a check to an existing suite if one exists and simply add the `check-*.js` file there and publish it to expose your check.
-
-### Checks, suites and package.json `tags`
-
-The relationship between checks, suites, and `package.json` tags is straight-forward but important to grasp to understand what checks will be run when you run `npm publish` for a given module.
-
-1. Every Check is part of a check suite.
-2. Check suites are executed on `npm publish`
-3. Tags on a module's `package.json` determine which check suite(s) will run.
-
 ## API documentation
 
 The Warehouse implements four distinct APIs over HTTP:
@@ -192,7 +145,6 @@ The Warehouse implements four distinct APIs over HTTP:
   - **Overridden routes:** These are routes that the warehouse itself has reimplemented to ensure that builds are fresh and that modules are installed from the correct environment.
   - **`npm` proxying:** before any 404 is served the request is first proxied over HTTP(S) to the location specified via `npm.urls.read`.
 - _Assets & Builds:_ Creating ad-hoc builds, fetching builds and assets (based on fingerprint), and when necessary finding builds for a particular version or environment or both.
-- _Checks:_ Lists checks that would run for a package, runs checks against packages ad-hoc, and gets stats about checks run against packages.
 
 - All routes are able to get some debugging information by using the `?debug=*` query parameter. This will override the output of your request and show all logged output for that request as JSON, response headers that were intended to be sent back, and content that was sent back.
 
@@ -217,20 +169,11 @@ The rest of the requests related to the `npm` wire protocol will be sent to the 
 ### Assets & Builds API
 
 ```scala
-GET  /assets/:hash                    # Fetch an actual build file, will detect Accept-Encoding: gzip
 GET  /builds/:pkg                     # Get build information
 GET  /builds/:pkg/:env/:version       # Get build information
 GET  /builds/:pkg/:env/:version/meta  # Get build information
 POST /builds/:pkg                     # Ad-hoc build
 POST /builds/compose                  # Trigger multiple builds
-```
-
-### Checks API
-
-```scala
-GET  /checks/:pkg                     # Get all checks that would run
-POST /checks/:pkg/run                 # Run checks ad-hoc for a package
-GET  /checks/:pkg/stats               # Get stats for checks run
 ```
 
 ### Packages API
@@ -286,7 +229,6 @@ They are [documented individually in warehouse-models](https://github.com/wareho
       read: 'http://your.target-registry.com',
       write: 'http://your.target-registry.com'
     },
-    checkScript: 'path/to/a/forkable/script',
     cluster: {
       //
       // Gjallarhorn related options
