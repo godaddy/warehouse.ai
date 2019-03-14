@@ -69,7 +69,6 @@ describe('/api-docs', function () {
       '"/packages"',
       '"/packages/{pkg}"',
       '"/promote/{pkg}/{env}/{version}"',
-      '"/promote/{pkg}/{env}"',
       '"/{pkg}/-rev/{rev}"',
       '"/-/package/{pkg}/dist-tags"',
       '"/-/package/{pkg}/dist-tags/{tag}"',
