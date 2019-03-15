@@ -69,10 +69,11 @@ describe('/api-docs', function () {
       '"/packages"',
       '"/packages/{pkg}"',
       '"/promote/{pkg}/{env}/{version}"',
-      '"/promote/{pkg}/{env}"',
       '"/{pkg}/-rev/{rev}"',
       '"/-/package/{pkg}/dist-tags"',
       '"/-/package/{pkg}/dist-tags/{tag}"',
+      '"/release-line/{pkg}"',
+      '"/release-line/{pkg}/{version}"',
       '"/{pkg}"'
     ].forEach(route => assume(response).to.include(route));
   });
