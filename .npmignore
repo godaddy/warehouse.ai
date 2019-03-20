@@ -40,4 +40,4 @@ npm-error.log
 .node_repl_history
 
 # swagger docs
-!lib/swagger.json
+!lib/wrhs-spec.json

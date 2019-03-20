@@ -16,7 +16,7 @@
     "report": "nyc report --reporter=lcov",
     "eslint": "eslint-godaddy -c .eslintrc lib/ test/",
     "sandbox": "npm-registry-echo",
-    "swagger": "swagger-jsdoc -d lib/swagger.js -o lib/swagger.json"
+    "swagger": "./bin/swagger"
   },
   "repository": {
     "type": "git",
@@ -92,6 +92,7 @@
     "eslint-plugin-json": "^1.2.0",
     "eslint-plugin-mocha": "^5.3.0",
     "eslint-plugin-react": "^7.1.0",
+    "json-refs": "^3.0.12",
     "mocha": "^6.0.2",
     "nock": "^10.0.6",
     "npm": "^6.8.0",
