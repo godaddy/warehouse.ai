@@ -40,7 +40,7 @@
     "async": "^1.4.1",
     "authboot": "^2.0.1",
     "basic-auth": "^2.0.0",
-    "bffs": "^5.3.0",
+    "bffs": "^5.4.0",
     "body-parser": "^1.18.3",
     "carpenterd-api-client": "^2.0.0",
     "commenting": "~1.0.3",
