@@ -8,6 +8,7 @@
     "prefix": "wrhs",
     "cdn": {
       "prod": {
+        "acl": "public-read",
         "pkgcloud": {
           "provider": "amazon",
           "endpoint": "aws.amazon.net",
@@ -18,6 +19,7 @@
         "url": "https://mycloudfrontURL.com"
       },
       "test": {
+        "acl": "public-read",
         "pkgcloud": {
           "provider": "amazon",
           "endpoint": "aws.amazon.net",
@@ -28,6 +30,7 @@
         "url": "https://mycloudfrontURL.com"
       },
       "dev": {
+        "acl": "public-read",
         "pkgcloud": {
           "provider": "amazon",
           "endpoint": "aws.amazon.net",
