@@ -88,7 +88,7 @@ please stick to the code style as defined by the [Godaddy JS styleguide][style].
 - [JSDoc]
 
 [issues]: https://github.com/godaddy/warehouse.ai/issues
-[slack]: https://godaddy-oss.slack.com/
+[slack]: https://godaddy-oss.slack.com/messages/CHXEP5DNH
 [JSDoc]: http://usejsdoc.org/
 [npm]: http://npmjs.org/
 [style]: https://github.com/godaddy/javascript/#godaddy-style
