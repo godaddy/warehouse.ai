@@ -23,7 +23,7 @@ information or guidance.
 ## Secure configuration
 
 By default Warehouse.ai runs as an service over `http` and has no authentication in place.
-Setup the configration to have [Slay] use `https` and use authentication middleware, for example [authboot].
+Setup the configuration to have [Slay] use `https` and use authentication middleware, for example [authboot].
 Store API keys and tokens in an encrypted config with [whisper.json][whisper].
 
 ## Known security issues and future enhancements
