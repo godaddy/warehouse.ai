@@ -1,10 +1,14 @@
 # Contributing
 
-Everyone is welcome to contribute to GoDaddy's Open Source Software. Contributing doesn’t just mean submitting pull requests. To get involved you can, report or triage bugs and participate in discussions on the evolution of each project.
+Everyone is welcome to contribute to GoDaddy's Open Source Software. Contributing doesn’t just mean
+submitting pull requests. To get involved you can, report or triage bugs and participate in
+discussions on the evolution of each project.
 
-No matter how you want to get involved, we ask that you first learn what’s expected of anyone who participates in the project by reading the Contribution Guidelines.
+No matter how you want to get involved, we ask that you first learn what’s expected of anyone who
+participates in the project by reading the Contribution Guidelines.
 
-**Please Note:** GitHub is for bug reports and contributions primarily - if you have a support question head over to [GoDaddy's Open Source Software Slack channel][slack].
+**Please Note:** GitHub is for bug reports and contributions primarily - if you have a support
+question head over to [GoDaddy's Open Source Software Slack channel][slack].
 
 ## Answering Questions
 
@@ -17,9 +21,9 @@ seasoned developer, your knowledge and experience with JS can go a long way to h
 **Do not report potential security vulnerabilities here. Refer to [SECURITY.md](./SECURITY.md) for more
 details about the process of reporting security vulnerabilities.**
 
-Before submitting a ticket, please be sure to have a simple replication of the behavior. If the issue is isolated to
-one of the dependencies of this project. Please create a Github issue in that project. All dependencies are open source
-software and can be easily found through [npm].
+Before submitting a ticket, please be sure to have a simple replication of the behavior.
+If the issue is isolated to one of the dependencies of this project. Please create a Github issue in that project.
+All dependencies are open source software and can be easily found through [npm].
 
 Submit a ticket for your issue, assuming one does not already exist:
   - Create it on our [Issue Tracker][issues]
@@ -78,7 +82,7 @@ Git handles attribution automatically.
 
 ## Code Documentation
 
-Ensure that every function in warehouse.ai is documented and follows the standards set by [JSDoc]. Finally,
+Ensure that every function in `warehouse.ai` is documented and follows the standards set by [JSDoc]. Finally,
 please stick to the code style as defined by the [Godaddy JS styleguide][style].
 
 # Additional Resources
