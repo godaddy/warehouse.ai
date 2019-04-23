@@ -1,0 +1,7 @@
+`ISSUE_TEMPLATE.md` and markdown files under the `ISSUE_TEMPLATE` directory are adapted from `react-native` under MIT.
+
+https://github.com/facebook/react-native/blob/master/.github/ISSUE_TEMPLATE.md
+https://github.com/facebook/react-native/blob/37bf2ce/.github/ISSUE_TEMPLATE.md
+
+https://github.com/facebook/react-native/tree/master/.github/ISSUE_TEMPLATE
+https://github.com/facebook/react-native/tree/37bf2ce/.github/ISSUE_TEMPLATE
