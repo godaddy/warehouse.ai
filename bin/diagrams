@@ -1,0 +1,51 @@
+#!/usr/bin/env node
+
+const { promisify } = require('util');
+const canihaz = require('canihaz');
+const path = require('path');
+const fs = require('fs');
+
+const readFile = promisify(fs.readFile);
+const readdir = promisify(fs.readdir);
+const source = path.join(__dirname, '..', 'assets', 'diagrams');
+
+async function snapshot(page, file) {
+  const chart = await readFile(path.join(source, file), 'utf-8');
+  const output = path.join(source, '..', `${ path.basename(file, '.mmd') }.png`);
+
+  await page.evaluate(chart => {
+    window.mermaid.mermaidAPI.initialize({ theme: 'neutral' });
+    window.mermaid.mermaidAPI.render('id1', chart, svg => {
+      document.getElementById('container').innerHTML = svg;
+    });
+  }, chart);
+
+  const clip = await page.$eval('#container svg', svg => {
+    const react = svg.getBoundingClientRect();
+    return { x: react.left, y: react.top, width: react.width, height: react.height };
+  });
+
+  await page.screenshot({ path: output, clip, omitBackground: true });
+}
+
+console.log('Requesting availability of puppeteer, it will be installed if unavailable.'); // eslint-ignore-line
+
+canihaz({
+  key: 'cliDependencies'
+}).puppeteer(async function puppetmaster(error, puppeteer) {
+  if (error) throw error;
+
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  const diagrams = await readdir(source);
+
+  page.setViewport({ width: 1920, height: 1080 });
+  await page.goto(`file://${ path.join(__dirname, 'index.html') }`);
+
+  for (const file of diagrams) {
+    await snapshot(page, file);
+  }
+
+  await browser.close();
+  console.log('Chart images generated.'); // eslint-ignore-line
+});

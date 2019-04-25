@@ -15,6 +15,7 @@
     "posttest": "npm run eslint",
     "report": "nyc report --reporter=lcov",
     "eslint": "eslint-godaddy -c .eslintrc lib/ test/",
+    "diagrams": "./bin/diagrams",
     "sandbox": "npm-registry-echo",
     "swagger": "./bin/swagger"
   },
@@ -85,6 +86,7 @@
     "assume": "^2.1.0",
     "assume-sinon": "1.0.0",
     "babel-eslint": "^10.0.1",
+    "canihaz": "^1.1.0",
     "datastar-test-tools": "~1.0.0",
     "diagnostics": "^2.0.0",
     "eslint": "^5.14.1",
@@ -106,5 +108,8 @@
     "sinon": "^7.2.4",
     "swagger-jsdoc": "^3.2.7",
     "tmp": "0.0.31"
+  },
+  "cliDependencies": {
+    "puppeteer": "^1.14.0"
   }
 }
