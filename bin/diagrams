@@ -15,6 +15,15 @@ const template = `
         font-family: 'monaco';
       }
 
+      .node {
+        text-align: center;
+      }
+      
+      i.fa {
+        display: block;
+        margin: 5px;
+      }
+
       .edgeLabel:not(:empty) {
         padding: 0px 8px;
       }
@@ -31,6 +40,9 @@ async function snapshot(page, file) {
   const chart = await fs.readFile(path.join(source, file), 'utf-8');
   const output = path.join(source, '..', `${ path.basename(file, '.mmd') }.png`);
 
+  console.log(`Rendering ${ file }`);
+
+  await page.setContent(template);
   await page.evaluate(chart => {
     window.mermaid.mermaidAPI.initialize({ theme: 'forest' });
     window.mermaid.mermaidAPI.render('id1', chart, svg => {
@@ -58,10 +70,9 @@ canihaz({
   const diagrams = await fs.readdir(source);
 
   await page.setViewport({ width: 1920, height: 1080 });
-  await page.setContent(template);
 
   for (const file of diagrams) {
-    await snapshot(page, file);
+    if (path.extname(file) === '.mmd') await snapshot(page, file);
   }
 
   await browser.close();

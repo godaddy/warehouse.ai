@@ -1,0 +1,6 @@
+graph LR
+B -.-> build>RUN BUILD<br><small>NODE_ENV=env</small>]
+B --> |"update module {version@env}"| C{fa:fa-database Database}
+G{fa:fa-database Artifactory} --> |"fetch @version tarball"| B
+A(npm dist-tag add) -->|"module@version env"| B(fa:fa-server warehouse.ai)
+style build fill:#ccf,stroke:#f66,stroke-width:2px,stroke-dasharray: 5, 5
