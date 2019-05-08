@@ -1,9 +1,9 @@
 graph LR
 A(fa:fa-server warehouse.ai)
-B(fa:fa-opencart web service)
-C{fa:fa-database No-SQL Database}
-D[fa:fa-laptop browser]
+B{fa:fa-database No-SQL Database}
+C(fa:fa-lightbulb web service)
+D[fa:fa-laptop visitor browser]
 
-B --> |"get assets from CDN"| D
-C --> |"fetch metadata"| A
-A --> |"get CDN metadata - wrhs.ai-client"| B
+C --> |"serve response with CDN assets"| D
+B --> |"fetch metadata"| A
+C --> |"fetch build CDN metadata - wrhs.ai-client"| A

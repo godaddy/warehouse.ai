@@ -12,8 +12,6 @@ The goal of the Warehouse is to support modular UI development by:
 
 In other words the Warehouse is designed to give as many programmatic guarantees that it is safe to "always be on latest" and make rolling back as painless as possible when issues arise.
 
-![](assets/workflow.png)
-
 - [Developer Experience](#developer-experience)
   - [Releasing code](#releasing-code)
   - [Rolling back to previous versions](#rolling-back-to-previous-versions)
@@ -53,6 +51,7 @@ The release process for any module using the Warehouse is:
 cd /path/to/my/front-end/module
 npm publish
 ```
+![](assets/publish.png)
 3. Perform any manual QA in your DEV environment.
 4. Promote the `module@version` to production using `npm dist-tag add`
 ```

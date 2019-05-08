@@ -3,9 +3,10 @@
 const canihaz = require('canihaz');
 const path = require('path');
 const fs = require('fs').promises;
+let browser;
 
 const source = path.join(__dirname, '..', 'assets', 'diagrams');
-const template = `
+const template = chart => `
 <!doctype html>
 <html>
   <head>
@@ -30,34 +31,38 @@ const template = `
     </style>
   </head>
   <body>
-    <div id="container" class="mermaid"></div>
     <script src="https://unpkg.com/mermaid/dist/mermaid.min.js" charset="utf-8"></script>
+    <script>
+      const diagram = document.createElement('div');
+
+      window.mermaid.mermaidAPI.initialize({ theme: 'forest' });
+      window.mermaid.mermaidAPI.render('container', \`${chart}\`, svg => {
+        diagram.innerHTML = svg;
+        diagram.id = 'container';
+
+        document.body.appendChild(diagram);
+      });
+    </script>
   </body>
 </html>
 `;
 
-async function snapshot(page, file) {
+async function snapshot(browser, file) {
   try {
     const chart = await fs.readFile(path.join(source, file), 'utf-8');
     const output = path.join(source, '..', `${ path.basename(file, '.mmd') }.png`);
+    const page = await browser.newPage();
 
     console.log(`Rendering ${ file }`);
 
-    await page.setContent(template, { waitUntil: ['load', 'networkidle0', 'domcontentloaded'] });
     await page.setViewport({ width: 1920, height: 1080 });
-    await page.evaluate(chart => {
-      window.mermaid.mermaidAPI.initialize({ theme: 'forest' });
-      window.mermaid.mermaidAPI.render('id1', chart, svg => {
-        document.getElementById('container').innerHTML = svg;
-      });
-    }, chart);
+    await page.setContent(template(chart), { waitUntil: ['networkidle0'] });
 
-    const clip = await page.$eval('#container svg', svg => {
+    const clip = await page.$eval('svg', svg => {
       const box = svg.getBoundingClientRect();
       return { x: box.left, y: box.top, width: box.width, height: box.height };
     });
 
-    // await new Promise(resolve => setTimeout(resolve, 500));
     await page.screenshot({ path: output, clip, omitBackground: true });
   } catch (error) {
     throw new Error(`Snapshot of diagram failed: ${ error.message }`);
@@ -73,14 +78,14 @@ canihaz({
   const input = process.argv.slice(2);
 
   try {
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
+    browser = await puppeteer.launch();
+
     const diagrams = input.length
       ? input.map(file => path.extname(file) === '.mmd' ? file : `${ file }.mmd`)
       : await fs.readdir(source);
 
     for (const file of diagrams) {
-      if (path.extname(file) === '.mmd') await snapshot(page, file);
+      if (path.extname(file) === '.mmd') await snapshot(browser, file);
     }
 
     await browser.close();
@@ -89,4 +94,12 @@ canihaz({
   } catch (error) {
     throw new Error(`Puppeteer failed: ${ error.message }`);
   }
+});
+
+//
+// Ensure Chromium process is closed.
+//
+process.once('SIGINT', async function kill() {
+  if (!browser) process.exit(); // eslint-disable-line
+  await browser.close();
 });
