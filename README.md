@@ -57,6 +57,12 @@ npm publish
 ```
 npm dist-tag add module@version prod
 ```
+![](assets/promote.png)
+
+Warehouse.ai builds are an interaction between multiple smaller microservices to garantuee high
+concurrency and stability.
+
+![](assets/build.png)
 
 **NOTE** In order to publish to warehouse you must add the following to your
 `.npmrc`. Authorization information is stubbed to let the `npm` client itself
@@ -74,6 +80,18 @@ actually make the publish request and not just throw an error before it even tri
 ```
 npm c set strict-ssl false
 ```
+
+### Automatically build dependents
+
+> Stability: 2 – **Stable**
+
+After a package build completes Warehouse.ai will query the database for any dependant modules. Builds for
+dependents will automatically be queued. The system will walk all the way up the dependency tree until it
+reaches a "top-level" package.
+
+**NOTE** Dependent builds are only performed if the dependent has opted for building with Warehouse.ai.
+
+![](assets/dependent.png)
 
 ### Rolling back to previous versions
 
@@ -175,6 +193,11 @@ POST /builds/:pkg                     # Ad-hoc build
 POST /builds/compose                  # Trigger multiple builds
 ```
 
+To use the fingerprinted assets from the CDN the build information can be fetched through the above API endpoints
+or by using [the warehouse.ai-client][client].
+
+![](assets/assets.png)
+
 ### Packages API
 ```scala
 GET  /packages/                       # Get information about all packages
@@ -269,3 +292,4 @@ npm test
 
 [carpenterd]: https://github.com/godaddy/carpenterd
 [carpenterd-identify]: https://github.com/godaddy/carpenterd#identification-of-build-system-type
+[client]: https://github.com/warehouseai/warehouse.ai-api-client
