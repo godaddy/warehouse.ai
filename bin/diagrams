@@ -9,7 +9,7 @@ const template = `
 <!doctype html>
 <html>
   <head>
-    <link rel="stylesheet" href="https://unpkg.com/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css">
     <style>
       html, * {
         font-family: 'monaco';
@@ -31,7 +31,7 @@ const template = `
   </head>
   <body>
     <div id="container" class="mermaid"></div>
-    <script id="api" src="https://unpkg.com/mermaid/dist/mermaid.min.js" charset="utf-8"></script>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js" charset="utf-8"></script>
   </body>
 </html>
 `;
@@ -44,6 +44,7 @@ async function snapshot(page, file) {
     console.log(`Rendering ${ file }`);
 
     await page.setContent(template, { waitUntil: ['load', 'networkidle0', 'domcontentloaded'] });
+    await page.setViewport({ width: 1920, height: 1080 });
     await page.evaluate(chart => {
       window.mermaid.mermaidAPI.initialize({ theme: 'forest' });
       window.mermaid.mermaidAPI.render('id1', chart, svg => {
@@ -56,6 +57,7 @@ async function snapshot(page, file) {
       return { x: box.left, y: box.top, width: box.width, height: box.height };
     });
 
+    // await new Promise(resolve => setTimeout(resolve, 500));
     await page.screenshot({ path: output, clip, omitBackground: true });
   } catch (error) {
     throw new Error(`Snapshot of diagram failed: ${ error.message }`);
@@ -68,13 +70,14 @@ canihaz({
   key: 'cliDependencies'
 }).puppeteer(async function puppetmaster(error, puppeteer) {
   if (error) throw error;
+  const input = process.argv.slice(2);
 
   try {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    const diagrams = await fs.readdir(source);
-
-    await page.setViewport({ width: 1920, height: 1080 });
+    const diagrams = input.length
+      ? input.map(file => path.extname(file) === '.mmd' ? file : `${ file }.mmd`)
+      : await fs.readdir(source);
 
     for (const file of diagrams) {
       if (path.extname(file) === '.mmd') await snapshot(page, file);
