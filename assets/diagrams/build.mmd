@@ -1,8 +1,15 @@
 graph LR
-C -->|enqueue build|D{fa:fa-broadcast-tower NSQ}
-E(fa:fa-spinner carpenterd-worker) --> |subscribe| D
-B --> |duplicate tarball| C(fa:fa-toolbox carpenterd)
-B --> |store tarball| G{fa:fa-database Artifactory}
-A(npm publish) -->|publish tarball| B(fa:fa-server warehouse.ai)
-E --> |store build output| F{fa:fa-box-open S3 compatible CDN}
-E --> |build metadata| H{fa:fa-database Database}
+A>BUILD]
+B(fa:fa-toolbox carpenterd)
+C{fa:fa-broadcast-tower NSQ}
+D(fa:fa-spinner carpenterd-worker)
+E{fa:fa-box-open S3 compatible CDN}
+F{fa:fa-database No-SQL Database}
+
+A -.-> |"<small>{ NODE_ENV: env, LOCALE: locale }</small>"| B
+B --> |"enqueue build"|C
+D --> |"subscribe"| C
+D --> |"store build output"| E
+D --> |"build metadata"| F
+
+style A fill:#ccf,stroke:#f66,stroke-width:2px,stroke-dasharray: 5, 5

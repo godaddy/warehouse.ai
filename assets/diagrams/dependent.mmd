@@ -1,0 +1,14 @@
+graph LR
+A>FINISHED BUILD]
+B(fa:fa-server warehouse.ai)
+C{fa:fa-database Database}
+D{fa:fa-database Artifactory}
+E>BUILD]
+
+A -.-> |"trigger builds"| B
+C --> |"fetch dependent metadata"| B
+D --> |"fetch dependent tarball"| B
+B -.-> |"provide { tarball, metadata }"| E
+
+style A fill:#ccf,stroke:#f66,stroke-width:2px,stroke-dasharray: 5, 5
+style E fill:#ccf,stroke:#f66,stroke-width:2px,stroke-dasharray: 5, 5

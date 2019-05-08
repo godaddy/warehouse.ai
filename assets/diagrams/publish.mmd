@@ -1,0 +1,11 @@
+graph LR
+A(npm publish)
+B(fa:fa-server warehouse.ai)
+C{fa:fa-database Artifactory}
+D>BUILD]
+
+A --> |"publish tarball"| B
+B --> |"store tarball"| C
+B --> |"duplicate tarball"| D
+
+style D fill:#ccf,stroke:#f66,stroke-width:2px,stroke-dasharray: 5, 5

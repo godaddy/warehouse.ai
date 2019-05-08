@@ -9,7 +9,7 @@ const template = `
 <!doctype html>
 <html>
   <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/font-awesome/css/font-awesome.min.css">
     <style>
       html, * {
         font-family: 'monaco';
@@ -31,31 +31,35 @@ const template = `
   </head>
   <body>
     <div id="container" class="mermaid"></div>
-    <script id="api" src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.0.0/mermaid.min.js" charset="utf-8"></script>
+    <script id="api" src="https://unpkg.com/mermaid/dist/mermaid.min.js" charset="utf-8"></script>
   </body>
 </html>
 `;
 
 async function snapshot(page, file) {
-  const chart = await fs.readFile(path.join(source, file), 'utf-8');
-  const output = path.join(source, '..', `${ path.basename(file, '.mmd') }.png`);
+  try {
+    const chart = await fs.readFile(path.join(source, file), 'utf-8');
+    const output = path.join(source, '..', `${ path.basename(file, '.mmd') }.png`);
 
-  console.log(`Rendering ${ file }`);
+    console.log(`Rendering ${ file }`);
 
-  await page.setContent(template);
-  await page.evaluate(chart => {
-    window.mermaid.mermaidAPI.initialize({ theme: 'forest' });
-    window.mermaid.mermaidAPI.render('id1', chart, svg => {
-      document.getElementById('container').innerHTML = svg;
+    await page.setContent(template, { waitUntil: ['load', 'networkidle0', 'domcontentloaded'] });
+    await page.evaluate(chart => {
+      window.mermaid.mermaidAPI.initialize({ theme: 'forest' });
+      window.mermaid.mermaidAPI.render('id1', chart, svg => {
+        document.getElementById('container').innerHTML = svg;
+      });
+    }, chart);
+
+    const clip = await page.$eval('#container svg', svg => {
+      const box = svg.getBoundingClientRect();
+      return { x: box.left, y: box.top, width: box.width, height: box.height };
     });
-  }, chart);
 
-  const clip = await page.$eval('#container svg', svg => {
-    const box = svg.getBoundingClientRect();
-    return { x: box.left, y: box.top, width: box.width, height: box.height };
-  });
-
-  await page.screenshot({ path: output, clip, omitBackground: true });
+    await page.screenshot({ path: output, clip, omitBackground: true });
+  } catch (error) {
+    throw new Error(`Snapshot of diagram failed: ${ error.message }`);
+  }
 }
 
 console.log('Requesting availability of puppeteer, it will be installed if unavailable.'); // eslint-disable-line
@@ -65,17 +69,21 @@ canihaz({
 }).puppeteer(async function puppetmaster(error, puppeteer) {
   if (error) throw error;
 
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-  const diagrams = await fs.readdir(source);
+  try {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    const diagrams = await fs.readdir(source);
 
-  await page.setViewport({ width: 1920, height: 1080 });
+    await page.setViewport({ width: 1920, height: 1080 });
 
-  for (const file of diagrams) {
-    if (path.extname(file) === '.mmd') await snapshot(page, file);
+    for (const file of diagrams) {
+      if (path.extname(file) === '.mmd') await snapshot(page, file);
+    }
+
+    await browser.close();
+
+    console.log('Chart images generated.'); // eslint-disable-line
+  } catch (error) {
+    throw new Error(`Puppeteer failed: ${ error.message }`);
   }
-
-  await browser.close();
-
-  console.log('Chart images generated.'); // eslint-disable-line
 });
