@@ -52,6 +52,7 @@ cd /path/to/my/front-end/module
 npm publish
 ```
 ![](assets/publish.png)
+
 3. Perform any manual QA in your DEV environment.
 4. Promote the `module@version` to production using `npm dist-tag add`
 ```
