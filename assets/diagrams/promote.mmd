@@ -1,13 +1,12 @@
 graph LR
 A(npm dist-tag add)
 B(fa:fa-server warehouse.ai)
-C{fa:fa-database No-SQL Database}
-D{fa:fa-database npm-like registry}
-E>BUILD]
+C{fa:fa-database npm-like registry}
+D>BUILD]
 
-B -.-> E
-B --> |"update module {version@env}"| C
-D --> |"fetch @version tarball"| B
-A -->|"module@version env"| B
+B -.-> |"{NODE_ENV=env, ...metadata}"| D
+C --> |"fetch @version tarball"| B
+B --> |"store dist-tag"| C
+A --> |"module@version env"| B
 
-style E fill:#ccf,stroke:#f66,stroke-width:2px,stroke-dasharray: 5, 5
+style D fill:#ccf,stroke:#f66,stroke-width:2px,stroke-dasharray: 5, 5
