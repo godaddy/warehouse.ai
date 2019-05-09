@@ -1,0 +1,12 @@
+graph LR
+B(fa:fa-server warehouse.ai)
+C{fa:fa-database No-SQL Database}
+D{fa:fa-database npm-like registry}
+E>BUILD]
+
+E -.-> |"trigger dependent builds"| B
+C --> |"fetch dependent metadata"| B
+D --> |"fetch dependent tarball"| B
+B -.-> |"provide { tarball, metadata }"| E
+
+style E fill:#ccf,stroke:#f66,stroke-width:2px,stroke-dasharray: 5, 5

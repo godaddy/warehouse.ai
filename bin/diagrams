@@ -1,0 +1,105 @@
+#!/usr/bin/env node
+
+const canihaz = require('canihaz');
+const path = require('path');
+const fs = require('fs').promises;
+let browser;
+
+const source = path.join(__dirname, '..', 'assets', 'diagrams');
+const template = chart => `
+<!doctype html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css">
+    <style>
+      html, * {
+        font-family: 'monaco';
+      }
+
+      .node {
+        text-align: center;
+      }
+      
+      i.fa {
+        display: block;
+        margin: 5px;
+      }
+
+      .edgeLabel:not(:empty) {
+        padding: 0px 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://unpkg.com/mermaid/dist/mermaid.min.js" charset="utf-8"></script>
+    <script>
+      const diagram = document.createElement('div');
+
+      window.mermaid.mermaidAPI.initialize({ theme: 'forest' });
+      window.mermaid.mermaidAPI.render('container', \`${chart}\`, svg => {
+        diagram.innerHTML = svg;
+        diagram.id = 'container';
+
+        document.body.appendChild(diagram);
+      });
+    </script>
+  </body>
+</html>
+`;
+
+async function snapshot(browser, file) {
+  try {
+    const chart = await fs.readFile(path.join(source, file), 'utf-8');
+    const output = path.join(source, '..', `${ path.basename(file, '.mmd') }.png`);
+    const page = await browser.newPage();
+
+    console.log(`Rendering ${ file }`);
+
+    await page.setViewport({ width: 1920, height: 1080 });
+    await page.setContent(template(chart), { waitUntil: ['networkidle0'] });
+
+    const clip = await page.$eval('svg', svg => {
+      const box = svg.getBoundingClientRect();
+      return { x: box.left, y: box.top, width: box.width, height: box.height };
+    });
+
+    await page.screenshot({ path: output, clip, omitBackground: true });
+  } catch (error) {
+    throw new Error(`Snapshot of diagram failed: ${ error.message }`);
+  }
+}
+
+console.log('Requesting availability of puppeteer, it will be installed if unavailable.'); // eslint-disable-line
+
+canihaz({
+  key: 'cliDependencies'
+}).puppeteer(async function puppetmaster(error, puppeteer) {
+  if (error) throw error;
+  const input = process.argv.slice(2);
+
+  try {
+    browser = await puppeteer.launch();
+
+    const diagrams = input.length
+      ? input.map(file => path.extname(file) === '.mmd' ? file : `${ file }.mmd`)
+      : await fs.readdir(source);
+
+    for (const file of diagrams) {
+      if (path.extname(file) === '.mmd') await snapshot(browser, file);
+    }
+
+    await browser.close();
+
+    console.log('Chart images generated.'); // eslint-disable-line
+  } catch (error) {
+    throw new Error(`Puppeteer failed: ${ error.message }`);
+  }
+});
+
+//
+// Ensure Chromium process is closed.
+//
+process.once('SIGINT', async function kill() {
+  if (!browser) process.exit(); // eslint-disable-line
+  await browser.close();
+});
