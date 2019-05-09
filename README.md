@@ -51,19 +51,19 @@ The release process for any module using the Warehouse is:
 cd /path/to/my/front-end/module
 npm publish
 ```
-![](assets/publish.png)
+![Diagram of npm publish workflow to Warehouse.ai](assets/publish.png)
 
 3. Perform any manual QA in your DEV environment.
 4. Promote the `module@version` to production using `npm dist-tag add`
 ```
 npm dist-tag add module@version prod
 ```
-![](assets/promote.png)
+![Diagram of npm dist-tag promotion of modules](assets/promote.png)
 
 Warehouse.ai builds are an interaction between multiple smaller microservices to garantuee high
 concurrency and stability.
 
-![](assets/build.png)
+![Diagram of build workflow of a single package in Warehouse.ai](assets/build.png)
 
 **NOTE** In order to publish to warehouse you must add the following to your
 `.npmrc`. Authorization information is stubbed to let the `npm` client itself
@@ -92,7 +92,7 @@ reaches a "top-level" package.
 
 **NOTE** Dependent builds are only performed if the dependent has opted for building with Warehouse.ai.
 
-![](assets/dependent.png)
+![Diagram of build scheduling of dependent packages](assets/dependent.png)
 
 ### Rolling back to previous versions
 
@@ -153,7 +153,7 @@ private-dep-3@2.9.8
 
 Then the build the Warehouse returns for your module _will include those dependencies._
 
-![](assets/package-versions.png)
+![Depedency resolution](assets/package-versions.png)
 
 ## API documentation
 
@@ -197,7 +197,7 @@ POST /builds/compose                  # Trigger multiple builds
 To use the fingerprinted assets from the CDN the build information can be fetched through the above API endpoints
 or by using [the warehouse.ai-client][client].
 
-![](assets/assets.png)
+![Diagram of web services retrieving CDN metadata of builds](assets/assets.png)
 
 ### Packages API
 ```scala
@@ -227,7 +227,7 @@ GET /env/:pkg  # Install a package against a specified "environment" (i.e. `dist
 
 The purpose of this section is to document important internals, conventions and patterns used by the Warehouse.
 
-![](assets/component-model.png)
+![Internals and conventions](assets/component-model.png)
 
 ### Data Models
 
