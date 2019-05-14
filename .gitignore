@@ -41,3 +41,6 @@ npm-error.log
 
 # swagger docs
 lib/wrhs-spec.json
+
+# Intermediary HTML assets
+assets/*.html
