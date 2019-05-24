@@ -1,5 +1,10 @@
 # CHANGELOG
 
+- [#56] Update `README.md`
+  - Add badges
+  - Add `promote` routes
+  - Remove inline links
+  - Add instructions to run local
 - [#54] Generate diagrams
   - Include `canihaz` to optionally install `puppeteer`.
   - Provide script `bin/diagrams` to render `mermaid` diagrams and store snapshots to file
