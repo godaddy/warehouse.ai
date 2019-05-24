@@ -1,6 +1,6 @@
 # CHANGELOG
 
-- [#56] Update `README.md`
+- [#57] Update `README.md`
   - Add badges
   - Add `promote` routes
   - Remove inline links
@@ -19,3 +19,4 @@
 [#52]: https://github.com/godaddy/warehouse.ai/pull/52
 [#53]: https://github.com/godaddy/warehouse.ai/pull/53
 [#54]: https://github.com/godaddy/warehouse.ai/pull/54
+[#57]: https://github.com/godaddy/warehouse.ai/pull/57
