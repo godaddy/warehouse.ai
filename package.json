@@ -15,7 +15,7 @@
     "posttest": "npm run eslint",
     "report": "nyc report --reporter=lcov",
     "eslint": "eslint-godaddy -c .eslintrc lib/ test/",
-    "diagrams": "wrhs-diagrams",
+    "diagrams": "wrhs-diagrams --source=assets/diagrams --target=assets",
     "sandbox": "npm-registry-echo",
     "swagger": "./bin/swagger"
   },
