@@ -1,16 +1,45 @@
-# Warehouse
+# `warehouse.ai`
+
+[![Version npm](https://img.shields.io/npm/v/warehouse.ai.svg?style=flat-square)](https://www.npmjs.com/package/warehouse.ai)
+[![License](https://img.shields.io/npm/l/warehouse.ai.svg?style=flat-square)](https://github.com/godaddy/warehouse.ai/blob/master/LICENSE)
+[![npm Downloads](https://img.shields.io/npm/dm/warehouse.ai.svg?style=flat-square)](https://npmcharts.com/compare/warehouse.ai?minimal=true)
+[![Build Status](https://travis-ci.org/godaddy/warehouse.ai.svg?branch=master)](https://travis-ci.org/godaddy/warehouse.ai)
+[![Dependencies](https://img.shields.io/david/godaddy/warehouse.ai.svg?style=flat-square)](https://github.com/godaddy/warehouse.ai/blob/master/package.json)
 
 A storage and developer workflow engine for npm packages.
+
+## Install
+
+```
+git clone git@github.com:godaddy/warehouse.ai.git
+cd warehouse.ai && npm install
+```
+
+## Usage
+
+The module provides a [`bin/server`](./bin/server) script that starts the
+service. The service requires [`carpenterd`][carpenterd] to run
+locally or at the configured location as builds will run in `carpenterd`.
+`warehouse.ai` can be started using:
+
+```bash
+npm start
+```
 
 ## Motivation
 
 The goal of the Warehouse is to support modular UI development by:
 
-- Serving [fully built assets](#builds) (e.g. JavaScript, CSS, etc) for published modules through [a CDN target](#cdn-support).
-- Decoupling [upgrade and rollback](#upgrade-and-rollback) of individual dependencies across multiple environments through use of `npm dist-tag`.
-- Automatically [updating built assets](#auto-update-of-builds) when new versions of dependent modules are published.
+- Serving [fully built assets](#builds) (e.g. JavaScript, CSS, etc) for
+  published modules through [a CDN target](#cdn-support).
+- Decoupling [upgrade and rollback](#upgrade-and-rollback) of individual
+  dependencies across multiple environments through use of `npm dist-tag`.
+- Automatically [updating built assets](#auto-update-of-builds) when new
+  versions of dependent modules are published.
 
-In other words the Warehouse is designed to give as many programmatic guarantees that it is safe to "always be on latest" and make rolling back as painless as possible when issues arise.
+In other words Warehouse.ai is designed to give as many programmatic
+guarantees that it is safe to "always be on latest" and make rolling back as
+painless as possible when issues arise.
 
 - [Developer Experience](#developer-experience)
   - [Releasing code](#releasing-code)
@@ -27,7 +56,8 @@ In other words the Warehouse is designed to give as many programmatic guarantees
 
 ## Developer Experience
 
-The Warehouse was created with specific conventions around how developers release code:
+The Warehouse was created with specific conventions around how developers
+release code:
 
 1. Front-end code is built to be modular by design.
 2. A module must be up-to-date with the latest version of its dependencies.
@@ -60,14 +90,15 @@ npm dist-tag add module@version prod
 ```
 ![Diagram of npm dist-tag promotion of modules](assets/promote.png)
 
-Warehouse.ai builds are an interaction between multiple smaller microservices to garantuee high
-concurrency and stability.
+Warehouse.ai builds are an interaction between multiple smaller microservices
+to guarantee high concurrency and stability.
 
 ![Diagram of build workflow of a single package in Warehouse.ai](assets/build.png)
 
 **NOTE** In order to publish to warehouse you must add the following to your
 `.npmrc`. Authorization information is stubbed to let the `npm` client itself
-actually make the publish request and not just throw an error before it even tries.
+actually make the publish request and not just throw an error before it even
+tries.
 
 ```ini
 //where.you.are.running.your-warehouse.ai/:_password=whocares
@@ -76,7 +107,8 @@ actually make the publish request and not just throw an error before it even tri
 //where.you.are.running.your-warehouse.ai/:always-auth=false
 ```
 
-> *NOTE:* You may also need to set `strict-ssl` to false if you do not configure SSL termination for `where.you.are.running.your-warehouse.ai`
+> *NOTE:* You may also need to set `strict-ssl` to false if you do not
+configure SSL termination for `where.you.are.running.your-warehouse.ai`
 
 ```
 npm c set strict-ssl false
@@ -86,11 +118,13 @@ npm c set strict-ssl false
 
 > Stability: 2 – **Stable**
 
-After a package build completes Warehouse.ai will query the database for any dependant modules. Builds for
-dependents will automatically be queued. The system will walk all the way up the dependency tree until it
+After a package build completes Warehouse.ai will query the database for any
+dependant modules. Builds for dependents will automatically be queued. The
+system will walk all the way up the dependency tree until it
 reaches a "top-level" package.
 
-**NOTE** Dependent builds are only performed if the dependent has opted for building with Warehouse.ai.
+**NOTE** Dependent builds are only performed if the dependent has opted for
+building with Warehouse.ai.
 
 ![Diagram of build scheduling of dependent packages](assets/dependent.png)
 
@@ -100,10 +134,18 @@ reaches a "top-level" package.
 
 The act of rolling back to a previous version takes two forms in the Warehouse:
 
-1. **Rolling back a top-level module:** if a module has no dependents (i.e. nothing depends on a given module) then that module is considered "top-level". In this case a rollback in a specific environment will use the previous build of the version being rolled back to with no other side-effects.
-2. **Rolling back a module depended on by other modules:** if a module has dependents (i.e. other modules depend on a given module) then rolling back to a previous version in a specific environment will roll back the top level module and all dependent modules to the version they were on for the given release-line.
+1. **Rolling back a top-level module:** if a module has no dependents (i.e.
+nothing depends on a given module) then that module is considered "top-level".
+In this case a rollback in a specific environment will use the previous build
+of the version being rolled back to with no other side-effects.
+2. **Rolling back a module depended on by other modules:** if a module has
+dependents (i.e. other modules depend on a given module) then rolling back to
+a previous version in a specific environment will roll back the top level
+module and all dependent modules to the version they were on for the given
+release-line.
 
-Rollback is performed using `npm dist-tag`. For example if `my-module` has a production version of 1.0.5:
+Rollback is performed using `npm dist-tag`. For example if `my-module` has a
+production version of 1.0.5:
 
 ```
 npm view my-module dist-tags
@@ -120,15 +162,22 @@ And we wish to rollback production to `1.0.4` then:
 npm dist-tag add my-module@1.0.4 prod
 ```
 
-This will trigger a build of `my-module@1.0.4` (since it's dependencies may have changed since 1.0.4 was latest in production) and a build of all modules that depend on `my-module`.
+This will reuse the build of `my-module@1.0.4` if it existed in `PROD` or
+trigger a new build. Dependent modules will also rollback to the version
+that depend on `my-module@1.0.4`.
 
 ### Auto-update of builds
 
 > Stability: 1 – **Unstable**
 
-The first (and most important) point developers need to be aware of is that builds from the Warehouse are always on latest version of private dependencies tagged with that particular environment.
+The first (and most important) point developers need to be aware of is that
+new builds from the Warehouse are on the latest matching semver version of
+private dependencies tagged with that particular environment. Older existing
+builds will remain unaffected however.
 
-In other words **the version specified in the package.json may not match the version used in builds, by design.** For example if a module that has the following dependencies:
+In other words **the version specified in the package.json may not match the
+version used in builds, by design.** For example if a module that has the
+following dependencies:
 
 ``` js
 {
@@ -142,7 +191,8 @@ In other words **the version specified in the package.json may not match the ver
 }
 ```
 
-And the latest versions tagged with "production" and "devtest" are, respectively:
+And the latest versions tagged with "production" and "devtest" are,
+respectively:
 
 **production**
 ```
@@ -151,7 +201,8 @@ private-dep-2@1.2.8
 private-dep-3@2.9.8
 ```
 
-Then the build the Warehouse returns for your module _will include those dependencies._
+Then the build the Warehouse returns for your module _will include those
+dependencies._
 
 ![Depedency resolution](assets/package-versions.png)
 
@@ -159,12 +210,22 @@ Then the build the Warehouse returns for your module _will include those depende
 
 The Warehouse implements four distinct APIs over HTTP:
 
-- _`npm` wire protocol:_ This is the HTTP API that the `npm` CLI client speaks. This allows the Warehouse to be a publish and install target for the `npm` CLI client itself. The wire protocol is implemented in two ways:
-  - **Overridden routes:** These are routes that the warehouse itself has reimplemented to ensure that builds are fresh and that modules are installed from the correct environment.
-  - **`npm` proxying:** before any 404 is served the request is first proxied over HTTP(S) to the location specified via `npm.urls.read`.
-- _Assets & Builds:_ Creating ad-hoc builds, fetching builds and assets (based on fingerprint), and when necessary finding builds for a particular version or environment or both.
+- _`npm` wire protocol:_ This is the HTTP API that the `npm` CLI client speaks.
+  This allows the Warehouse to be a publish and install target for the `npm`
+  CLI client itself. The wire protocol is implemented in two ways:
+  - **Overridden routes:** These are routes that the warehouse itself has
+    reimplemented to ensure that builds are fresh and that modules are
+    installed from the correct environment.
+  - **`npm` proxying:** before any 404 is served the request is first proxied
+    over HTTP(S) to the location specified via `npm.urls.read`.
+- _Assets & Builds:_ Creating ad-hoc builds, fetching builds and assets
+(based on fingerprint), and when necessary finding builds for a particular
+version or environment or both.
 
-- All routes are able to get some debugging information by using the `?debug=*` query parameter. This will override the output of your request and show all logged output for that request as JSON, response headers that were intended to be sent back, and content that was sent back.
+- All routes are able to get some debugging information by using the
+`?debug=*` query parameter. This will override the output of your request and
+show all logged output for that request as JSON, response headers that were
+intended to be sent back, and content that was sent back.
 
 ### `npm` wire protocol
 
@@ -182,7 +243,8 @@ PUT    /-/package/:pkg/dist-tags/:tag # Update a dist-tag
 POST   /-/package/:pkg/dist-tags/:tag # Set a dist-tag
 ```
 
-The rest of the requests related to the `npm` wire protocol will be sent to the npm `read` or `write` URL specified in the [configuration](#config-options)
+The rest of the requests related to the `npm` wire protocol will be sent to
+the npm `read` or `write` URL specified in the [configuration](#config-options)
 
 ### Assets & Builds API
 
@@ -194,12 +256,13 @@ POST /builds/:pkg                     # Ad-hoc build
 POST /builds/compose                  # Trigger multiple builds
 ```
 
-To use the fingerprinted assets from the CDN the build information can be fetched through the above API endpoints
-or by using [the warehouse.ai-client][client].
+To use the fingerprinted assets from the CDN the build information can be
+fetched through the above API endpoints or by using [the warehouse.ai-client][client].
 
 ![Diagram of web services retrieving CDN metadata of builds](assets/assets.png)
 
 ### Packages API
+
 ```scala
 GET  /packages/                       # Get information about all packages
 GET  /packages/:pkg                   # Get information about a specific package
@@ -207,15 +270,27 @@ POST /packages/search                 # Search for packages (if redis is configu
 ```
 
 ### Release Line API
+
 ```scala
 GET /release-line/:pkg/:version?      # Get release line for specified package and version (or latest if not defined)
 ```
 
+### Promote API
+
+```scala
+PATCH /promote/:pkg/:env/:version     # Promote a package@version to an environment
+```
+
 ### Environment-specific installation
 
-Warehouse allows for installation against a specific `dist-tag` via the `REGISTRY-ENVIRONMENT` header. Although `npm` does not allow for headers to be set directly, [carpenter] sets these headers internally during it's install process.
+Warehouse allows for installation against a specific `dist-tag` via the
+`REGISTRY-ENVIRONMENT` header. Although `npm` does not allow for headers to be
+set directly, [carpenterd] sets these headers internally during it's install
+process.
 
-This is how multiple versions live and are built side-by-side in the same registry namespace. Without this nuance, the `latest` npm `dist-tag` would be installed by default everywhere, including [carpenterd].
+This is how multiple versions live and are built side-by-side in the same
+registry namespace. Without this nuance, the `latest` npm `dist-tag` would be
+installed by default everywhere, including [carpenterd].
 
 Future extensions to this header-only API are planned:
 
@@ -225,7 +300,8 @@ GET /env/:pkg  # Install a package against a specified "environment" (i.e. `dist
 
 ## Warehouse.ai Internals
 
-The purpose of this section is to document important internals, conventions and patterns used by the Warehouse.
+The purpose of this section is to document important internals, conventions
+and patterns used by the Warehouse.
 
 ![Internals and conventions](assets/component-model.png)
 
@@ -240,7 +316,7 @@ Currently the data models defined by the Warehouse are:
 - Version
 - Package
 
-They are [documented individually in warehouse-models](https://github.com/warehouseai/warehouse-models#readme).
+They are [documented individually in warehouse-models][models].
 
 ### Config options
 
@@ -271,26 +347,23 @@ They are [documented individually in warehouse-models](https://github.com/wareho
 
 #### npm.auth-argument-factory
 
-Warehouse has the ability to use [passport-npm](https://github.com/godaddy/passport-npm) to check authorization when connecting via `npm`. An example of this can be found in the [tests for npm auth](https://github.com/godaddy/warehouse.ai/blob/master/test/integration/npm/econn.test.js).
+Warehouse has the ability to use [passport-npm] to check authorization when
+connecting via `npm`. An example of this can be found in the
+[tests for npm auth][auth].
 
-## Local development environment
+## Tests
 
-Running `warehouse.ai` locally requires [`carpenterd`][carpenterd] to run locally or at the configured location as builds will run in `carpenterd`. Then the `warehouse.ai` can be started using:
-
-``` bash
-npm start
-```
-
-### Running tests
-
-Running the tests will require a running cassandra instance on your local machine. All tests are written with `mocha` and `istanbul`. They can be run with `npm`:
+Running the tests will require a running cassandra instance on your local
+machine. All tests are written with `mocha` and `istanbul`. They can be run
+with `npm`:
 
 ``` bash
 npm test
 ```
 
-##### LICENSE: MIT (C) 2015 Godaddy.com Operating Company, LLC
-
 [carpenterd]: https://github.com/godaddy/carpenterd
 [carpenterd-identify]: https://github.com/godaddy/carpenterd#identification-of-build-system-type
 [client]: https://github.com/warehouseai/warehouse.ai-api-client
+[models]: https://github.com/warehouseai/warehouse-models#readme
+[passport-npm]: https://github.com/godaddy/passport-npm
+[auth]: https://github.com/godaddy/warehouse.ai/blob/master/test/integration/npm/econn.test.js
