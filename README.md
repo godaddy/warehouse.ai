@@ -37,7 +37,7 @@ The goal of the Warehouse is to support modular UI development by:
 - Automatically [updating built assets](#auto-update-of-builds) when new
   versions of dependent modules are published.
 
-In other words the Warehouse is designed to give as many programmatic
+In other words Warehouse.ai is designed to give as many programmatic
 guarantees that it is safe to "always be on latest" and make rolling back as
 painless as possible when issues arise.
 
@@ -91,7 +91,7 @@ npm dist-tag add module@version prod
 ![Diagram of npm dist-tag promotion of modules](assets/promote.png)
 
 Warehouse.ai builds are an interaction between multiple smaller microservices
-to garantuee high concurrency and stability.
+to guarantee high concurrency and stability.
 
 ![Diagram of build workflow of a single package in Warehouse.ai](assets/build.png)
 
@@ -162,17 +162,18 @@ And we wish to rollback production to `1.0.4` then:
 npm dist-tag add my-module@1.0.4 prod
 ```
 
-This will trigger a build of `my-module@1.0.4` (since it's dependencies may
-have changed since 1.0.4 was latest in production) and a build of all modules
-that depend on `my-module`.
+This will reuse the build of `my-module@1.0.4` if it existed in `PROD` or
+trigger a new build. Dependent modules will also rollback to the version
+that depend on `my-module@1.0.4`.
 
 ### Auto-update of builds
 
 > Stability: 1 – **Unstable**
 
 The first (and most important) point developers need to be aware of is that
-builds from the Warehouse are always on latest version of private dependencies
-tagged with that particular environment.
+new builds from the Warehouse are on the latest matching semver version of
+private dependencies tagged with that particular environment. Older existing
+builds will remain unaffected however.
 
 In other words **the version specified in the package.json may not match the
 version used in builds, by design.** For example if a module that has the
@@ -284,7 +285,7 @@ PATCH /promote/:pkg/:env/:version     # Promote a package@version to an environm
 
 Warehouse allows for installation against a specific `dist-tag` via the
 `REGISTRY-ENVIRONMENT` header. Although `npm` does not allow for headers to be
-set directly, [carpenter] sets these headers internally during it's install
+set directly, [carpenterd] sets these headers internally during it's install
 process.
 
 This is how multiple versions live and are built side-by-side in the same
