@@ -1,5 +1,6 @@
 # CHANGELOG
 
+- [#59] Add documentation on what goes into a specific package
 - Add proper swagger route for optional path variable `/assets/files` route
 - [#57] Update `README.md`
   - Add badges
@@ -21,3 +22,4 @@
 [#53]: https://github.com/godaddy/warehouse.ai/pull/53
 [#54]: https://github.com/godaddy/warehouse.ai/pull/54
 [#57]: https://github.com/godaddy/warehouse.ai/pull/57
+[#59]: https://github.com/godaddy/warehouse.ai/pull/59
