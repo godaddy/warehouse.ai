@@ -361,6 +361,46 @@ with `npm`:
 npm test
 ```
 
+## Getting a package `warehouse.ai` - ready
+
+Let's take a client-side package and augment it so that it can be properly consumed in `warehouse.ai`. In this case, we will be
+
+- Building with `webpack`
+- Localizing for 2 different locales `en-US`, and `es-MX`.
+- Defaulting to minified files in test and production
+
+
+First, you must have a `build` parameters in your `package.json`:
+
+```json
+{
+  "scripts": {
+    "build": "webpack"
+  },
+  "build": "webpack",
+  "locales": [
+    "en-US",
+    "es-MX"
+  ],
+  "publishConfig": {
+    "registry": "https://wherever-you-deployed-warehouse.ai"
+  }
+}
+```
+
+This indicates to `warehouse.ai` that you're building with `webpack` for the appropriate locales. TODO: webpack config, other build types.
+
+Next, add a `wrhs.toml` at the top-level directory, with following contents, indicating which assets are to be served by default in each environment:
+
+```toml
+[files]
+dev = ['dist/css/compiled-code.css', 'dist/js/compiled-code.js']
+test = ['dist/css/compiled-code.min.css', 'dist/js/compiled-code.min.js']
+prod = ['dist/css/compiled-code.min.css', 'dist/js/compiled-code.min.js']
+```
+
+That's literally it. You can now follow the guide for [Releasing code](#releasing-code).
+
 [carpenterd]: https://github.com/godaddy/carpenterd
 [carpenterd-identify]: https://github.com/godaddy/carpenterd#identification-of-build-system-type
 [client]: https://github.com/warehouseai/warehouse.ai-api-client
