@@ -351,16 +351,6 @@ Warehouse has the ability to use [passport-npm] to check authorization when
 connecting via `npm`. An example of this can be found in the
 [tests for npm auth][auth].
 
-## Tests
-
-Running the tests will require a running cassandra instance on your local
-machine. All tests are written with `mocha` and `istanbul`. They can be run
-with `npm`:
-
-``` bash
-npm test
-```
-
 ## Getting a package `warehouse.ai` - ready
 
 Let's take a client-side package and augment it so that it can be properly consumed in `warehouse.ai`. In this case, we will be
@@ -369,8 +359,7 @@ Let's take a client-side package and augment it so that it can be properly consu
 - Localizing for 2 different locales `en-US`, and `es-MX`.
 - Defaulting to minified files in test and production
 
-
-First, you must have a `build` parameters in your `package.json`:
+First, add these parameters in your `package.json`:
 
 ```json
 {
@@ -399,7 +388,19 @@ test = ['dist/css/compiled-code.min.css', 'dist/js/compiled-code.min.js']
 prod = ['dist/css/compiled-code.min.css', 'dist/js/compiled-code.min.js']
 ```
 
-That's literally it. You can now follow the guide for [Releasing code](#releasing-code).
+You see the full enumeration of options available [here](https://github.com/warehouseai/extract-config#wrhstoml).
+
+That's literally it. You can now follow the guide for [releasing code](#releasing-code).
+
+## Tests
+
+Running the tests will require a running cassandra instance on your local
+machine. All tests are written with `mocha` and `istanbul`. They can be run
+with `npm`:
+
+``` bash
+npm test
+```
 
 [carpenterd]: https://github.com/godaddy/carpenterd
 [carpenterd-identify]: https://github.com/godaddy/carpenterd#identification-of-build-system-type
