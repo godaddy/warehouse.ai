@@ -51,6 +51,7 @@ painless as possible when issues arise.
 - [Warehouse.ai Internals](#warehouseai-internals)
   - [Data Models](#data-models)
   - [Config options](#config-options)
+- [Getting a package `warehouse.ai`-ready](#https://github.com/godaddy/warehouse.ai/tree/package-docs#getting-a-package-warehouseai---ready)
 - [Local development environment](#local-development-environment)
   - [Running tests](#running-tests)
 
