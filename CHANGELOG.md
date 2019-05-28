@@ -1,5 +1,6 @@
 # CHANGELOG
 
+- Add proper swagger route for optional path variable `/assets/files` route
 - [#57] Update `README.md`
   - Add badges
   - Add `promote` routes
