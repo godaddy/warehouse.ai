@@ -400,7 +400,8 @@ prod = ['dist/js/compiled-code.min.js']
 You see the full enumeration of options available
 [here](https://github.com/warehouseai/extract-config#wrhstoml).
 
-Finally, you will need a `webpack.config.js`, if you don't already have one.
+Finally, you will need a [`webpack.config.js`](https://webpack.js.org/concepts/configuration),
+if you don't already have one.
 
 ```js
 const path = require('path');
