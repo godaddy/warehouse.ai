@@ -52,6 +52,7 @@ painless as possible when issues arise.
   - [Data Models](#data-models)
   - [Config options](#config-options)
 - [Getting a package `warehouse.ai`-ready](#getting-a-package-warehouseai---ready)
+  - [Private or scoped packages](#private-or--scoped-packages)
 - [Local development environment](#local-development-environment)
   - [Running tests](#running-tests)
 
