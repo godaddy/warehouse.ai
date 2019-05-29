@@ -354,7 +354,8 @@ connecting via `npm`. An example of this can be found in the
 
 ## Getting a package `warehouse.ai` - ready
 
-Let's take a client-side package and augment it so that it can be properly consumed in `warehouse.ai`. In this case, we will be
+Let's take a client-side package and augment it so that it can be properly
+consumed in `warehouse.ai`. In this case, we will be:
 
 - Building with `webpack`
 - Localizing for 2 different locales `en-US`, and `es-MX`.
@@ -378,9 +379,13 @@ First, add these parameters in your `package.json`:
 }
 ```
 
-This indicates to `warehouse.ai` that you're building with `webpack` for the appropriate locales. Currently, 3 build systems are supported, `webpack`, `es*`, and `browserify`. These additional systems are further detailed [here](https://github.com/godaddy/carpenterd#identification-of-build-system-type).
+This indicates to `warehouse.ai` that you're building with `webpack` for the
+appropriate locales. Currently, 3 build systems are supported, `webpack`, `es*`,
+and `browserify`. These additional systems are further detailed
+[here](https://github.com/godaddy/carpenterd#identification-of-build-system-type).
 
-Next, add a `wrhs.toml` at the top-level directory, with following contents, indicating which assets are to be served by default in each environment:
+Next, add a `wrhs.toml` at the top-level directory, with following contents,
+indicating which assets are to be served by default in each environment:
 
 ```toml
 [files]
@@ -389,9 +394,11 @@ test = ['dist/css/compiled-code.min.css', 'dist/js/compiled-code.min.js']
 prod = ['dist/css/compiled-code.min.css', 'dist/js/compiled-code.min.js']
 ```
 
-You see the full enumeration of options available [here](https://github.com/warehouseai/extract-config#wrhstoml).
+You see the full enumeration of options available
+[here](https://github.com/warehouseai/extract-config#wrhstoml).
 
-That's literally it. You can now follow the guide for [releasing code](#releasing-code).
+That's literally it. You can now follow the guide for
+[releasing code](#releasing-code).
 
 ## Tests
 
