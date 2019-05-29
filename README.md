@@ -399,9 +399,8 @@ prod = ['dist/js/compiled-code.min.js']
 ```
 
 You see the full enumeration of options available
-[here](https://github.com/warehouseai/extract-config#wrhstoml).
-
-Finally, you will need a [`webpack.config.js`](https://webpack.js.org/concepts/configuration),
+[here](https://github.com/warehouseai/extract-config#wrhstoml). Finally, you
+will need a [`webpack.config.js`](https://webpack.js.org/concepts/configuration),
 if you don't already have one.
 
 ```js
@@ -435,7 +434,8 @@ registry=https://your.private.registry.com/
 //registry.npmjs.org/:_authToken=some-generated-auth-token
 ```
 
-Additionally, you will need to ensure that this registry
+If using a private registry, be sure that your instance of `warehouse.ai`
+has network access to that registry so that `npm install` can succeed.
 
 ## Tests
 
