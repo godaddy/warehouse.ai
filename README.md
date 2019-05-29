@@ -357,6 +357,7 @@ connecting via `npm`. An example of this can be found in the
 Let's take a client-side package and augment it so that it can be properly
 consumed in `warehouse.ai`. In this case, we will be:
 
+- Using a public package
 - Building with `webpack`
 - Localizing for 2 different locales `en-US`, and `es-MX`.
 - Defaulting to minified files in test and production
@@ -365,6 +366,7 @@ First, add these parameters in your `package.json`:
 
 ```json
 {
+  "name": "yet-another-js-framework",
   "scripts": {
     "build": "webpack"
   },
@@ -397,8 +399,30 @@ prod = ['dist/css/compiled-code.min.css', 'dist/js/compiled-code.min.js']
 You see the full enumeration of options available
 [here](https://github.com/warehouseai/extract-config#wrhstoml).
 
+Finally, you will need a `webpack.config.js`, if you don't already have one.
+
+TODO: webpack config
+
 That's literally it. You can now follow the guide for
 [releasing code](#releasing-code).
+
+### Private or `@`-scoped packages
+
+If your package is [private](https://docs.npmjs.com/creating-and-publishing-private-packages) or [scoped](https://docs.npmjs.com/about-scopes), it
+is important that you setup an `.npmrc` file that provides proper authorization
+so that `warehouse.ai` can properly `npm install` and build your assets. For
+example, if you're using a private registry you may need to add this to an
+`.npmrc` file:
+
+```sh
+# for a private registry
+registry=https://your.private.registry.com/
+
+# for a scoped package
+//registry.npmjs.org/:_authToken=some-generated-auth-token
+```
+
+Additionally, you will need to ensure that this registry
 
 ## Tests
 
