@@ -400,8 +400,10 @@ prod = ['dist/js/compiled-code.min.js']
 
 You see the full enumeration of options available
 [here](https://github.com/warehouseai/extract-config#wrhstoml). Finally, you
-will need a [`webpack.config.js`](https://webpack.js.org/concepts/configuration),
-if you don't already have one.
+will need a [`webpack.config.js`](https://webpack.js.org/concepts/configuration)
+in the root directory, if you don't already have one. It is important to note
+that all `warehouse.ai` is doing is to call `webpack` in this case. All of your
+configuration must live within this file (not as command line arguments).
 
 ```js
 const path = require('path');
@@ -415,15 +417,18 @@ module.exports = {
 };
 ```
 
-That's literally it. You can now follow the guide for
-[releasing code](#releasing-code).
+It is also important to note that the `dist` directory is not an arbitrary
+choice, `warehouse.ai` will need the `dist` directory to explicitly exist so it
+knows which files to serve.
+
+That's it. You can now follow the guide for [releasing code](#releasing-code).
 
 ### Private or `@`-scoped packages
 
 If your package is [private](https://docs.npmjs.com/creating-and-publishing-private-packages) or [scoped](https://docs.npmjs.com/about-scopes), it
 is important that you setup an `.npmrc` file that provides proper authorization
 so that `warehouse.ai` can properly `npm install` and build your assets. For
-example, if you're using a private registry you may need to add this to an
+example, if you're using a private registry you may need to add this to your
 `.npmrc` file:
 
 ```sh
