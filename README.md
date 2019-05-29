@@ -378,7 +378,7 @@ First, add these parameters in your `package.json`:
 }
 ```
 
-This indicates to `warehouse.ai` that you're building with `webpack` for the appropriate locales. TODO: webpack config, other build types.
+This indicates to `warehouse.ai` that you're building with `webpack` for the appropriate locales. Currently, 3 build systems are supported, `webpack`, `es*`, and `browserify`. These additional systems are further detailed [here](https://github.com/godaddy/carpenterd#identification-of-build-system-type).
 
 Next, add a `wrhs.toml` at the top-level directory, with following contents, indicating which assets are to be served by default in each environment:
 
