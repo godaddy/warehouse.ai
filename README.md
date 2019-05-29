@@ -364,21 +364,22 @@ consumed in `warehouse.ai`. In this case, we will be:
 
 First, add these parameters in your `package.json`:
 
-```json
-{
-  "name": "yet-another-js-framework",
-  "scripts": {
-    "build": "webpack"
-  },
-  "build": "webpack",
-  "locales": [
-    "en-US",
-    "es-MX"
-  ],
-  "publishConfig": {
-    "registry": "https://wherever-you-deployed-warehouse.ai"
-  }
-}
+```diff
+ {
+   "name": "yet-another-js-framework",
+   "scripts": {
+     "build": "webpack && npm run minify",
+     "minify": "run-some-minification-tool"
+   },
++  "build": "webpack",
++  "locales": [
++    "en-US",
++    "es-MX"
++  ],
++  "publishConfig": {
++    "registry": "https://wherever-you-deployed-warehouse.ai"
++  }
+ }
 ```
 
 This indicates to `warehouse.ai` that you're building with `webpack` for the
@@ -391,9 +392,9 @@ indicating which assets are to be served by default in each environment:
 
 ```toml
 [files]
-dev = ['dist/css/compiled-code.css', 'dist/js/compiled-code.js']
-test = ['dist/css/compiled-code.min.css', 'dist/js/compiled-code.min.js']
-prod = ['dist/css/compiled-code.min.css', 'dist/js/compiled-code.min.js']
+dev = ['dist/js/compiled-code.js']
+test = ['dist/js/compiled-code.min.js']
+prod = ['dist/js/compiled-code.min.js']
 ```
 
 You see the full enumeration of options available
@@ -401,7 +402,17 @@ You see the full enumeration of options available
 
 Finally, you will need a `webpack.config.js`, if you don't already have one.
 
-TODO: webpack config
+```js
+const path = require('path');
+
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    path: path.resolve(__dirname, 'dist', 'js'),
+    filename: 'compiled-code.js'
+  }
+};
+```
 
 That's literally it. You can now follow the guide for
 [releasing code](#releasing-code).
