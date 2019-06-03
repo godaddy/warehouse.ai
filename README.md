@@ -431,14 +431,11 @@ If your package is [private](https://docs.npmjs.com/creating-and-publishing-priv
 is important that you setup an `.npmrc` file that provides proper authorization
 so that `warehouse.ai` can properly `npm install` and build your assets. For
 example, if you're using a private registry you may need to add this to your
-`.npmrc` file:
+repository's `.npmrc` file:
 
 ```sh
 # for a private registry
 registry=https://your.private.registry.com/
-
-# for a scoped package
-//registry.npmjs.org/:_authToken=some-generated-auth-token
 ```
 
 If using a private registry, be sure that your instance of `warehouse.ai`
