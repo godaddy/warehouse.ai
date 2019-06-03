@@ -51,6 +51,8 @@ painless as possible when issues arise.
 - [Warehouse.ai Internals](#warehouseai-internals)
   - [Data Models](#data-models)
   - [Config options](#config-options)
+- [Getting a package `warehouse.ai`-ready](#getting-a-package-warehouseai---ready)
+  - [Private or scoped packages](#private-or--scoped-packages)
 - [Local development environment](#local-development-environment)
   - [Running tests](#running-tests)
 
@@ -350,6 +352,94 @@ They are [documented individually in warehouse-models][models].
 Warehouse has the ability to use [passport-npm] to check authorization when
 connecting via `npm`. An example of this can be found in the
 [tests for npm auth][auth].
+
+## Getting a package `warehouse.ai` - ready
+
+Let's take a client-side package and augment it so that it can be properly
+consumed in `warehouse.ai`. In this case, we will be:
+
+- Using a public package
+- Building with `webpack`
+- Localizing for 2 different locales `en-US`, and `es-MX`.
+- Defaulting to minified files in test and production
+
+First, add these parameters in your `package.json`:
+
+```diff
+ {
+   "name": "yet-another-js-framework",
+   "scripts": {
+     "build": "webpack && npm run minify",
+     "minify": "run-some-minification-tool"
+   },
++  "build": "webpack",
++  "locales": [
++    "en-US",
++    "es-MX"
++  ],
++  "publishConfig": {
++    "registry": "https://wherever-you-deployed-warehouse.ai"
++  }
+ }
+```
+
+This indicates to `warehouse.ai` that you're building with `webpack` for the
+appropriate locales. Currently, 3 build systems are supported, `webpack`, `es*`,
+and `browserify`. These additional systems are further detailed
+[here](https://github.com/godaddy/carpenterd#identification-of-build-system-type).
+Very simply, you can change the `build` keyword in your `package.json` to invoke
+these build tools.
+
+Next, add a `wrhs.toml` at the top-level directory, with following contents,
+indicating which assets are to be served by default in each environment:
+
+```toml
+[files]
+dev = ['dist/js/compiled-code.js']
+test = ['dist/js/compiled-code.min.js']
+prod = ['dist/js/compiled-code.min.js']
+```
+
+You see the full enumeration of options available
+[here](https://github.com/warehouseai/extract-config#wrhstoml). Finally, you
+will need a [`webpack.config.js`](https://webpack.js.org/concepts/configuration)
+in the root directory, if you don't already have one. It is important to note
+that all `warehouse.ai` is doing is to call `webpack` in this case. All of your
+configuration must live within this file (not as command line arguments).
+
+```js
+const path = require('path');
+
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    path: path.resolve(__dirname, 'dist', 'js'),
+    filename: 'compiled-code.js'
+  }
+};
+```
+
+It is also important to note that the `dist` directory is not an arbitrary
+choice, `warehouse.ai` will need the `dist` directory to explicitly exist so it
+knows which files to serve.
+
+That's it. You can now follow the guide for [releasing code](#releasing-code).
+
+### Private or `@`-scoped packages
+
+If your package is [private](https://docs.npmjs.com/creating-and-publishing-private-packages) or [scoped](https://docs.npmjs.com/about-scopes), it
+is important that you setup an `.npmrc` file that provides proper authorization
+so that `warehouse.ai` can properly `npm install` and build your assets. For
+example, if you're using a private registry you may need to add this to your
+repository's `.npmrc` file:
+
+```sh
+# for a private registry
+registry=https://your.private.registry.com/
+```
+
+If using a private registry, be sure that your instance of `warehouse.ai`
+has network access to that registry so that `npm install` can succeed.
 
 ## Tests
 
