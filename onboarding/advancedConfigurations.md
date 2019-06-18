@@ -1,9 +1,9 @@
-# Advanced features
+# Advanced configurations
 
 This document details advanced configurations such as minification, create dependent builds, 
 create locale-specific builds, etc.
 
-1. [Advanced features](#6-advanced-features)
+1. Advanced configurations
     - [Building for multiple locales](#building-for-multiple-locales)
     - [Debugging a build](#debugging-a-build)
     - [Minification](#minification)

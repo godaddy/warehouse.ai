@@ -4,16 +4,16 @@ These steps should enable you to setup and publish a module to your running inst
 
 ### Onboarding process
 
-1. [Configure your `npm` client](#1=configure-your-npm-client)
+1. [Configure your `npm` client](#1-configure-your-npm-client)
     1. [Private or `@`-scoped packages](#private-or-`@`-scoped-packages)
-1. [Configure your module for Warehouse](#3-configure-your-module-for-warehouse)
+1. [Configure your module for Warehouse](#2-configure-your-module-for-warehouse)
     1. [Add properties to package.json](#add-properties-to-packagejson)
     1. [Set publish target](#warehouse-as-publish-target)
     1. [Setup `wrhs.toml`](#setup-wrhstoml)
-1. [Publishing your module and advanced configurations](#4-publishing-your-module-and-advanced-configurations)
+1. [Publishing your module and advanced configurations](#3-publishing-your-module-and-advanced-configurations)
 
 
-### 1. Configure your npm client
+### 1. Configure your `npm` client
 
 Depending on the warehouse instance, performing requests against the API may require authentication. 
 If so, you will need to add the credentials, which you created as part of the setup process for your 
@@ -27,7 +27,7 @@ running instance of `warehouse.ai`, to your `.npmrc` file.
 configure SSL termination for `where.you.are.running.your-warehouse.ai`
 
 ```sh
-npm c set strict-ssl false
+npm config set strict-ssl false
 ```
 
 #### Private or `@`-scoped packages

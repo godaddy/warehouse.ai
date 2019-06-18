@@ -1,6 +1,6 @@
 # Using build output
 
-This document provids more details on using [`warehouse.ai-api-client`][client] in your application 
+This document provides more details on using [`warehouse.ai-api-client`][client] in your application 
 to consume the build output of your module.
 
 ### Using build output
@@ -27,7 +27,7 @@ wrhs get:build [module-name] dev
 
 Use the [Warehouse-client][client] to retrieve bundle information for your webserver's responses. The client
 requires the same authentication and endpoint details as provided to the [CLI](#inspect-your-bundle).
-Currently, we only have a client available for Node.JS. Usage is straightforward. Install the module as
+Currently, we only have a client available for Node.JS. Install the module as
 a `dependency` of your webserver, e.g. `npm install warehouse.ai-api-client`.
 
 Next, setup an instance of the client like below. 
@@ -51,8 +51,6 @@ secure config, for example by using [whisper.json][whisper].
   ...
 }
 ```
-
-
 
 This client can now be used to get information from bundle `details`. This object will contain properties like
 `files` and `fingerprints` (unique hashes). Which enables you to reference the correct CDN assets in your
