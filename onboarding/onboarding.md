@@ -5,7 +5,7 @@ These steps should enable you to setup and publish a module to your running inst
 ### Onboarding process
 
 1. [Configure your `npm` client](#1-configure-your-npm-client)
-    1. [Private or `@`-scoped packages](#private-or-`@`-scoped-packages)
+    1. [Private or `@`-scoped packages](#private-or--scoped-packages)
 1. [Configure your module for Warehouse](#2-configure-your-module-for-warehouse)
     1. [Add properties to package.json](#add-properties-to-packagejson)
     1. [Set publish target](#warehouse-as-publish-target)
