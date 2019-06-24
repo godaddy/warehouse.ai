@@ -1,5 +1,6 @@
 # CHANGELOG
 
+- [#60] Added onboarding guide for setting up a new project with an existing warehouse.ai service
 - [#56] Extract diagram tool for other Warehouse.ai modules.
 - [#59] Add documentation on what goes into a specific package
 - Add proper swagger route for optional path variable `/assets/files` route
@@ -25,3 +26,4 @@
 [#56]: https://github.com/godaddy/warehouse.ai/pull/56
 [#57]: https://github.com/godaddy/warehouse.ai/pull/57
 [#59]: https://github.com/godaddy/warehouse.ai/pull/59
+[#60]: https://github.com/godaddy/warehouse.ai/pull/60
