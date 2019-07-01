@@ -28,4 +28,4 @@
 [#57]: https://github.com/godaddy/warehouse.ai/pull/57
 [#59]: https://github.com/godaddy/warehouse.ai/pull/59
 [#60]: https://github.com/godaddy/warehouse.ai/pull/60
-[#60]: https://github.com/godaddy/warehouse.ai/pull/61
+[#61]: https://github.com/godaddy/warehouse.ai/pull/61
