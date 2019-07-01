@@ -28,7 +28,9 @@ Gets the file assets for a given package-environment-version
 | 404 | Not Found |
 | 500 | Internal Server Error |
 
-null
+##### Security
+
+unauthed
 
 ### /assets/files/{pkg}/{env}/{version}
 
@@ -56,7 +58,9 @@ Gets the file assets for a given package-environment-version
 | 404 | Not Found |
 | 500 | Internal Server Error |
 
-null
+##### Security
+
+unauthed
 
 ### /builds/-/head
 
@@ -343,7 +347,9 @@ Healthcheck endpoint to verify that service is running and able to accept new co
 | 200 | OK |
 | 500 | Internal Server Error |
 
-null
+##### Security
+
+unauthed
 
 ### /packages/search
 
