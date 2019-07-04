@@ -18,7 +18,9 @@
     "diagrams": "wrhs-diagrams --source=assets/diagrams --target=assets",
     "sandbox": "npm-registry-echo",
     "swagger": "./bin/swagger",
-    "apiDocs": "npm run swagger && json2yaml ./lib/wrhs-spec.json > ./lib/wrhs-spec.yaml && swagger-markdown -i ./lib/wrhs-spec.yaml -o ./apiDocs/wrhs-spec.md"
+    "apiDocs": "npm run swagger && json2yaml ./lib/wrhs-spec.json > ./lib/wrhs-spec.yaml && swagger-markdown -i ./lib/wrhs-spec.yaml -o ./apiDocs/wrhs-spec.md",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -81,7 +83,8 @@
     "tinythen": "^1.0.1",
     "warehouse-models": "^5.9.1",
     "winston": "~2.3.1",
-    "zipline": "^1.0.0"
+    "zipline": "^1.0.0",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "@wrhs/diagrams": "^1.0.0",
@@ -112,5 +115,6 @@
     "swagger-jsdoc": "^3.2.7",
     "swagger-markdown": "^1.2.0",
     "tmp": "0.0.31"
-  }
+  },
+  "snyk": true
 }
