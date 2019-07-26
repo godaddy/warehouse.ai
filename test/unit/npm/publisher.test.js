@@ -7,12 +7,18 @@ var path = require('path'),
   concat = require('concat-stream'),
   diagnostics = require('diagnostics'),
   sinon = require('sinon'),
+  nock = require('nock'),
   mocks = require('../../mocks'),
   macros = require('../../macros'),
   dirs = require('../../helpers').dirs;
 
+const { PassThrough, Readable } = require('stream');
+
 var Publisher = mocks.publisher();
 var FileRequest = mocks.FileRequest;
+
+var RealPublisher = require('../../../lib/npm/publisher');
+var Carpenter = require('carpenterd-api-client');
 
 /**
  * function assumePublisher(opts)
@@ -79,11 +85,43 @@ describe('npm/publisher.js', function () {
   });
 
   describe.only('build', function () {
-    it('fails to publish after retries', done => {
-      var publisher = new Publisher(config);
+    let mock;
+    const uri = actualConfig.builder.url;
+
+    it('succeeds to publish after retry', function (done) {
+      const carpenter = new Carpenter({ uri });
+      var publisher = new RealPublisher({
+        log: { info: function () {}, warn: function () {}, error: function () {} },
+        carpenter,
+        retry: { retries: 1 }
+      });
+
+      const errorStream = new PassThrough();
+      const successStream = new PassThrough();
+      // make a stream that will end itself so end it emitted
+      const buildLog = new Readable({
+        read() {
+          setImmediate(() => this.push(null));
+        }
+      });
+      // Once the first stream errors, lets prepare the successStream which
+      // comes next
+      errorStream.once('error', (err) => {
+        setImmediate(() => {
+          successStream.emit('response', buildLog);
+          setImmediate(() => buildLog.resume());
+        })
+      });
+      setImmediate(() => {
+        errorStream.emit('error', new Error('wtf mate'));
+      });
+      const build = sinon.stub(carpenter, 'build');
+      build.returns(errorStream)
+      build.returns(successStream);
 
       publisher.build('whatever', 'emit an error', function (err) {
-        console.dir(err);
+        assume(err).is.falsey();
+        build.restore();
         done();
       });
     });
