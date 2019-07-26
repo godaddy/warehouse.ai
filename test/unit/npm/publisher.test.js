@@ -104,20 +104,21 @@ describe('npm/publisher.js', function () {
           setImmediate(() => this.push(null));
         }
       });
-      // Once the first stream errors, lets prepare the successStream which
-      // comes next
-      errorStream.once('error', (err) => {
-        setImmediate(() => {
-          successStream.emit('response', buildLog);
-          setImmediate(() => buildLog.resume());
-        })
-      });
+
       setImmediate(() => {
         errorStream.emit('error', new Error('wtf mate'));
       });
       const build = sinon.stub(carpenter, 'build');
-      build.returns(errorStream)
-      build.returns(successStream);
+      build.onCall(0).returns(errorStream)
+      build.onCall(1).callsFake(() => {
+        console.log('call build a second time');
+        setImmediate(() => {
+          console.log('emit response')
+          successStream.emit('response', buildLog);
+          setImmediate(() => buildLog.resume());
+        })
+        return successStream;
+      });
 
       publisher.build('whatever', 'emit an error', function (err) {
         assume(err).is.falsey();
