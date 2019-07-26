@@ -84,14 +84,19 @@ describe('npm/publisher.js', function () {
     assume(req.headers.host).equals(parsed.host);
   });
 
-  describe.only('build', function () {
+  describe('build', function () {
     let mock;
     const uri = actualConfig.builder.url;
 
     it('succeeds to publish after retry', function (done) {
       const carpenter = new Carpenter({ uri });
+      const warnSpy = sinon.spy();
       var publisher = new RealPublisher({
-        log: { info: function () {}, warn: function () {}, error: function () {} },
+        log: {
+          info: function () {},
+          warn: warnSpy,
+          error: function () {}
+        },
         carpenter,
         retry: { retries: 1 }
       });
@@ -106,14 +111,12 @@ describe('npm/publisher.js', function () {
       });
 
       setImmediate(() => {
-        errorStream.emit('error', new Error('wtf mate'));
+        errorStream.emit('error', new Error('Mock error'));
       });
       const build = sinon.stub(carpenter, 'build');
       build.onCall(0).returns(errorStream)
       build.onCall(1).callsFake(() => {
-        console.log('call build a second time');
         setImmediate(() => {
-          console.log('emit response')
           successStream.emit('response', buildLog);
           setImmediate(() => buildLog.resume());
         })
@@ -122,6 +125,7 @@ describe('npm/publisher.js', function () {
 
       publisher.build('whatever', 'emit an error', function (err) {
         assume(err).is.falsey();
+        assume(warnSpy.calledWith('carpenter attempts to build with retries')).is.truthy();
         build.restore();
         done();
       });

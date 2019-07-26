@@ -1,7 +1,6 @@
 'use strict';
 
 var join = require('path').join,
-  through = require('through2'),
   concat = require('concat-stream'),
   datastarHelpers = require('datastar-test-tools').helpers,
   datastarMocks = require('datastar-test-tools').mocks,
@@ -80,19 +79,7 @@ exports.publisher = function (opts) {
  */
 exports.carpenter = {
   build: function build(obj) {
-    var stream = through();
-
-    if (obj.data.data === 'emit an error') {
-      console.log('call setImmediate');
-      setImmediate(() => {
-        console.log('emitting error');
-        stream.on('error', (err) => console.error(err));
-        stream.emit(new Error('Mock error'));
-        setImmediate(() => stream.end());
-      });
-    }
-
-    return stream;
+    return concat();
   }
 };
 
