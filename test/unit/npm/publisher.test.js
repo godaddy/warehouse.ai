@@ -6,6 +6,7 @@ var path = require('path'),
   assume = require('assume'),
   concat = require('concat-stream'),
   diagnostics = require('diagnostics'),
+  sinon = require('sinon'),
   mocks = require('../../mocks'),
   macros = require('../../macros'),
   dirs = require('../../helpers').dirs;
@@ -75,6 +76,17 @@ describe('npm/publisher.js', function () {
 
     var parsed = url.parse(req.uri);
     assume(req.headers.host).equals(parsed.host);
+  });
+
+  describe.only('build', function () {
+    it('fails to publish after retries', done => {
+      var publisher = new Publisher(config);
+
+      publisher.build('whatever', 'emit an error', function (err) {
+        console.dir(err);
+        done();
+      });
+    });
   });
 
   //

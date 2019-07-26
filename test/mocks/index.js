@@ -78,8 +78,16 @@ exports.publisher = function (opts) {
  * @type {Object}
  */
 exports.carpenter = {
-  build: function build() {
-    return concat();
+  build: function build(obj) {
+    var stream = concat();
+
+    if (obj.data.data === 'emit an error') {
+      console.dir('I am here');
+      setImmediate(() => stream.emit(new Error('Mock error')));
+      console.dir('wtf!!!!???');
+    }
+console.dir('I am faster?!!!');
+    return stream;
   }
 };
 

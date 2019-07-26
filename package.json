@@ -12,7 +12,7 @@
     "prepublishOnly": "npm run swagger",
     "pretest": "npm run swagger",
     "test": "npm run cover && npm run report",
-    "posttest": "npm run eslint",
+    "postest": "npm run eslint",
     "report": "nyc report --reporter=lcov",
     "eslint": "eslint-godaddy -c .eslintrc lib/ test/",
     "diagrams": "wrhs-diagrams --source=assets/diagrams --target=assets",
