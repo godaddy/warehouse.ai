@@ -78,7 +78,7 @@ exports.publisher = function (opts) {
  * @type {Object}
  */
 exports.carpenter = {
-  build: function build(obj) {
+  build: function build() {
     return concat();
   }
 };

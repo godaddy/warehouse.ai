@@ -7,7 +7,6 @@ var path = require('path'),
   concat = require('concat-stream'),
   diagnostics = require('diagnostics'),
   sinon = require('sinon'),
-  nock = require('nock'),
   mocks = require('../../mocks'),
   macros = require('../../macros'),
   dirs = require('../../helpers').dirs;
