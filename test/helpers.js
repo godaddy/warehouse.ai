@@ -79,6 +79,9 @@ var defaultAppOpts = {
         replication_factor: 1
       }
     }
+  },
+  retry: {
+    retries: 1
   }
 };
 
