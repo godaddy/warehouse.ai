@@ -47,6 +47,7 @@ describe('npm/publisher.js', function () {
     config.log.info = actualConfig.log.info = diagnostics('warehouse:test:info');
     config.carpenter = actualConfig.carpenter = mocks.carpenter;
     config.models = actualConfig.models = mocks.models();
+    config.retry = { retries: 1 };
   });
 
   describe('Publisher', function () {
@@ -127,7 +128,7 @@ describe('npm/publisher.js', function () {
 
       publisher.build('whatever', 'emit an error', function (err) {
         assume(err).is.falsey();
-        assume(publisher.log.warn).is.calledWith('carpenter attempts to build with retries');
+        assume(publisher.log.warn).is.calledWith('carpenter failed to build, will try again (1 left)');
         done();
       });
     });
