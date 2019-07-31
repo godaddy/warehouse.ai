@@ -6,12 +6,18 @@ var path = require('path'),
   assume = require('assume'),
   concat = require('concat-stream'),
   diagnostics = require('diagnostics'),
+  sinon = require('sinon'),
   mocks = require('../../mocks'),
   macros = require('../../macros'),
   dirs = require('../../helpers').dirs;
 
+const { PassThrough, Readable } = require('stream');
+
 var Publisher = mocks.publisher();
 var FileRequest = mocks.FileRequest;
+
+var RealPublisher = require('../../../lib/npm/publisher');
+var Carpenter = require('carpenterd-api-client');
 
 /**
  * function assumePublisher(opts)
@@ -41,6 +47,7 @@ describe('npm/publisher.js', function () {
     config.log.info = actualConfig.log.info = diagnostics('warehouse:test:info');
     config.carpenter = actualConfig.carpenter = mocks.carpenter;
     config.models = actualConfig.models = mocks.models();
+    config.retry = { retries: 1 };
   });
 
   describe('Publisher', function () {
@@ -75,6 +82,56 @@ describe('npm/publisher.js', function () {
 
     var parsed = url.parse(req.uri);
     assume(req.headers.host).equals(parsed.host);
+  });
+
+  describe('build', function () {
+    const uri = actualConfig.builder.url;
+
+    after(function () {
+      sinon.restore();
+    });
+
+    it('succeeds to publish after retry', function (done) {
+      const carpenter = new Carpenter({ uri });
+      const publisher = new RealPublisher({
+        log: {
+          info: function () {},
+          warn: console.warn,
+          error: function () {}
+        },
+        carpenter,
+        retry: { retries: 1 }
+      });
+
+      sinon.stub(publisher.log, 'warn');
+      const errorStream = new PassThrough();
+      const successStream = new PassThrough();
+      // make a stream that will end itself so end it emitted
+      const buildLog = new Readable({
+        read() {
+          setImmediate(() => this.push(null));
+        }
+      });
+
+      setImmediate(() => {
+        errorStream.emit('error', new Error('Mock error'));
+      });
+      const build = sinon.stub(carpenter, 'build');
+      build.onCall(0).returns(errorStream);
+      build.onCall(1).callsFake(() => {
+        setImmediate(() => {
+          successStream.emit('response', buildLog);
+          setImmediate(() => buildLog.resume());
+        });
+        return successStream;
+      });
+
+      publisher.build('whatever', 'emit an error', function (err) {
+        assume(err).is.falsey();
+        assume(publisher.log.warn).is.calledWith('carpenter failed to build, will try again (1 left)');
+        done();
+      });
+    });
   });
 
   //

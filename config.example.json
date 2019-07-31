@@ -71,5 +71,10 @@
         "replication_factor": 1
       }
     }
+  },
+  "retry": {
+    "retries": 3,
+    "min": 50,
+    "max": 10000
   }
 }
