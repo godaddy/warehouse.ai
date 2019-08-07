@@ -74,7 +74,7 @@
     "retryme": "^1.1.0",
     "semver": "^5.6.0",
     "slay": "~1.0.2",
-    "slay-config": "^2.1.0",
+    "slay-config": "^2.3.0",
     "slay-log": "^2.1.0",
     "stringify-stream": "^1.0.3",
     "swagger-ui-express": "^4.0.4",
