@@ -50,6 +50,10 @@ These tables should for the most part just migrate into DynamoDB tables without
 significant changes. The largest changes will be needing to create our own
 composite keys since DynamoDB doesn't support them.
 
+DynamoDB also doesn't support the Cassandra `keyspace` mechanism, so each table
+name should get prefixed with `wrhs_` so that it's less likely to conflict with
+an existing table name.
+
 The following sections contain the column/attribute mappings for each table.
 
 Legend:
@@ -320,6 +324,20 @@ As part of this transition and the move to a more `serverless` style we will
 just directly use the [`dynamodb`] library from the models packages rather than
 trying to adapt `datastar` to work with dynamodb.
 
+## Future Serverless Considerations
+
+Out of scope for this proposal, but interesting potential future work related
+to serverless could include:
+
+1. Changing the messaging architecture
+   > Currently `warehouse.ai` uses a combination of direct http calls and NSQ
+   > for messaging between components, We should consider moving off that for
+   > something like [AWS Step Functions], [Amazon SNS], [Amazon SQS], etc.
+1. Builds on demand
+   > `carpenterd-worker` could be migrated to an [AWS Lambda] to allow for
+   > better scaling for on-demand builds, so you don't need to pay for fully
+   > running EC2 instances.
+
 [DynamoDB]: https://aws.amazon.com/dynamodb/
 [`warehouse.ai`]: https://github.com/godaddy/warehouse.ai
 [contributing]: /blob/master/CONTRIBUTING.md
@@ -334,3 +352,7 @@ trying to adapt `datastar` to work with dynamodb.
 [`datastar`]: https://github.com/godaddy/datastar
 [`dynamodb`]: https://github.com/baseprime/dynamodb
 [Cassandra]: http://cassandra.apache.org/
+[Amazon SNS]: https://aws.amazon.com/sns/
+[AWS Step Functions]: https://aws.amazon.com/step-functions/
+[Amazon SQS]: https://aws.amazon.com/sqs/
+[AWS Lambda]: https://aws.amazon.com/lambda/
