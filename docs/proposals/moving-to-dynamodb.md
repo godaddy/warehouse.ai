@@ -1,4 +1,4 @@
-# **Design Change** Moving to [DyanamoDB]
+# **Design Change** Moving to [DynamoDB]
 
 ## Motivation
 
