@@ -1,8 +1,8 @@
 # API
 
-This documentation contains information about warehouse.ai's API. 
+This documentation contains information about warehouse.ai's API.
 
-For a complete list of exisiting routes in `warehouse.ai`, their parameters, and their requirements, please refer to the API documentation [here][api-docs].
+For a complete list of existing routes in `warehouse.ai`, their parameters, and their requirements, please refer to the API documentation [here][api-docs].
 
 In addition, to make it easier to interact with `warehouse.ai`, we provide an [API client][api-client] for `warehouse.ai`. It has interfaces such as a [build interface][build], which allows users to trigger and promote builds, an [asset interface][asset], which allows users to get asset information, and other interfaces for the `warehouse.ai`'s API.
 

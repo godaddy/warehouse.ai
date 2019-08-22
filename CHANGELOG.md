@@ -1,5 +1,7 @@
 # CHANGELOG
 
+### 5.1.4
+
 - [#64] Add retry logic for carpenter build.
 - [#61] Add full API documentation
 - [#60] Add onboarding guide for setting up a new project with an existing warehouse.ai service
