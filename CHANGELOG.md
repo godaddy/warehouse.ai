@@ -1,5 +1,7 @@
 # CHANGELOG
 
+- Use `swagger-jsdoc-deref` rather than a custom implementation of it
+
 ### 5.1.4
 
 - [#64] Add retry logic for carpenter build.
@@ -19,8 +21,8 @@
   - Provide npm command to execute above script
   - Reference diagrams in documentation.
 - [#53] Give credits for Github templates
-- [#52] Default documenation
-  - Add: `CONTRUBUTING.md`, `CHANGELOG.md`, `SECURITY.md`
+- [#52] Default documentation
+  - Add: `CONTRIBUTING.md`, `CHANGELOG.md`, `SECURITY.md`
   - update `LICENSE` year
   - add `.github` templates
 
