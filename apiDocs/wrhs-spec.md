@@ -28,8 +28,6 @@ Gets the file assets for a given package-environment-version
 | 404 | Not Found |
 | 500 | Internal Server Error |
 
-null
-
 ### /assets/files/{pkg}/{env}/{version}
 
 #### GET
@@ -55,8 +53,6 @@ Gets the file assets for a given package-environment-version
 | 403 | Forbidden |
 | 404 | Not Found |
 | 500 | Internal Server Error |
-
-null
 
 ### /builds/-/head
 
@@ -343,8 +339,6 @@ Healthcheck endpoint to verify that service is running and able to accept new co
 | 200 | OK |
 | 500 | Internal Server Error |
 
-null
-
 ### /packages/search
 
 #### GET
@@ -520,8 +514,6 @@ Get the release line for a package, environment, and version
 | Security Schema | Scopes |
 | --- | --- |
 | basicAuth | |
-
-### security
 
 ### /{pkg}
 
