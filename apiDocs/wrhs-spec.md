@@ -1,7 +1,7 @@
 # Warehouse.ai
-Warehouse.ai API Documentation
+Warehouse.ai
 
-## Version: 5.1.1
+## Version: 5.1.4
 
 ### /assets/files/{pkg}/{env}
 
@@ -28,10 +28,6 @@ Gets the file assets for a given package-environment-version
 | 404 | Not Found |
 | 500 | Internal Server Error |
 
-##### Security
-
-unauthed
-
 ### /assets/files/{pkg}/{env}/{version}
 
 #### GET
@@ -57,10 +53,6 @@ Gets the file assets for a given package-environment-version
 | 403 | Forbidden |
 | 404 | Not Found |
 | 500 | Internal Server Error |
-
-##### Security
-
-unauthed
 
 ### /builds/-/head
 
@@ -347,10 +339,6 @@ Healthcheck endpoint to verify that service is running and able to accept new co
 | 200 | OK |
 | 500 | Internal Server Error |
 
-##### Security
-
-unauthed
-
 ### /packages/search
 
 #### GET
@@ -527,8 +515,6 @@ Get the release line for a package, environment, and version
 | --- | --- |
 | basicAuth | |
 
-### security
-
 ### /{pkg}
 
 #### PUT
@@ -559,7 +545,7 @@ Publish a package but only when verified.
 | --- | --- |
 | basicAuth | |
 
-#### DELETE
+#### GET
 ##### Summary:
 
 Attempts to fetch the `package` and `version` records that have been persisted for this `:pkg`

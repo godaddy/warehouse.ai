@@ -17,7 +17,7 @@
     "eslint": "eslint-godaddy -c .eslintrc lib/ test/",
     "diagrams": "wrhs-diagrams --source=assets/diagrams --target=assets",
     "sandbox": "npm-registry-echo",
-    "swagger": "./bin/swagger",
+    "swagger": "swagger-jsdoc-deref -d ./lib/swagger.js -o ./lib/wrhs-spec.json",
     "apiDocs": "npm run swagger && json2yaml ./lib/wrhs-spec.json > ./lib/wrhs-spec.yaml && swagger-markdown -i ./lib/wrhs-spec.yaml -o ./apiDocs/wrhs-spec.md"
   },
   "repository": {
@@ -109,7 +109,7 @@
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5",
     "sinon": "^7.2.4",
-    "swagger-jsdoc": "^3.2.7",
+    "swagger-jsdoc-deref": "^1.0.0",
     "swagger-markdown": "^1.2.0",
     "tmp": "0.0.31"
   }
