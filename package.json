@@ -109,7 +109,6 @@
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5",
     "sinon": "^7.2.4",
-    "swagger-jsdoc": "^3.2.7",
     "swagger-jsdoc-deref": "^1.0.0",
     "swagger-markdown": "^1.2.0",
     "tmp": "0.0.31"
