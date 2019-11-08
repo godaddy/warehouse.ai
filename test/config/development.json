@@ -1,23 +1,70 @@
 {
+  "auth": false,
+  "http": 8080,
+  "cors": {
+    "methods": ["GET"]
+  },
+  "bffs": {
+    "prefix": "wrhs",
+    "cdn": {
+      "prod": {
+        "acl": "public-read",
+        "pkgcloud": {
+          "provider": "amazon",
+          "endpoint": "aws.amazon.net",
+          "keyId": "fake",
+          "key": "fake",
+          "forcePathBucket": true
+        },
+        "url": "https://mycloudfrontURL.com"
+      },
+      "test": {
+        "acl": "public-read",
+        "pkgcloud": {
+          "provider": "amazon",
+          "endpoint": "aws.amazon.net",
+          "keyId": "fake",
+          "key": "fake",
+          "forcePathBucket": true
+        },
+        "url": "https://mycloudfrontURL.com"
+      },
+      "dev": {
+        "acl": "public-read",
+        "pkgcloud": {
+          "provider": "amazon",
+          "endpoint": "aws.amazon.net",
+          "keyId": "fake",
+          "key": "fake",
+          "forcePathBucket": true
+        },
+        "url": "https://mycloudfrontURL.com/"
+      }
+    }
+  },
   "npm": {
+    "debugChildren": true,
     "urls": {
       "read": "https://registry.npmjs.org",
       "write": {
-        "default": "http://localhost:4984"
+        "default": "http://localhost:8081"
       }
-    },
-    "concurrency": 10,
-    "cleanup": false
+    }
+  },
+  "builder": {
+    "url": {
+      "hostname": "127.0.0.1",
+      "protocol": "http",
+      "port": 1337
+    }
   },
   "database": {
     "endpoint": "http://localhost:4569",
     "region": "us-east-1"
   },
-  "dependentBuilds": {
-    "retries": {
-      "times": 3,
-      "interval": 5
-    },
-    "limit": 2
+  "retry": {
+    "retries": 3,
+    "min": 50,
+    "max": 10000
   }
 }

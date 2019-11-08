@@ -19,7 +19,7 @@ function address(app, properties) {
   }, properties || {}));
 }
 
-var configFile = path.join(__dirname, '..', '..', 'config.example.json');
+var configFile = path.join(__dirname, '..', 'config', 'development.json');
 describe('App (integration)', function () {
   it('should start with the given override port by default', function (done) {
     registry.start({
