@@ -2,11 +2,12 @@
 
 var join = require('path').join,
   concat = require('concat-stream'),
-  datastarHelpers = require('datastar-test-tools').helpers,
-  datastarMocks = require('datastar-test-tools').mocks,
   ndjson = require('ndjson'),
   readonly = require('read-only-stream'),
   wrhs = require('warehouse-models');
+var { DynamoDB } = require('aws-sdk');
+var dynamo = require('dynamodb-x');
+var config = require('../config/development.json');
 
 var proxyquire = require('proxyquire').noPreserveCache();
 
@@ -19,8 +20,10 @@ exports.FileRequest = require('./file-request');
 exports.hyperquest = require('./hyperquest');
 exports.registry = require('registry-mock');
 exports.models = function () {
-  var datastar = datastarHelpers.connectDatastar({ mock: true }, datastarMocks.datastar());
-  return wrhs(datastar);
+  const dynamoDriver = new DynamoDB(config.database);
+  dynamo.dynamoDriver(dynamoDriver);
+
+  return wrhs(dynamo);
 };
 
 exports.carpenterBuildResponse = function ({ error } = {}) {

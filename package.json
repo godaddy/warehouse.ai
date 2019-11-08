@@ -16,7 +16,7 @@
     "report": "nyc report --reporter=lcov",
     "lint": "eslint-godaddy -c .eslintrc lib/ test/",
     "diagrams": "wrhs-diagrams --source=assets/diagrams --target=assets",
-    "localstack": "docker run -it -p 4569:4569 -p 4572:4572 --rm localstack/localstack",
+    "localstack": "docker run -it -p 4569:4569 --rm localstack/localstack",
     "sandbox": "npm-registry-echo",
     "swagger": "swagger-jsdoc-deref -d ./lib/swagger.js -o ./lib/wrhs-spec.json",
     "apiDocs": "npm run swagger && json2yaml ./lib/wrhs-spec.json > ./lib/wrhs-spec.yaml && swagger-markdown -i ./lib/wrhs-spec.yaml -o ./apiDocs/wrhs-spec.md"
@@ -92,7 +92,6 @@
     "assume": "^2.1.0",
     "assume-sinon": "^1.0.1",
     "babel-eslint": "^10.0.3",
-    "datastar-test-tools": "~1.0.0",
     "diagnostics": "^2.0.1",
     "eslint": "^6.6.0",
     "eslint-config-godaddy-react": "^6.0.0",

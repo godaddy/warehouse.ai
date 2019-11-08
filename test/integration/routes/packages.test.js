@@ -45,12 +45,6 @@ describe('/packages/*', function () {
       context.app = result.app;
       context.app.publisher.carpenter = mocks.carpenter;
 
-      if (process.env.DEBUG) {
-        context.app.datastar.connection.on('queryStarted', function () {
-          console.log.apply(console, arguments);
-        });
-      }
-
       next();
     });
   });

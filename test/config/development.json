@@ -9,6 +9,10 @@
     "concurrency": 10,
     "cleanup": false
   },
+  "database": {
+    "endpoint": "http://localhost:4569",
+    "region": "us-east-1"
+  },
   "dependentBuilds": {
     "retries": {
       "times": 3,
