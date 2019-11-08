@@ -10,35 +10,35 @@
       "prod": {
         "acl": "public-read",
         "pkgcloud": {
+          "accessKeyId": "fakeId",
+          "secretAccessKey": "fakeKey",
           "provider": "amazon",
-          "endpoint": "aws.amazon.net",
-          "keyId": "fake",
-          "key": "fake",
+          "endpoint": "http://localhost:4572",
           "forcePathBucket": true
         },
-        "url": "https://mycloudfrontURL.com"
+        "url": "http://localhost:4572"
       },
       "test": {
         "acl": "public-read",
         "pkgcloud": {
+          "accessKeyId": "fakeId",
+          "secretAccessKey": "fakeKey",
           "provider": "amazon",
-          "endpoint": "aws.amazon.net",
-          "keyId": "fake",
-          "key": "fake",
+          "endpoint": "http://localhost:4572",
           "forcePathBucket": true
         },
-        "url": "https://mycloudfrontURL.com"
+        "url": "http://localhost:4572"
       },
       "dev": {
         "acl": "public-read",
         "pkgcloud": {
+          "accessKeyId": "fakeId",
+          "secretAccessKey": "fakeKey",
           "provider": "amazon",
-          "endpoint": "aws.amazon.net",
-          "keyId": "fake",
-          "key": "fake",
+          "endpoint": "http://localhost:4572",
           "forcePathBucket": true
         },
-        "url": "https://mycloudfrontURL.com/"
+        "url": "http://localhost:4572"
       }
     }
   },

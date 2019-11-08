@@ -36,7 +36,7 @@ function assumePublisher(opts) {
 }
 
 describe('npm/publisher.js', function () {
-  var actualConfig = require(path.join(__dirname, '..', '..', '..', 'config.example.json'));
+  var actualConfig = require(path.join(__dirname, '..', '..', 'config', 'development.json'));
   var env = process.env.NODE_ENV || 'development';
   var config;
 

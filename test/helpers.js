@@ -123,7 +123,7 @@ exports.start = function (opts, callback) {
     ensure: true,
     auth: opts.auth,
     config: {
-      file: path.join(__dirname, '..', 'config.example.json'),
+      file: path.join(__dirname, 'config', 'development.json'),
       overrides: extend(true, {}, defaultStart, opts)
     }
   }, callback);
@@ -211,7 +211,8 @@ exports.cleanupPublish = function (app, options) {
         var json = require(options.file);
         var versionNumber = Object.keys(json.versions)[0];
         app.models.Version.remove({
-          versionId: [json.name, versionNumber].join('@')
+          name: json.name,
+          version: versionNumber
         }, next);
       }
     ], callback);

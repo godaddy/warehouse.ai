@@ -97,7 +97,7 @@ describe('npm publish', function () {
   });
 
   it('should create the Package record on publish', function (done) {
-    context.app.models.Package.get('my-package', function (err, pack) {
+    context.app.models.Package.get({ name: 'my-package' }, function (err, pack) {
       assume(err).is.falsey();
       assume(pack).is.an('object');
       assume(pack.name).equals('my-package');

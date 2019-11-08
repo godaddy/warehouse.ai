@@ -143,14 +143,13 @@ exports.publishOk = function (context, opts) {
       async.parallel({
         version: function (next) {
           app.models.Version.findOne({
-            conditions: {
-              versionId: json.name + '@' + versionNumber
-            }
+            name: json.name,
+            version: versionNumber
           }, next);
         },
         pkg: function (next) {
           app.models.Package.findOne({
-            conditions: { name: json.name }
+            name: json.name
           }, next);
         }
       }, function (err, models) {
