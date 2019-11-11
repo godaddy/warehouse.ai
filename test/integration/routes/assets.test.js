@@ -18,10 +18,6 @@ function address(app, properties) {
   }, properties || {}));
 }
 
-//
-// TODO: Need testing config for publishing to s3 to store encrypted with
-// travis
-//
 describe('/assets/*', function () {
   this.timeout(12E4);
   var jsContent = path.join(__dirname, 'builds.test.js'),
