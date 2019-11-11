@@ -1,5 +1,6 @@
 # CHANGELOG
 
+- [#71] Use DynamoDB based models.
 - Use `swagger-jsdoc-deref` rather than a custom implementation of it
 
 ### 5.1.4
@@ -35,3 +36,4 @@
 [#60]: https://github.com/godaddy/warehouse.ai/pull/60
 [#61]: https://github.com/godaddy/warehouse.ai/pull/61
 [#64]: https://github.com/godaddy/warehouse.ai/pull/64
+[#71]: https://github.com/godaddy/warehouse.ai/pull/71
