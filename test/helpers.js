@@ -20,22 +20,7 @@ var defaultStart = {
 //
 // Default options to start slay with
 //
-var defaultAppOpts = {
-  ...config,
-  auth: false,
-  http: 8090,
-  npm: {
-    urls: {
-      write: {
-        'default': 'http://localhost:8091',
-        '@good': 'http://localhost:8091'
-      }
-    }
-  },
-  retry: {
-    retries: 1
-  }
-};
+var defaultAppOpts = config;
 
 var defaultRegOpts = {
   auth: false,

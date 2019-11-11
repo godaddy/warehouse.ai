@@ -1,6 +1,6 @@
 {
   "auth": false,
-  "http": 8080,
+  "http": 8090,
   "cors": {
     "methods": ["GET"]
   },
@@ -46,11 +46,11 @@
     }
   },
   "npm": {
-    "debugChildren": true,
     "urls": {
       "read": "https://registry.npmjs.org",
       "write": {
-        "default": "http://localhost:8081"
+        "default": "http://localhost:8091",
+        "@good": "http://localhost:8091"
       }
     }
   },
@@ -66,8 +66,6 @@
     "region": "us-east-1"
   },
   "retry": {
-    "retries": 3,
-    "min": 50,
-    "max": 10000
+    "retries": 1
   }
 }
