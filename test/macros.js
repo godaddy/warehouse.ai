@@ -264,8 +264,6 @@ exports.testNPM = function testNPM(registry, options, cb) {
         `--cache=${tmpNpmcache}`,
         command
       ].concat(args), {
-        // npm demands stdout/err be a tty
-        // stdio: ['pipe', 'inherit', 'inherit'],
         env: {
           PATH: process.env.PATH// eslint-disable-line no-process-env
         }

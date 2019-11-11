@@ -109,7 +109,7 @@ describe('npm routes', function () {
     ], done);
   });
 
-  it('can rollback release-lines', function (done) {
+  it.only('can rollback release-lines', function (done) {
     macros.addDistTag({
       method: 'POST',
       host: 'http://localhost:8092',
