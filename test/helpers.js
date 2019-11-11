@@ -1,12 +1,13 @@
 /* eslint {no-process-env: 0} */
 'use strict';
 
-var fs = require('fs'),
-  path = require('path'),
-  async = require('async'),
-  etag = require('etag'),
-  extend = require('extend'),
-  registry = require('../lib');
+var fs = require('fs');
+var path = require('path');
+var async = require('async');
+var etag = require('etag');
+var extend = require('extend');
+var registry = require('../lib');
+var config = require('./config/development.json');
 
 /**
  * @property {defaultStart} Object
@@ -20,63 +21,14 @@ var defaultStart = {
 // Default options to start slay with
 //
 var defaultAppOpts = {
+  ...config,
   auth: false,
   http: 8090,
-  bffs: {
-    prefix: process.env.WRHS_TEST_AWS_PREFIX,
-    cdn: {
-      prod: {
-        url: process.env.WRHS_TEST_AWS_PROD_URL,
-        pkgcloud: {
-          keyId: process.env.WRHS_TEST_AWS_KEY_ID,
-          key: process.env.WRHS_TEST_AWS_KEY,
-          provider: 'amazon',
-          endpoint: 's3.amazonaws.com',
-          region: 'us-west-1',
-          forcePathBucket: false
-        }
-      },
-      test: {
-        url: process.env.WRHS_TEST_AWS_TEST_URL,
-        pkgcloud: {
-          keyId: process.env.WRHS_TEST_AWS_KEY_ID,
-          key: process.env.WRHS_TEST_AWS_KEY,
-          provider: 'amazon',
-          endpoint: 's3.amazonaws.com',
-          region: 'us-west-1',
-          forcePathBucket: false
-        }
-      },
-      dev: {
-        url: process.env.WRHS_TEST_AWS_DEV_URL,
-        pkgcloud: {
-          keyId: process.env.WRHS_TEST_AWS_KEY_ID,
-          key: process.env.WRHS_TEST_AWS_KEY,
-          provider: 'amazon',
-          endpoint: 's3.amazonaws.com',
-          region: 'us-west-1',
-          forcePathBucket: false
-        }
-      }
-    }
-  },
   npm: {
     urls: {
       write: {
         'default': 'http://localhost:8091',
         '@good': 'http://localhost:8091'
-      }
-    }
-  },
-  database: {
-    config: {
-      keyspace: 'warehouse_test',
-      user: 'cassandra',
-      password: 'cassandra',
-      hosts: ['127.0.0.1'],
-      keyspaceOptions: {
-        class: 'SimpleStrategy',
-        replication_factor: 1
       }
     }
   },

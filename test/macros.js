@@ -117,6 +117,7 @@ exports.publishOk = function (context, opts) {
     parsed.auth = `${options.auth.user}:${options.auth.password}`;
     options.publishUrl = url.format(parsed);
   }
+
   return function shouldPublish(done) {
     var app = context.app;
     var registry = context.registry;
@@ -269,6 +270,7 @@ exports.testNPM = function testNPM(registry, options, cb) {
           PATH: process.env.PATH// eslint-disable-line no-process-env
         }
       });
+
       fs.createReadStream(stdinFile).pipe(pid.stdin);
       pid.on('exit', (code) => {
         assume(code).equals(expectedExit);

@@ -14,6 +14,7 @@ describe('npm auth', function () {
     let teardowns;
     const context = {};
     const teardown = (cb) => void teardowns.push(cb);
+
     beforeEach((done) => {
       teardowns = [];
       helpers.integrationSetup({
@@ -37,9 +38,11 @@ describe('npm auth', function () {
         })(done);
       });
     });
+
     afterEach(() => {
       teardowns.forEach(fn => fn());
     });
+
     it('handles basic auth', function (done) {
       macros.testNPM(context.registry, {
         teardown,

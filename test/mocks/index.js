@@ -1,10 +1,10 @@
 'use strict';
 
-var join = require('path').join,
-  concat = require('concat-stream'),
-  ndjson = require('ndjson'),
-  readonly = require('read-only-stream'),
-  wrhs = require('warehouse-models');
+var { join } = require('path');
+var concat = require('concat-stream');
+var ndjson = require('ndjson');
+var readonly = require('read-only-stream');
+var wrhs = require('warehouse-models');
 var { DynamoDB } = require('aws-sdk');
 var dynamo = require('dynamodb-x');
 var config = require('../config/development.json');

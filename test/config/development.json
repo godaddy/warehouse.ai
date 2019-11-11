@@ -4,6 +4,9 @@
   "cors": {
     "methods": ["GET"]
   },
+  "s3": {
+    "endpoint": "http://localhost:4572"
+  },
   "bffs": {
     "prefix": "wrhs",
     "cdn": {
