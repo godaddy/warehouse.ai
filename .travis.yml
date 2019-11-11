@@ -1,13 +1,21 @@
 sudo: required
-dist: trusty
 language: node_js
+
 node_js:
-- '8'
-- '10'
+  - "10"
+  - "12"
+
 services:
-- cassandra
-before_install: 
+  - docker
+
+before_install:
+  - docker pull localstack/localstack
+  - docker run -d -p 127.0.0.1:4569:4569 -p 127.0.0.1:4572:4572 --name localstack localstack/localstack
+
+install: npm install
+
 env:
+  - AWS_ACCESS_KEY_ID=foobar AWS_SECRET_ACCESS_KEY=foobar
   global:
   - secure: W8EiJzG9a3MUCCW/tnVfavWOoM1hiXnx5jGaWEIub/F1OhNlG0XfpxWC/6zsduY9JtfOG+oAhPWpwP+lpAq0zaU71D0zaddcd0d54Lp30ZPfwlluwdJ7JBrWHqr7YxCqgJXcH+e6cK6HzgtY0z120dnvVykWBxeP7u5Wi4Dt7eV5gycnrWeroteH+DZVHLK6pcley6iB74q9NbJeRak9fH/nhcSZGox5BlJVJnhb+/k5PMX8mL/PdrT2q4EZpsHX6EV7RvsPiVxfnR95sHK0Y9L0eo1t/RD9z35LUxLKskk8EgpM3YE5dCXySyoj31phkuOC/1MPh0L2lnz3nAiBiUxoPOSSDFM32XOj7KWEPy/e3nnQGUcZ2F/7GFBaY6tkf4OCKr+LYGKEYM1bz6EEqafe2ugMknFBq+/QJPTtJEGyVpGpiEj35TpclaT7yJJm3ppX1exW6M4jffhcNqyI6LNwbPeVSZkaIMmWWkps1nLa++hNTtz17TX4LGy4zH9hF79VrYc4Tt4W2Rj3MotlClg0F306/rOrUjA5FYFPTHAUza3iILUHXENgMNDcxO954EehsCwvB9A9ToekjMXK+iNg30954Y7huKMT8HFKnENuOpAHS7SO8oy4ei4dcbxDnXBs7JuGsw9OctRKYKuTeII1t43h3Gk9TU04iHyNn1s=
   - secure: n7Kf6Gr83oeliZ6pevHrqeLJiRkFCsNUjHyN/Z/GIRr6q+BLLFtLY7FTt5NLOk/L2wYtOu2XPq6Y6aQkqheGYi3HRqI3wUobTHk3bK0EOL4iOtWFa7+CEVTaezB9CYELl8l3/cVdvJyv41/84IoA04AN5+jgWJX3emtSuDf1mLCxywWbcsHKlD3AVHvZwrFahSFafTEFeAvaDtKPHV0uLBqJRDslv/AtXIyDaEgtrnHsuNM7oF6/BBLTe6Z01AticjmJzwvjNp05Ro8dPx0ThgFHLbYA5946eArapuj/urIUu9mRU7+oEcr22A3kC4yj2qGRkRf7WiZCNQXbCfq/5bpjf3b+XGSB1OLHlBOGxEaBeVZN2C8uO/T/8a0/4iDzKBJdOtROGxbeE8Jlr+5o0sFB5Kyv4jLgvUs4Wa7UQ9PajEBOlCIr05Slycfdmf2fgX8IIleEbtNhs+RjYfDWsVPyAdP7Eg80ENQwVgbJUZJck6qUdrSbXMn/Jp7Xou80NpJBr2W/kpw/vRHPWOqNXbnQSyUAn2e91anLzYW+Yx/6UT5DX7J8l7O/UweOfXXuOZxhGSkhR56TI3GhaV7GRrP5R1WP7rDNfKHs7OoPHYhyWSM0nN6nXnb7eZduD7TDaxFAwl/plQ8i6NZjYh6TzA9GRL7WBWcWt20uap9XVcQ=
