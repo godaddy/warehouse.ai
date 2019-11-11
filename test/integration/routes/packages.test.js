@@ -20,14 +20,6 @@ function address(app, properties) {
 }
 
 function validatePackage(pkg, expectation) {
-  const keys = ['name', 'version', 'description', 'main', 'gitHead', 'extended',
-    'keywords', 'bundledDependencies', 'distTags', 'envs', 'metadata', 'config',
-    'repository', 'dependencies', 'devDependencies', 'peerDependencies',
-    'optionalDependencies'];
-
-  console.log(key);
-  keys.forEach(key => assume(pkg[key]).is.not.equals(undefined)); // eslint-disable-line no-undefined
-
   Object.keys(expectation).forEach(key => {
     assume(pkg[key]).equals(expectation[key]);
   });
@@ -62,7 +54,7 @@ describe('/packages/*', function () {
     ], next);
   });
 
-  it.only('/packages returns a list all of the packages', function (next) {
+  it('/packages returns a list all of the packages', function (next) {
     macros.publishOk(context)(function () {
       macros.publishOk(context, {
         file: path.join(helpers.dirs.payloads, '@good-work.json'),
@@ -84,7 +76,6 @@ describe('/packages/*', function () {
           validatePackage(packages[0], {
             name: '@good/work',
             version: '1.0.0',
-            description: '',
             main: 'index.js'
           });
 
@@ -121,7 +112,6 @@ describe('/packages/*', function () {
         validatePackage(body, {
           name: '@good/work',
           version: '1.0.0',
-          description: '',
           main: 'index.js'
         });
 

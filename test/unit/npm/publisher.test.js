@@ -1,15 +1,16 @@
 /* eslint no-process-env: 0*/
 'use strict';
 
-var path = require('path'),
-  url = require('url'),
-  assume = require('assume'),
-  concat = require('concat-stream'),
-  diagnostics = require('diagnostics'),
-  sinon = require('sinon'),
-  mocks = require('../../mocks'),
-  macros = require('../../macros'),
-  dirs = require('../../helpers').dirs;
+var path = require('path');
+var url = require('url');
+var assume = require('assume');
+var concat = require('concat-stream');
+var diagnostics = require('diagnostics');
+var sinon = require('sinon');
+var mocks = require('../../mocks');
+var macros = require('../../macros');
+var { dirs } = require('../../helpers');
+var async = require('async');
 
 const { PassThrough, Readable } = require('stream');
 
@@ -144,6 +145,7 @@ describe('npm/publisher.js', function () {
     var name = 'npm-publish-split-stream';
     var version = '0.0.0';
     var payload = path.join(dirs.payloads, name + '-' + version + '.json');
+    var models = mocks.models();
 
     it('passes through a simple package passing checks', function (done) {
       //
@@ -187,6 +189,15 @@ describe('npm/publisher.js', function () {
         assume(res.statusCode).equals(expected.statusCode);
         assume(res.statusMessage).equals(expected.statusMessage);
         assume(res.headers).deep.equals(expected.headers);
+
+        //
+        // Clean up database tables.
+        //
+        async.series([
+          models.Package.remove.bind(models.Package, { name }),
+          models.Version.remove.bind(models.Version, { name, version })
+        ], done);
+
         done();
       });
 

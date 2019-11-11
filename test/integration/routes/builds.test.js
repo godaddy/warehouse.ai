@@ -156,7 +156,7 @@ describe('/builds/*', function () {
       assume(body.version).equals('0.0.1');
       assume(body.env).equals('test');
       assume(body.files).is.an('array');
-      assume(body.recommended).is(undefined);
+      assume(body.recommended).equals(undefined);
 
       async.each(body.files, (file, next) => {
         request({
