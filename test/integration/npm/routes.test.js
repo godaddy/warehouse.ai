@@ -70,8 +70,7 @@ describe('npm routes', function () {
         host: 'http://localhost:8092',
         name: name,
         expect: {
-          latest: '0.0.1',
-          test: null
+          latest: '0.0.1'
         }
       }));
 
