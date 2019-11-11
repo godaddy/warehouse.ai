@@ -118,6 +118,7 @@ describe('npm routes', function () {
       version: '0.0.1'
     })(function (err) {
       assume(err).is.falsey();
+
       setTimeout(function () {
         async.series([
           macros.hasDistTags({
@@ -137,7 +138,7 @@ describe('npm routes', function () {
             }
           })
         ], done);
-      }, 100);
+      }, 500);
     });
   });
 
@@ -169,7 +170,7 @@ describe('npm routes', function () {
             }
           })
         ], done);
-      }, 100);
+      }, 500);
     });
   });
 });
