@@ -265,7 +265,7 @@ exports.testNPM = function testNPM(registry, options, cb) {
         command
       ].concat(args), {
         // npm demands stdout/err be a tty
-        stdio: ['pipe', 'inherit', 'inherit'],
+        // stdio: ['pipe', 'inherit', 'inherit'],
         env: {
           PATH: process.env.PATH// eslint-disable-line no-process-env
         }
