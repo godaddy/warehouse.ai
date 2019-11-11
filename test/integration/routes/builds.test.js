@@ -1,5 +1,4 @@
-/* eslint no-sync: 0*/
-/* eslint max-nested-callbacks: 0*/
+/* eslint no-sync:0, max-nested-callbacks:0, no-undefined:0*/
 'use strict';
 
 var fs = require('fs'),
@@ -157,7 +156,7 @@ describe('/builds/*', function () {
       assume(body.version).equals('0.0.1');
       assume(body.env).equals('test');
       assume(body.files).is.an('array');
-      assume(body.recommended).is.an('array');
+      assume(body.recommended).is(undefined);
 
       async.each(body.files, (file, next) => {
         request({
