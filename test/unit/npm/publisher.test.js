@@ -191,14 +191,14 @@ describe('npm/publisher.js', function () {
         assume(res.headers).deep.equals(expected.headers);
 
         //
-        // Clean up database tables.
+        // Clean up database tables, await propagation.
         //
-        async.series([
-          models.Package.remove.bind(models.Package, { name }),
-          models.Version.remove.bind(models.Version, { name, version })
-        ], done);
-
-        done();
+        setTimeout(function () {
+          async.series([
+            models.Package.remove.bind(models.Package, { name }),
+            models.Version.remove.bind(models.Version, { name, version })
+          ], done);
+        }, 500);
       });
 
       res.writeHead = function (status, message, headers) {
