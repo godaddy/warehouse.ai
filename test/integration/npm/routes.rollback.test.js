@@ -109,7 +109,7 @@ describe('npm routes', function () {
     ], done);
   });
 
-  it.only('can rollback release-lines', function (done) {
+  it('can rollback release-lines', function (done) {
     macros.addDistTag({
       method: 'POST',
       host: 'http://localhost:8092',
@@ -124,7 +124,6 @@ describe('npm routes', function () {
             host: 'http://localhost:8092',
             name: 'child-package',
             expect: {
-              latest: '0.0.2',
               test: '0.0.1'
             }
           }),
@@ -132,7 +131,6 @@ describe('npm routes', function () {
             host: 'http://localhost:8092',
             name: 'parent-package',
             expect: {
-              latest: '0.0.3',
               test: '0.0.1'
             }
           })
@@ -156,7 +154,6 @@ describe('npm routes', function () {
             host: 'http://localhost:8092',
             name: 'child-package',
             expect: {
-              latest: '0.0.2',
               test: '0.0.1'
             }
           }),
@@ -164,7 +161,6 @@ describe('npm routes', function () {
             host: 'http://localhost:8092',
             name: 'parent-package',
             expect: {
-              latest: '0.0.3',
               test: '0.0.3'
             }
           })
