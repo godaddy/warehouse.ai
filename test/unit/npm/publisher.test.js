@@ -1,24 +1,24 @@
 /* eslint no-process-env: 0, no-console: 0 */
 'use strict';
 
-var path = require('path');
-var url = require('url');
-var assume = require('assume');
-var concat = require('concat-stream');
-var diagnostics = require('diagnostics');
-var sinon = require('sinon');
-var mocks = require('../../mocks');
-var macros = require('../../macros');
-var { dirs } = require('../../helpers');
-var async = require('async');
+const path = require('path');
+const url = require('url');
+const assume = require('assume');
+const concat = require('concat-stream');
+const diagnostics = require('diagnostics');
+const sinon = require('sinon');
+const mocks = require('../../mocks');
+const macros = require('../../macros');
+const { dirs } = require('../../helpers');
+const async = require('async');
 
 const { PassThrough, Readable } = require('stream');
 
-var Publisher = mocks.publisher();
-var FileRequest = mocks.FileRequest;
+const Publisher = mocks.publisher();
+const FileRequest = mocks.FileRequest;
 
-var RealPublisher = require('../../../lib/npm/publisher');
-var Carpenter = require('carpenterd-api-client');
+const RealPublisher = require('../../../lib/npm/publisher');
+const Carpenter = require('carpenterd-api-client');
 
 /**
  * function assumePublisher(opts)

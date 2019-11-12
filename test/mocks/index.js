@@ -1,17 +1,17 @@
 'use strict';
 
-var { join } = require('path');
-var concat = require('concat-stream');
-var ndjson = require('ndjson');
-var readonly = require('read-only-stream');
-var wrhs = require('warehouse-models');
-var { DynamoDB } = require('aws-sdk');
-var dynamo = require('dynamodb-x');
-var config = require('../config/development.json');
+const { join } = require('path');
+const concat = require('concat-stream');
+const ndjson = require('ndjson');
+const readonly = require('read-only-stream');
+const wrhs = require('warehouse-models');
+const { DynamoDB } = require('aws-sdk');
+const dynamo = require('dynamodb-x');
+const config = require('../config/development.json');
 
-var proxyquire = require('proxyquire').noPreserveCache();
+const proxyquire = require('proxyquire').noPreserveCache();
 
-var lib = require('../helpers').dirs.lib;
+const lib = require('../helpers').dirs.lib;
 
 // Export our "submodules" for future use
 //
