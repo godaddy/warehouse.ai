@@ -89,7 +89,7 @@ describe('checkmate', function () {
       assume(context.response).is.an('object');
       assume(context.response.message).is.a('string');
       assume(context.response.stack).is.a('string');
-      assume(context.response.message).equals("Cannot find module '" + checkFile + "'");
+      assume(context.response.message).includes("Cannot find module '" + checkFile + "'");
       done();
     });
   });

@@ -30,12 +30,6 @@ describe('npm publish', function () {
       context.app = result.app;
       context.app.publisher.carpenter = mocks.carpenter;
 
-      if (process.env.DEBUG) {
-        context.app.datastar.connection.on('queryStarted', function () {
-          console.log.apply(console, arguments);
-        });
-      }
-
       done();
     });
   });
@@ -103,7 +97,7 @@ describe('npm publish', function () {
   });
 
   it('should create the Package record on publish', function (done) {
-    context.app.models.Package.get('my-package', function (err, pack) {
+    context.app.models.Package.get({ name: 'my-package' }, function (err, pack) {
       assume(err).is.falsey();
       assume(pack).is.an('object');
       assume(pack.name).equals('my-package');

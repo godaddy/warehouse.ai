@@ -1,14 +1,16 @@
 /* eslint max-nested-callbacks: 0, no-sync: 0 */
 'use strict';
 
-var async = require('async'),
-  assume = require('assume'),
-  fs = require('fs'),
-  path = require('path'),
-  zlib = require('zlib'),
-  mocks = require('../../mocks'),
-  macros = require('../../macros'),
-  helpers = require('../../helpers');
+var { S3 } = require('aws-sdk');
+var AwsLiveness = require('aws-liveness');
+var async = require('async');
+var assume = require('assume');
+var fs = require('fs');
+var path = require('path');
+var zlib = require('zlib');
+var mocks = require('../../mocks');
+var macros = require('../../macros');
+var helpers = require('../../helpers');
 
 describe('npm routes', function () {
   var registry,
@@ -75,11 +77,17 @@ describe('npm routes', function () {
       registry: {
         http: 8093
       }
-    }, function (err, result) {
+    }, async function (err, result) {
       assume(err).to.be.falsey();
+
       registry = result.registry;
       app = result.app;
       app.carpenter = app.publisher.carpenter = mocks.carpenter;
+
+      await new AwsLiveness().waitForServices({
+        clients: [new S3(app.config.get('s3'))],
+        waitSeconds: 30
+      });
 
       async.series([
         publishOne({ name: 'parent-package', version: '0.0.1' }),
@@ -118,6 +126,7 @@ describe('npm routes', function () {
       version: '0.0.1'
     })(function (err) {
       assume(err).is.falsey();
+
       setTimeout(function () {
         async.series([
           macros.hasDistTags({
@@ -137,7 +146,7 @@ describe('npm routes', function () {
             }
           })
         ], done);
-      }, 100);
+      }, 500);
     });
   });
 
@@ -169,7 +178,7 @@ describe('npm routes', function () {
             }
           })
         ], done);
-      }, 100);
+      }, 500);
     });
   });
 });

@@ -1,16 +1,17 @@
 'use strict';
 
-var join = require('path').join,
-  concat = require('concat-stream'),
-  datastarHelpers = require('datastar-test-tools').helpers,
-  datastarMocks = require('datastar-test-tools').mocks,
-  ndjson = require('ndjson'),
-  readonly = require('read-only-stream'),
-  wrhs = require('warehouse-models');
+const { join } = require('path');
+const concat = require('concat-stream');
+const ndjson = require('ndjson');
+const readonly = require('read-only-stream');
+const wrhs = require('warehouse-models');
+const { DynamoDB } = require('aws-sdk');
+const dynamo = require('dynamodb-x');
+const config = require('../config/development.json');
 
-var proxyquire = require('proxyquire').noPreserveCache();
+const proxyquire = require('proxyquire').noPreserveCache();
 
-var lib = require('../helpers').dirs.lib;
+const lib = require('../helpers').dirs.lib;
 
 // Export our "submodules" for future use
 //
@@ -19,8 +20,10 @@ exports.FileRequest = require('./file-request');
 exports.hyperquest = require('./hyperquest');
 exports.registry = require('registry-mock');
 exports.models = function () {
-  var datastar = datastarHelpers.connectDatastar({ mock: true }, datastarMocks.datastar());
-  return wrhs(datastar);
+  const dynamoDriver = new DynamoDB(config.database);
+  dynamo.dynamoDriver(dynamoDriver);
+
+  return wrhs(dynamo);
 };
 
 exports.carpenterBuildResponse = function ({ error } = {}) {

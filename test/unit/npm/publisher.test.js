@@ -1,23 +1,24 @@
-/* eslint no-process-env: 0*/
+/* eslint no-process-env: 0, no-console: 0 */
 'use strict';
 
-var path = require('path'),
-  url = require('url'),
-  assume = require('assume'),
-  concat = require('concat-stream'),
-  diagnostics = require('diagnostics'),
-  sinon = require('sinon'),
-  mocks = require('../../mocks'),
-  macros = require('../../macros'),
-  dirs = require('../../helpers').dirs;
+const path = require('path');
+const url = require('url');
+const assume = require('assume');
+const concat = require('concat-stream');
+const diagnostics = require('diagnostics');
+const sinon = require('sinon');
+const mocks = require('../../mocks');
+const macros = require('../../macros');
+const { dirs } = require('../../helpers');
+const async = require('async');
 
 const { PassThrough, Readable } = require('stream');
 
-var Publisher = mocks.publisher();
-var FileRequest = mocks.FileRequest;
+const Publisher = mocks.publisher();
+const FileRequest = mocks.FileRequest;
 
-var RealPublisher = require('../../../lib/npm/publisher');
-var Carpenter = require('carpenterd-api-client');
+const RealPublisher = require('../../../lib/npm/publisher');
+const Carpenter = require('carpenterd-api-client');
 
 /**
  * function assumePublisher(opts)
@@ -36,7 +37,7 @@ function assumePublisher(opts) {
 }
 
 describe('npm/publisher.js', function () {
-  var actualConfig = require(path.join(__dirname, '..', '..', '..', 'config.example.json'));
+  var actualConfig = require(path.join(__dirname, '..', '..', 'config', 'development.json'));
   var env = process.env.NODE_ENV || 'development';
   var config;
 
@@ -144,6 +145,7 @@ describe('npm/publisher.js', function () {
     var name = 'npm-publish-split-stream';
     var version = '0.0.0';
     var payload = path.join(dirs.payloads, name + '-' + version + '.json');
+    var models = mocks.models();
 
     it('passes through a simple package passing checks', function (done) {
       //
@@ -187,7 +189,16 @@ describe('npm/publisher.js', function () {
         assume(res.statusCode).equals(expected.statusCode);
         assume(res.statusMessage).equals(expected.statusMessage);
         assume(res.headers).deep.equals(expected.headers);
-        done();
+
+        //
+        // Clean up database tables, await propagation.
+        //
+        setTimeout(function () {
+          async.series([
+            models.Package.remove.bind(models.Package, { name }),
+            models.Version.remove.bind(models.Version, { name, version })
+          ], done);
+        }, 500);
       });
 
       res.writeHead = function (status, message, headers) {

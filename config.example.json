@@ -59,18 +59,8 @@
     }
   },
   "database": {
-    "config": {
-      "keyspace": "warehouse_dev",
-      "user": "cassandra",
-      "password": "cassandra",
-      "hosts": [
-        "127.0.0.1"
-      ],
-      "keyspaceOptions": {
-        "class": "SimpleStrategy",
-        "replication_factor": 1
-      }
-    }
+    "endpoint": "aws.amazon.net",
+    "region": "us-east-1"
   },
   "retry": {
     "retries": 3,

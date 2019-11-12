@@ -443,11 +443,17 @@ has network access to that registry so that `npm install` can succeed.
 
 ## Tests
 
-Running the tests will require a running cassandra instance on your local
-machine. All tests are written with `mocha` and `istanbul`. They can be run
-with `npm`:
+Run an AWS local cloud stack, pull `latest` [localstack].
+This requires `docker` [to be setup][docker].
 
-``` bash
+```sh
+docker pull localstack/localstack:latest
+npm run localstack
+```
+
+Run tests in a separate terminal.
+
+```sh
 npm test
 ```
 
@@ -457,3 +463,4 @@ npm test
 [models]: https://github.com/warehouseai/warehouse-models#readme
 [passport-npm]: https://github.com/godaddy/passport-npm
 [auth]: https://github.com/godaddy/warehouse.ai/blob/master/test/integration/npm/econn.test.js
+[docker]: https://docs.docker.com/get-started/

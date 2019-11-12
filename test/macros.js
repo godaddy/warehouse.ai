@@ -117,6 +117,7 @@ exports.publishOk = function (context, opts) {
     parsed.auth = `${options.auth.user}:${options.auth.password}`;
     options.publishUrl = url.format(parsed);
   }
+
   return function shouldPublish(done) {
     var app = context.app;
     var registry = context.registry;
@@ -143,14 +144,13 @@ exports.publishOk = function (context, opts) {
       async.parallel({
         version: function (next) {
           app.models.Version.findOne({
-            conditions: {
-              versionId: json.name + '@' + versionNumber
-            }
+            name: json.name,
+            version: versionNumber
           }, next);
         },
         pkg: function (next) {
           app.models.Package.findOne({
-            conditions: { name: json.name }
+            name: json.name
           }, next);
         }
       }, function (err, models) {
@@ -264,12 +264,11 @@ exports.testNPM = function testNPM(registry, options, cb) {
         `--cache=${tmpNpmcache}`,
         command
       ].concat(args), {
-        // npm demands stdout/err be a tty
-        stdio: ['pipe', 'inherit', 'inherit'],
         env: {
           PATH: process.env.PATH// eslint-disable-line no-process-env
         }
       });
+
       fs.createReadStream(stdinFile).pipe(pid.stdin);
       pid.on('exit', (code) => {
         assume(code).equals(expectedExit);
