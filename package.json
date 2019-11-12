@@ -1,6 +1,6 @@
 {
   "name": "warehouse.ai",
-  "version": "5.1.4",
+  "version": "6.0.0",
   "description": "Modular front-end development through checks, automatic builds, and CDNs.",
   "main": "./lib/index.js",
   "bin": {

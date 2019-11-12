@@ -1,5 +1,7 @@
 # CHANGELOG
 
+### 6.0.0
+
 - [#71] Use DynamoDB based models.
 - Use `swagger-jsdoc-deref` rather than a custom implementation of it
 
