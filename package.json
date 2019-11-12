@@ -14,7 +14,7 @@
     "test": "npm run cover && npm run report",
     "posttest": "npm run lint",
     "report": "nyc report --reporter=lcov",
-    "lint": "eslint-godaddy -c .eslintrc lib/ test/",
+    "lint": "eslint-godaddy -c .eslintrc \"{lib,test}/**/*.js\"",
     "diagrams": "wrhs-diagrams --source=assets/diagrams --target=assets",
     "localstack": "docker run -it -p 4569:4569 -p 4572:4572 --rm localstack/localstack",
     "sandbox": "npm-registry-echo",
