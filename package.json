@@ -40,7 +40,7 @@
   "dependencies": {
     "@wrhs/release-line": "^2.0.0",
     "access-control": "^1.0.0",
-    "async": "^3.1.0",
+    "async": "^3.2.0",
     "authboot": "^2.0.1",
     "aws-liveness": "^1.1.0",
     "aws-sdk": "^2.567.0",
