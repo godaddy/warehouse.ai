@@ -84,7 +84,7 @@
     "swagger-ui-express": "^4.1.2",
     "tinythen": "^1.0.1",
     "warehouse-models": "^6.0.1",
-    "winston": "~2.3.1",
+    "winston": "~2.4.4",
     "zipline": "^1.0.0"
   },
   "devDependencies": {
