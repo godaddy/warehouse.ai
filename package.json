@@ -74,7 +74,7 @@
     "p-limit": "^2.2.1",
     "passport": "^0.4.0",
     "passport-npm": "2.0.0",
-    "readable-stream": "^3.4.0",
+    "readable-stream": "^3.6.0",
     "retryme": "^1.1.0",
     "semver": "^6.3.0",
     "slay": "~1.0.2",
