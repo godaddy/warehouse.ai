@@ -1,5 +1,7 @@
 # CHANGELOG
 
+- Allow `DATABASE_REGION` env var to configure dynamo region
+
 ### 6.0.0
 
 - [#71] Use DynamoDB based models.
