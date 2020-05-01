@@ -19,7 +19,9 @@
     "localstack": "docker run -it -p 4569:4569 -p 4572:4572 --rm localstack/localstack",
     "sandbox": "npm-registry-echo",
     "swagger": "swagger-jsdoc-deref -d ./lib/swagger.js -o ./lib/wrhs-spec.json",
-    "apiDocs": "npm run swagger && json2yaml ./lib/wrhs-spec.json > ./lib/wrhs-spec.yaml && swagger-markdown -i ./lib/wrhs-spec.yaml -o ./apiDocs/wrhs-spec.md"
+    "apiDocs": "npm run swagger && json2yaml ./lib/wrhs-spec.json > ./lib/wrhs-spec.yaml && swagger-markdown -i ./lib/wrhs-spec.yaml -o ./apiDocs/wrhs-spec.md",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -85,7 +87,8 @@
     "tinythen": "^1.0.1",
     "warehouse-models": "^6.0.1",
     "winston": "~2.3.1",
-    "zipline": "^1.0.0"
+    "zipline": "^1.0.0",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "@wrhs/diagrams": "^1.0.0",
@@ -115,5 +118,6 @@
     "swagger-jsdoc-deref": "^1.0.0",
     "swagger-markdown": "^1.2.0",
     "tmp": "^0.1.0"
-  }
+  },
+  "snyk": true
 }
