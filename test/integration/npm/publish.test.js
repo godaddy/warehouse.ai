@@ -171,6 +171,10 @@ describe('npm publish', function () {
         name: 'promote-false',
         file: path.join(dirs.payloads, 'promote-false-0.0.1.json')
       }),
+      helpers.cleanupPublish(context.app, {
+        name: 'promote-true',
+        file: path.join(dirs.payloads, 'promote-true-0.0.1.json')
+      }),
       context.app.close.bind(context.app),
       context.registry.close.bind(context.registry)
     ], done);
