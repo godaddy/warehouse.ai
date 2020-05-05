@@ -12,7 +12,7 @@ const macros = require('../../macros');
 const { dirs } = require('../../helpers');
 const async = require('async');
 
-assume.use(require('assume-sinon'))
+assume.use(require('assume-sinon'));
 
 const { PassThrough, Readable } = require('stream');
 

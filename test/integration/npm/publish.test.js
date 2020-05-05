@@ -51,12 +51,15 @@ describe('npm publish', function () {
       }));
   });
 
-  it('should trigger a carpenter build', function (done) {
+  it('should trigger a carpenter build with promote=true', function (done) {
     sinon.spy(context.registry, 'cacheRequest');
     sinon.spy(context.app.publisher.carpenter, 'build');
 
     macros.publishOk(context)(function () {
       assume(context.app.publisher.carpenter.build).to.be.called();
+      assume(context.app.publisher.carpenter.build).to.be.calledWith(
+        sinon.match({ data: { payload: sinon.match.any, promote: true }})
+      );
       assume(context.app.publisher.carpenter.build).to.be.calledAfter(context.registry.cacheRequest);
 
       context.registry.cacheRequest.restore();
@@ -66,17 +69,20 @@ describe('npm publish', function () {
     });
   });
 
-  it('should trigger a carpenter build with promote false', function (done) {
+  it('should trigger a carpenter build with promote=false', function (done) {
     sinon.spy(context.registry, 'cacheRequest');
     sinon.spy(context.app.publisher.carpenter, 'build');
 
-    macros.publishOk({
-      file: path.join(dirs.payloads, 'promote-false-0.01.json'),
-      publishUrl: 'http://localhost;8090/promote-false',
+    macros.publishOk(context, {
+      file: path.join(dirs.payloads, 'promote-false-0.0.1.json'),
+      publishUrl: 'http://localhost:8090/promote-false',
       id: 'promote-false@0.0.1',
       path: '/promote-false'
     })(function () {
       assume(context.app.publisher.carpenter.build).to.be.called();
+      assume(context.app.publisher.carpenter.build).to.be.calledWith(
+        sinon.match({ data: { payload: sinon.match.any, promote: false }})
+      );
       assume(context.app.publisher.carpenter.build).to.be.calledAfter(context.registry.cacheRequest);
 
       context.registry.cacheRequest.restore();
