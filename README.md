@@ -383,6 +383,20 @@ First, add these parameters in your `package.json`:
  }
 ```
 
+We also have a new configuration option added to the `wrhs` property in the
+`package.json` if you want to disable auto promotion behavior during publish.
+
+```diff
+{
+  "name": "yet-another-js-framework",
+  ...
+
+  "wrhs": {
+    "autoPromoteOnPublish": false
+  }
+}
+```
+
 This indicates to `warehouse.ai` that you're building with `webpack` for the
 appropriate locales. Currently, 3 build systems are supported, `webpack`, `es*`,
 and `browserify`. These additional systems are further detailed
