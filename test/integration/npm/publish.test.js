@@ -66,6 +66,26 @@ describe('npm publish', function () {
     });
   });
 
+  it('should trigger a carpenter build with promote false', function (done) {
+    sinon.spy(context.registry, 'cacheRequest');
+    sinon.spy(context.app.publisher.carpenter, 'build');
+
+    macros.publishOk({
+      file: path.join(dirs.payloads, 'promote-false-0.01.json'),
+      publishUrl: 'http://localhost;8090/promote-false',
+      id: 'promote-false@0.0.1',
+      path: '/promote-false'
+    })(function () {
+      assume(context.app.publisher.carpenter.build).to.be.called();
+      assume(context.app.publisher.carpenter.build).to.be.calledAfter(context.registry.cacheRequest);
+
+      context.registry.cacheRequest.restore();
+      context.app.publisher.carpenter.build.restore();
+
+      done();
+    });
+  });
+
   it('should successfully publish a valid package', macros.publishOk(context));
 
   it('should successfully publish a scoped package', macros.publishOk(context, {
