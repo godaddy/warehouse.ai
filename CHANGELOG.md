@@ -1,5 +1,7 @@
 # CHANGELOG
 
+- [#83] Support configurable `wrhs.autoPromoteOnPublish` value in `package.json`
+
 ### 6.0.1
 
 - Allow `DATABASE_REGION` env var to configure dynamo region
@@ -43,3 +45,4 @@
 [#61]: https://github.com/godaddy/warehouse.ai/pull/61
 [#64]: https://github.com/godaddy/warehouse.ai/pull/64
 [#71]: https://github.com/godaddy/warehouse.ai/pull/71
+[#83]: https://github.com/godaddy/warehouse.ai/pull/83
