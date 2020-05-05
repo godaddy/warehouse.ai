@@ -58,7 +58,7 @@ describe('npm publish', function () {
     macros.publishOk(context)(function () {
       assume(context.app.publisher.carpenter.build).to.be.called();
       assume(context.app.publisher.carpenter.build).to.be.calledWith(
-        sinon.match({ data: { payload: sinon.match.any, promote: true }})
+        sinon.match({ data: { payload: sinon.match.any, promote: true } })
       );
       assume(context.app.publisher.carpenter.build).to.be.calledAfter(context.registry.cacheRequest);
 
@@ -81,7 +81,7 @@ describe('npm publish', function () {
     })(function () {
       assume(context.app.publisher.carpenter.build).to.be.called();
       assume(context.app.publisher.carpenter.build).to.be.calledWith(
-        sinon.match({ data: { payload: sinon.match.any, promote: false }})
+        sinon.match({ data: { payload: sinon.match.any, promote: false } })
       );
       assume(context.app.publisher.carpenter.build).to.be.calledAfter(context.registry.cacheRequest);
 
