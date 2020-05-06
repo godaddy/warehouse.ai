@@ -1,5 +1,7 @@
 # CHANGELOG
 
+### 6.1.0
+
 - [#83] Support configurable `wrhs.autoPromoteOnPublish` value in `package.json`
 
 ### 6.0.1
