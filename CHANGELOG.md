@@ -1,5 +1,7 @@
 # CHANGELOG
 
+- Configure env var to properly override config for dynamo region
+
 ### 6.1.0
 
 - [#83] Support configurable `wrhs.autoPromoteOnPublish` value in `package.json`
