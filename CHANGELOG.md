@@ -1,5 +1,7 @@
 # CHANGELOG
 
+### 6.1.1
+
 - Configure env var to properly override config for dynamo region
 
 ### 6.1.0
