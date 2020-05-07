@@ -1,5 +1,7 @@
 # CHANGELOG
 
+### 6.1.2
+
 - Do not let undefined override valid region
 
 ### 6.1.1
