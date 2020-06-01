@@ -23,19 +23,21 @@ function address(app, properties) {
     protocol: 'http'
   }, properties || {}));
 }
+
+const testPkg = JSON.parse(fs.readFileSync('test/fixtures/payloads/my-package-0.0.1.json', 'utf-8'))
 //
 // TODO: Need testing config for publishing to s3 to store encrypted with
 // travis
 //
-describe('/builds/*', function () {
+describe.only('/builds/*', function () {
   this.timeout(3E4);
   var content = path.join(__dirname, 'builds.test.js'),
     gzip = path.join(require('os').tmpdir(), 'build.test.js'),
     spec = { name: 'pancake', version: '0.0.1', env: 'test' },
     publishOptions = {
       files: [{
-        content: content,
-        compressed: gzip,
+        content: content, //path
+        compressed: gzip, //path
         fingerprint: '3x4mp311d',
         filename: 'builds.test.js',
         extension: '.js'
@@ -83,6 +85,7 @@ describe('/builds/*', function () {
   });
 
   after(function (next) {
+    console.log("cleanup package and version record")
     async.series([
       helpers.cleanupPublish(app),
       app.close.bind(app),
@@ -220,6 +223,24 @@ describe('/builds/*', function () {
       });
     });
   });
+
+  it.only('PUT /builds/:pkg/ can put a built payload', async () => {
+    try {
+      await req({
+        method: 'PUT',
+        uri: address(app, {
+          pathname: `builds/${name}/`
+        }),
+        json: testPkg 
+      });
+      //JSON.parse(fs.readFileSync('test/fixtures/payloads/built-asset.json', 'utf-8'))
+      console.log("done?");
+    } catch (ex) {
+      console.log('error message', ex.message);
+      assume(ex.statusCode).equals(400);
+    }
+  });
+
 
   it('PATCH /builds/:pkg/:env/:version gives 400 with bad version', async () => {
     try {
