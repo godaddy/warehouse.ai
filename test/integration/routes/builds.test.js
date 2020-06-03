@@ -24,7 +24,8 @@ function address(app, properties) {
   }, properties || {}));
 }
 
-const testPkg = JSON.parse(fs.readFileSync('test/fixtures/payloads/my-package-0.0.1.json', 'utf-8'))
+// const testPkg = JSON.parse(fs.readFileSync('test/fixtures/payloads/my-package-0.0.1.json', 'utf-8'))
+const testPkg = JSON.parse(fs.readFileSync('test/fixtures/payloads/built-asset.json', 'utf-8'))
 //
 // TODO: Need testing config for publishing to s3 to store encrypted with
 // travis
@@ -98,6 +99,7 @@ describe.only('/builds/*', function () {
   });
 
   afterEach(function (next) {
+    console.log("unpliblish", spec);
     app.bffs.unpublish(spec, function () {
       async.each(app.bffs.envs, function (env, next) {
         var mine = JSON.parse(JSON.stringify(spec));
@@ -224,21 +226,40 @@ describe.only('/builds/*', function () {
     });
   });
 
-  it.only('PUT /builds/:pkg/ can put a built payload', async () => {
-    try {
-      await req({
-        method: 'PUT',
-        uri: address(app, {
-          pathname: `builds/${name}/`
-        }),
-        json: testPkg 
+  describe.only('PUT /builds/:pkg/:env?', function () {
+    afterEach(function (next) {
+      const fullyBuiltAssetSpec = {
+        name: 'willowtestpackageload',
+        version: '1.0.0',
+        env: 'dev'
+      }
+      app.bffs.unpublish(fullyBuiltAssetSpec, function () {
+        console.log("unpublished post put call: ", fullyBuiltAssetSpec);
+        async.each(app.bffs.envs, function (env, next) {
+          var mine = JSON.parse(JSON.stringify(fullyBuiltAssetSpec));
+  
+          mine.name = mine.name + ':all';
+          mine.env = env;
+  
+          app.bffs.unpublish(mine, next);
+        }, next);
       });
-      //JSON.parse(fs.readFileSync('test/fixtures/payloads/built-asset.json', 'utf-8'))
-      console.log("done?");
-    } catch (ex) {
-      console.log('error message', ex.message);
-      assume(ex.statusCode).equals(400);
-    }
+    });
+    it.only('PUT /builds/:pkg/ can put a built payload', async () => {
+      try {
+        await req({
+          method: 'PUT',
+          uri: address(app, {
+            pathname: `builds/${name}/`
+          }),
+          json: testPkg 
+        });
+        console.log("done?");
+      } catch (ex) {
+        console.log('error message', ex.message);
+        assume(ex.statusCode).equals(400);
+      }
+    });
   });
 
 
