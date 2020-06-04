@@ -35,8 +35,8 @@ describe('/builds/*', function () {
     spec = { name: 'pancake', version: '0.0.1', env: 'test' },
     publishOptions = {
       files: [{
-        content: content, // path
-        compressed: gzip, // path
+        content: content,
+        compressed: gzip,
         fingerprint: '3x4mp311d',
         filename: 'builds.test.js',
         extension: '.js'
