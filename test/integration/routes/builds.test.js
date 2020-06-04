@@ -24,21 +24,19 @@ function address(app, properties) {
   }, properties || {}));
 }
 
-// const testPkg = JSON.parse(fs.readFileSync('test/fixtures/payloads/my-package-0.0.1.json', 'utf-8'))
-const testPkg = JSON.parse(fs.readFileSync('test/fixtures/payloads/built-asset.json', 'utf-8'))
 //
 // TODO: Need testing config for publishing to s3 to store encrypted with
 // travis
 //
-describe.only('/builds/*', function () {
+describe('/builds/*', function () {
   this.timeout(3E4);
   var content = path.join(__dirname, 'builds.test.js'),
     gzip = path.join(require('os').tmpdir(), 'build.test.js'),
     spec = { name: 'pancake', version: '0.0.1', env: 'test' },
     publishOptions = {
       files: [{
-        content: content, //path
-        compressed: gzip, //path
+        content: content, // path
+        compressed: gzip, // path
         fingerprint: '3x4mp311d',
         filename: 'builds.test.js',
         extension: '.js'
@@ -86,7 +84,6 @@ describe.only('/builds/*', function () {
   });
 
   after(function (next) {
-    console.log("cleanup package and version record")
     async.series([
       helpers.cleanupPublish(app),
       app.close.bind(app),
@@ -99,7 +96,6 @@ describe.only('/builds/*', function () {
   });
 
   afterEach(function (next) {
-    console.log("unpliblish", spec);
     app.bffs.unpublish(spec, function () {
       async.each(app.bffs.envs, function (env, next) {
         var mine = JSON.parse(JSON.stringify(spec));
@@ -226,39 +222,34 @@ describe.only('/builds/*', function () {
     });
   });
 
-  describe.only('PUT /builds/:pkg/:env?', function () {
+  describe('PUT /builds/:pkg/:env?', function () {
     afterEach(function (next) {
+      // cleans up records and unpublishes fully built asset payload
       const fullyBuiltAssetSpec = {
         name: 'willowtestpackageload',
         version: '1.0.0',
         env: 'dev'
-      }
-      app.bffs.unpublish(fullyBuiltAssetSpec, function () {
-        console.log("unpublished post put call: ", fullyBuiltAssetSpec);
-        async.each(app.bffs.envs, function (env, next) {
-          var mine = JSON.parse(JSON.stringify(fullyBuiltAssetSpec));
-  
-          mine.name = mine.name + ':all';
-          mine.env = env;
-  
-          app.bffs.unpublish(mine, next);
-        }, next);
-      });
+      };
+      async.series([
+        helpers.cleanupPublish(app, { name, file: path.join(helpers.dirs.payloads, 'built-asset.json') }),
+        function (cb) {
+          app.bffs.unpublish(fullyBuiltAssetSpec, (err) => {
+            cb();
+          });
+        }
+      ], next);
     });
-    it.only('PUT /builds/:pkg/ can put a built payload', async () => {
-      try {
-        await req({
-          method: 'PUT',
-          uri: address(app, {
-            pathname: `builds/${name}/`
-          }),
-          json: testPkg 
-        });
-        console.log("done?");
-      } catch (ex) {
-        console.log('error message', ex.message);
-        assume(ex.statusCode).equals(400);
-      }
+    it('PUT /builds/:pkg/ can put a built payload', async () => {
+      const testPkg = JSON.parse(fs.readFileSync('test/fixtures/payloads/built-asset.json', 'utf-8'));
+      const res = await req({
+        method: 'PUT',
+        uri: address(app, {
+          pathname: `builds/${name}/`
+        }),
+        json: testPkg,
+        resolveWithFullResponse: true
+      });
+      assume(res.statusCode).equals(204);
     });
   });
 
