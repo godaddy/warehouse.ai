@@ -1,0 +1,61 @@
+{
+   "_id":"fully-built-payload",
+   "name":"fully-built-payload",
+   "description":"try to see what a package payload is like",
+   "dist-tags":{
+      "latest":"1.0.0"
+   },
+   "versions":{
+      "1.0.0":{
+         "name":"fully-built-payload",
+         "version":"1.0.0",
+         "description":"try to see what a package payload is like",
+         "main":"index.js",
+         "scripts":{
+            "test":"echo \"Error: no test specified\" && exit 1"
+         },
+         "author":"",
+         "license":"ISC",
+         "dependencies":{
+            "slay":"^3.1.1"
+         },
+         "devDependencies":{
+            "assume":"^2.2.0"
+         },
+         "readme":"### TEST A PACKAGE PAYLOAD",
+         "readmeFilename":"README.md",
+         "_id":"fully-built-payload@1.0.0",
+         "_nodeVersion":"10.19.0",
+         "_npmVersion":"6.13.4",
+         "_npmUser":{
+            "name":"garbage!!user",
+            "email":"anyvalid@email.com"
+         },
+         "maintainers":[
+            {
+               "name":"garbage!!user",
+               "email":"anyvalid@email.com"
+            }
+         ],
+         "dist":{
+            "integrity":"sha512-J1JAImCjTKb1OABNSwkvzfHV58SwcbzVWWkAJs/DdB0/nZp2ojDFBNq/YhEiiUEqWLTSTkKUtJH0nnYg547RMw==",
+            "shasum":"fd8fb4945785db161a7aafcd78f5f29fb74d5198",
+            "tarball":"http://localhost:3676/fully-built-payload/-/fully-built-payload-1.0.0.tgz"
+         }
+      }
+   },
+   "readme":"### TEST A PACKAGE PAYLOAD",
+   "maintainers":[
+      {
+         "name":"garbage!!user",
+         "email":"anyvalid@email.com"
+      }
+   ],
+   "_attachments":{
+      "fully-built-payload-1.0.0.tgz":{
+         "content_type":"application/octet-stream",
+         "data":"H4sIAAAAAAAAE+1YbWvbMBDu5/yKw4WmhcaxEseFhn0IbRhjKxtrvox1BcW+JFpty0hyl2z0v0+y465rswU2J9moHgiK7k6nl9Pjk5TR8IZOsR0xqdoyH7ciJtrU/Szd6de9muB5XuD7sEq+BOx1e4FHSBB42s4jnZNeV5d1DeB3yKWiQg/lb/1UE6nK/wTZw/jTVhhTKXX0a+1jTfw7JHgSf+LZ+G8FRcBhhFLBtwZAyFOpRB4qLg55puRRIQVQMybdmE/hBRix+ftDnubJGIVW9bTsTv+09gKl1PvqMCnLyo9AlYv03t29ul+0vNv1ajw/ZL/6/tfYxxr+E+8p/7u+5f9WUBAeqCYv6TfKylhXOlWF5yrLlZZ8pMfjTw2cZ1woiHBC87jS9hu7noXFn2Il/8db5b+3Iv93jb3l/+ZRsjzUBG+GTcvjZ4ef+B9hhmkkWzxtcTVDUdNNYB3/A/8x/31CTiz/twGWFAl9meYngifQvD8GNhvFKYDHWBzWS6Oj/q7HbFEfKv4vS014ntbdxxr+93zymP+k5weW/9uAuZY7KU3QOQVnksfxojXOWaxaGV3EnEbOsTG41bmA8dTYENdzvVIaoQwFy9RSo8QCFAeJCF9m1FwqlpsKlr6ASYjZDZatE8qKZiyNcK73XSktPUqtKB8MHIVSGTMMZxyunKEQXJxCysEoQGYYsgnD6MqBgwPAOVNAHPOYUHijuZpxYZqX3mMWYiqLub66PKtmYZIepiHDB93KmC6M2XXXJe4DjxHenq9sQKXMy1W87rgdvUTli8a/fqSq+P9+ODi/GLpJtIE+1uX/bucx/72ekVn+bx77+/swGl6OYADvBmevBy+Huvzw5u3gfNcjs7CwsLDYJL4DugT95wAeAAA=",
+         "length":671
+      }
+   }
+}

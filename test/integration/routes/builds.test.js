@@ -226,21 +226,21 @@ describe('/builds/*', function () {
     afterEach(function (next) {
       // cleans up records and unpublishes fully built asset payload
       const fullyBuiltAssetSpec = {
-        name: 'willowtestpackageload',
+        name: 'fully-built-payload',
         version: '1.0.0',
         env: 'dev'
       };
       async.series([
-        helpers.cleanupPublish(app, { name: 'willowtestpackageload', file: path.join(helpers.dirs.payloads, 'built-asset.json') }),
+        helpers.cleanupPublish(app, { name: 'fully-built-payload', file: path.join(helpers.dirs.payloads, 'fully-built-payload.json') }),
         function (cb) {
-          app.bffs.unpublish(fullyBuiltAssetSpec, (err) => {
+          app.bffs.unpublish(fullyBuiltAssetSpec, () => {
             cb();
           });
         }
       ], next);
     });
     it('PUT /builds/:pkg/ can put a built payload', async () => {
-      const testPkg = JSON.parse(fs.readFileSync('test/fixtures/payloads/built-asset.json', 'utf-8'));
+      const testPkg = JSON.parse(fs.readFileSync('test/fixtures/payloads/fully-built-payload.json', 'utf-8'));
       const res = await req({
         method: 'PUT',
         uri: address(app, {
