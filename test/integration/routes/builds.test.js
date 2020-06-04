@@ -231,7 +231,7 @@ describe('/builds/*', function () {
         env: 'dev'
       };
       async.series([
-        helpers.cleanupPublish(app, { name, file: path.join(helpers.dirs.payloads, 'built-asset.json') }),
+        helpers.cleanupPublish(app, { name: 'willowtestpackageload', file: path.join(helpers.dirs.payloads, 'built-asset.json') }),
         function (cb) {
           app.bffs.unpublish(fullyBuiltAssetSpec, (err) => {
             cb();
