@@ -1,5 +1,7 @@
 # CHANGELOG
 
+- add route PUT /builds/:pkg/:env? for sending fully built assets
+
 ### 6.1.2
 
 - Do not let undefined override valid region
