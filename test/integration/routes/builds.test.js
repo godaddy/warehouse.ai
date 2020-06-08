@@ -223,24 +223,8 @@ describe('/builds/*', function () {
   });
 
   describe('PUT /builds/:pkg/:env?', function () {
-    afterEach(function (next) {
-      // cleans up records and unpublishes fully built asset payload
-      const fullyBuiltAssetSpec = {
-        name: 'fully-built-payload',
-        version: '1.0.0',
-        env: 'dev'
-      };
-      async.series([
-        helpers.cleanupPublish(app, { name: 'fully-built-payload', file: path.join(helpers.dirs.payloads, 'fully-built-payload.json') }),
-        function (cb) {
-          app.bffs.unpublish(fullyBuiltAssetSpec, () => {
-            cb();
-          });
-        }
-      ], next);
-    });
-    it('PUT /builds/:pkg/ can put a built payload', async () => {
-      const testPkg = JSON.parse(fs.readFileSync('test/fixtures/payloads/fully-built-payload.json', 'utf-8'));
+    it('PUT /builds/:pkg/ can put a built payload with tarball', async () => {
+      const testPkg = JSON.parse(fs.readFileSync('test/fixtures/payloads/fully-built-tarball.json', 'utf-8'));
       const res = await req({
         method: 'PUT',
         uri: address(app, {
@@ -250,7 +234,52 @@ describe('/builds/*', function () {
         resolveWithFullResponse: true
       });
       assume(res.statusCode).equals(204);
+
+      const fullyBuiltAssetSpec = {
+        name: 'fully-built-payload',
+        version: '1.0.0',
+        env: 'dev'
+      };
+      const file = path.join(helpers.dirs.payloads, 'fully-built-tarball.json');
+      return new Promise((resolve, reject) => {
+        helpers.cleanupRecordsAndUnpublish(app, { fullyBuiltAssetSpec, file })((err) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve();
+          }
+        });
+      });
     });
+
+    it('PUT /builds/:pkg/ can put a built payload with individual files', async () => {
+      const testPkg = JSON.parse(fs.readFileSync('test/fixtures/payloads/fully-built-individual.json', 'utf-8'));
+      const res = await req({
+        method: 'PUT',
+        uri: address(app, {
+          pathname: `builds/${name}/`
+        }),
+        json: testPkg,
+        resolveWithFullResponse: true
+      });
+      assume(res.statusCode).equals(204);
+      const fullyBuiltAssetSpec = {
+        name: 'fully-built-payload',
+        version: '1.0.0',
+        env: 'dev'
+      };
+      const file = path.join(helpers.dirs.payloads, 'fully-built-individual.json');
+      return new Promise((resolve, reject) => {
+        helpers.cleanupRecordsAndUnpublish(app, { fullyBuiltAssetSpec, file })((err) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve();
+          }
+        });
+      });
+    });
+
   });
 
 

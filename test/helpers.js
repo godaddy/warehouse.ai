@@ -155,3 +155,33 @@ exports.cleanupPublish = function (app, options) {
     ], callback);
   };
 };
+
+/**
+ * @function cleanupRecordsAndUnpublish
+ *  @param {slay.App} app Fully formed app object
+ *  @param {Object} options Configuration for cleanup
+ * Return a function that cleans up the records and unpublishes from bffs
+ * @returns {function} cleanup execution
+ */
+exports.cleanupRecordsAndUnpublish = function (app, options) {
+  options = options || {
+    fullyBuiltAssetSpec: {
+      name: 'fully-built-payload',
+      version: '1.0.0',
+      env: 'dev'
+    },
+    file: path.join(exports.dirs.payloads, 'tarball-with-image.json')
+  };
+
+  return function (callback) {
+    // cleans up records and unpublishes fully built asset payload
+    async.series([
+      exports.cleanupPublish(app, { name: options.fullyBuiltAssetSpec.name, file: options.file }),
+      function (cb) {
+        app.bffs.unpublish(options.fullyBuiltAssetSpec, () => {
+          cb();
+        });
+      }
+    ], callback);
+  };
+};
