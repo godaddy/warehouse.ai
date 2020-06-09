@@ -224,22 +224,22 @@ describe('/builds/*', function () {
 
   describe('PUT /builds/:pkg/:env?', function () {
     it('can put a built payload with tarball', async () => {
-      // try {
-      //   const testPkg = JSON.parse(fs.readFileSync('test/fixtures/payloads/fully-built-tarball.json', 'utf-8'));
-      //   const res = await req({
-      //     method: 'PUT',
-      //     uri: address(app, {
-      //       pathname: `builds/${name}/`
-      //     }),
-      //     json: testPkg,
-      //     resolveWithFullResponse: true
-      //   });
-      //   assume(res.statusCode).equals(204);
-      //   throw new Error('sds');
-      // } catch (ex) {
-      //   console.log('caught');
-      //   assume(ex).is.not.true();
-      // }
+      try {
+        const testPkg = JSON.parse(fs.readFileSync('test/fixtures/payloads/fully-built-tarball.json', 'utf-8'));
+        const res = await req({
+          method: 'PUT',
+          uri: address(app, {
+            pathname: `builds/${name}/`
+          }),
+          json: testPkg,
+          resolveWithFullResponse: true
+        });
+        assume(res.statusCode).equals(204);
+        throw new Error('sds');
+      } catch (ex) {
+        console.log('caught');
+        assume(ex).is.not.true();
+      }
       const fullyBuiltAssetSpec = {
         name: 'fully-built-tarball',
         version: '1.0.0',
@@ -259,16 +259,21 @@ describe('/builds/*', function () {
     });
 
     it('can put a built payload with individual files', async () => {
-      // const testPkg = JSON.parse(fs.readFileSync('test/fixtures/payloads/fully-built-individual.json', 'utf-8'));
-      // const res = await req({
-      //   method: 'PUT',
-      //   uri: address(app, {
-      //     pathname: `builds/${name}/`
-      //   }),
-      //   json: testPkg,
-      //   resolveWithFullResponse: true
-      // });
-      // assume(res.statusCode).equals(204);
+      try {
+        const testPkg = JSON.parse(fs.readFileSync('test/fixtures/payloads/fully-built-individual.json', 'utf-8'));
+        const res = await req({
+          method: 'PUT',
+          uri: address(app, {
+            pathname: `builds/${name}/`
+          }),
+          json: testPkg,
+          resolveWithFullResponse: true
+        });
+        assume(res.statusCode).equals(204);
+      } catch (ex) {
+        assume(ex).is.not.true();
+      }
+
       const fullyBuiltAssetSpec = {
         name: 'fully-built-individual',
         version: '1.0.0',
@@ -288,24 +293,24 @@ describe('/builds/*', function () {
 
 
     it('throws 403 error if version already exists', async () => {
-      // const testPkg = JSON.parse(fs.readFileSync('test/fixtures/payloads/fully-built-version.json', 'utf-8'));
-      // try {
-      //   await app.models.Version.create({
-      //     name: 'fully-built-version',
-      //     version: '1.0.0',
-      //     value: JSON.stringify(testPkg)
-      //   });
-      //   await req({
-      //     method: 'PUT',
-      //     uri: address(app, {
-      //       pathname: `builds/${name}/`
-      //     }),
-      //     json: testPkg,
-      //     resolveWithFullResponse: true
-      //   });
-      // } catch (ex) {
-      //   assume(ex.statusCode).equals(403);
-      // }
+      const testPkg = JSON.parse(fs.readFileSync('test/fixtures/payloads/fully-built-version.json', 'utf-8'));
+      try {
+        await app.models.Version.create({
+          name: 'fully-built-version',
+          version: '1.0.0',
+          value: JSON.stringify(testPkg)
+        });
+        await req({
+          method: 'PUT',
+          uri: address(app, {
+            pathname: `builds/${name}/`
+          }),
+          json: testPkg,
+          resolveWithFullResponse: true
+        });
+      } catch (ex) {
+        assume(ex.statusCode).equals(403);
+      }
 
       const fullyBuiltAssetSpec = {
         name: 'fully-built-version',
