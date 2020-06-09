@@ -222,7 +222,19 @@ describe('/builds/*', function () {
     });
   });
 
-  describe('PUT /builds/:pkg/:env?', function () {
+  describe('PUT /builds/:pkg/:env? can put a built payload with tarball', function () {
+    after(function (next) {
+      const fullyBuiltAssetSpec = {
+        name: 'fully-built-tarball',
+        version: '1.0.0',
+        env: 'dev'
+      };
+      const file = path.join(helpers.dirs.payloads, 'fully-built-tarball.json');
+
+      async.series([
+        helpers.cleanupRecordsAndUnpublish(app, { fullyBuiltAssetSpec, file })
+      ], next);
+    });
     it('can put a built payload with tarball', async () => {
       try {
         const testPkg = JSON.parse(fs.readFileSync('test/fixtures/payloads/fully-built-tarball.json', 'utf-8'));
@@ -235,29 +247,25 @@ describe('/builds/*', function () {
           resolveWithFullResponse: true
         });
         assume(res.statusCode).equals(204);
-        throw new Error('sds');
       } catch (ex) {
-        console.log('caught');
-        assume(ex).is.not.true();
+        // we should not be here
+        assume(ex).is.a('undefined');
       }
+    });
+  });
+
+  describe('PUT /builds/:pkg/:env? can put a built payload with individual files', function () {
+    after(function (next) {
       const fullyBuiltAssetSpec = {
-        name: 'fully-built-tarball',
+        name: 'fully-built-individual',
         version: '1.0.0',
         env: 'dev'
       };
-      const file = path.join(helpers.dirs.payloads, 'fully-built-tarball.json');
-      return new Promise((resolve, reject) => {
-        helpers.cleanupRecordsAndUnpublish(app, { fullyBuiltAssetSpec, file })((err) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve();
-          }
-          console.log('called');
-        });
-      });
+      const file = path.join(helpers.dirs.payloads, 'fully-built-individual.json');
+      async.series([
+        helpers.cleanupRecordsAndUnpublish(app, { fullyBuiltAssetSpec, file })
+      ], next);
     });
-
     it('can put a built payload with individual files', async () => {
       try {
         const testPkg = JSON.parse(fs.readFileSync('test/fixtures/payloads/fully-built-individual.json', 'utf-8'));
@@ -271,27 +279,13 @@ describe('/builds/*', function () {
         });
         assume(res.statusCode).equals(204);
       } catch (ex) {
-        assume(ex).is.not.true();
+        // we should not be here
+        assume(ex).is.a('undefined');
       }
-
-      const fullyBuiltAssetSpec = {
-        name: 'fully-built-individual',
-        version: '1.0.0',
-        env: 'dev'
-      };
-      const file = path.join(helpers.dirs.payloads, 'fully-built-individual.json');
-      return new Promise((resolve, reject) => {
-        helpers.cleanupRecordsAndUnpublish(app, { fullyBuiltAssetSpec, file })((err) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve();
-          }
-        });
-      });
     });
+  });
 
-
+  describe('PUT /builds/:pkg/:env? throws 403 error if version already exists', function () {
     it('throws 403 error if version already exists', async () => {
       const testPkg = JSON.parse(fs.readFileSync('test/fixtures/payloads/fully-built-version.json', 'utf-8'));
       try {
@@ -311,24 +305,7 @@ describe('/builds/*', function () {
       } catch (ex) {
         assume(ex.statusCode).equals(403);
       }
-
-      const fullyBuiltAssetSpec = {
-        name: 'fully-built-version',
-        version: '1.0.0',
-        env: 'dev'
-      };
-      const file = path.join(helpers.dirs.payloads, 'fully-built-version.json');
-      return new Promise((resolve, reject) => {
-        helpers.cleanupRecordsAndUnpublish(app, { fullyBuiltAssetSpec, file })((err) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve();
-          }
-        });
-      });
     });
-
   });
 
 
