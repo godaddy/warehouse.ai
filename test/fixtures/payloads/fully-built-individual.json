@@ -1,13 +1,13 @@
 {
-   "_id":"fully-built-payload",
-   "name":"fully-built-payload",
+   "_id":"fully-built-individual",
+   "name":"fully-built-individual",
    "description":"try to see what a package payload is like",
    "dist-tags":{
       "latest":"1.0.0"
    },
    "versions":{
       "1.0.0":{
-         "name":"fully-built-payload",
+         "name":"fully-built-individual",
          "version":"1.0.0",
          "description":"try to see what a package payload is like",
          "main":"index.js",
@@ -24,7 +24,7 @@
          },
          "readme":"### TEST A PACKAGE PAYLOAD",
          "readmeFilename":"README.md",
-         "_id":"fully-built-payload@1.0.0",
+         "_id":"fully-built-individuald@1.0.0",
          "_nodeVersion":"10.19.0",
          "_npmVersion":"6.13.4",
          "_npmUser":{
@@ -40,7 +40,7 @@
          "dist":{
             "integrity":"sha512-J1JAImCjTKb1OABNSwkvzfHV58SwcbzVWWkAJs/DdB0/nZp2ojDFBNq/YhEiiUEqWLTSTkKUtJH0nnYg547RMw==",
             "shasum":"fd8fb4945785db161a7aafcd78f5f29fb74d5198",
-            "tarball":"http://localhost:3676/fully-built-payload/-/fully-built-payload-1.0.0.tgz"
+            "tarball":"http://localhost:3676/fully-built-individual/-/fully-built-individual-1.0.0.tgz"
          }
       }
    },

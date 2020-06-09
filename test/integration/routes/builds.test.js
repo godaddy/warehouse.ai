@@ -223,7 +223,7 @@ describe('/builds/*', function () {
   });
 
   describe('PUT /builds/:pkg/:env?', function () {
-    it('PUT /builds/:pkg/ can put a built payload with tarball', async () => {
+    it('can put a built payload with tarball', async () => {
       const testPkg = JSON.parse(fs.readFileSync('test/fixtures/payloads/fully-built-tarball.json', 'utf-8'));
       const res = await req({
         method: 'PUT',
@@ -236,7 +236,7 @@ describe('/builds/*', function () {
       assume(res.statusCode).equals(204);
 
       const fullyBuiltAssetSpec = {
-        name: 'fully-built-payload',
+        name: 'fully-built-tarball',
         version: '1.0.0',
         env: 'dev'
       };
@@ -248,11 +248,12 @@ describe('/builds/*', function () {
           } else {
             resolve();
           }
+          console.log('1!!!!');
         });
       });
     });
 
-    it('PUT /builds/:pkg/ can put a built payload with individual files', async () => {
+    it('can put a built payload with individual files', async () => {
       const testPkg = JSON.parse(fs.readFileSync('test/fixtures/payloads/fully-built-individual.json', 'utf-8'));
       const res = await req({
         method: 'PUT',
@@ -264,7 +265,7 @@ describe('/builds/*', function () {
       });
       assume(res.statusCode).equals(204);
       const fullyBuiltAssetSpec = {
-        name: 'fully-built-payload',
+        name: 'fully-built-individual',
         version: '1.0.0',
         env: 'dev'
       };
@@ -276,6 +277,46 @@ describe('/builds/*', function () {
           } else {
             resolve();
           }
+          console.log('2!!!!');
+        });
+      });
+    });
+
+
+    it('throws 403 error if version already exists', async () => {
+      const testPkg = JSON.parse(fs.readFileSync('test/fixtures/payloads/fully-built-version.json', 'utf-8'));
+      try {
+        await app.models.Version.create({
+          name: 'fully-built-version',
+          version: '1.0.0',
+          value: JSON.stringify(testPkg)
+        });
+        await req({
+          method: 'PUT',
+          uri: address(app, {
+            pathname: `builds/${name}/`
+          }),
+          json: testPkg,
+          resolveWithFullResponse: true
+        });
+      } catch (ex) {
+        assume(ex.statusCode).equals(403);
+      }
+
+      const fullyBuiltAssetSpec = {
+        name: 'fully-built-version',
+        version: '1.0.0',
+        env: 'dev'
+      };
+      const file = path.join(helpers.dirs.payloads, 'fully-built-version.json');
+      return new Promise((resolve, reject) => {
+        helpers.cleanupRecordsAndUnpublish(app, { fullyBuiltAssetSpec, file })((err) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve();
+          }
+          console.log('jsdjd');
         });
       });
     });
