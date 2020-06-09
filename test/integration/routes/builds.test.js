@@ -248,7 +248,6 @@ describe('/builds/*', function () {
           } else {
             resolve();
           }
-          console.log('1!!!!');
         });
       });
     });
@@ -277,7 +276,6 @@ describe('/builds/*', function () {
           } else {
             resolve();
           }
-          console.log('2!!!!');
         });
       });
     });
@@ -316,7 +314,6 @@ describe('/builds/*', function () {
           } else {
             resolve();
           }
-          console.log('jsdjd');
         });
       });
     });
