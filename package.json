@@ -38,6 +38,7 @@
   "author": "GoDaddy.com Operating Company LLC",
   "license": "MIT",
   "dependencies": {
+    "@jsdevtools/readdir-enhanced": "^6.0.3",
     "@wrhs/release-line": "^2.0.0",
     "access-control": "^1.0.0",
     "async": "^3.1.0",
@@ -86,7 +87,6 @@
     "tar-fs": "^2.1.0",
     "through2": "~3.0.1",
     "tinythen": "^1.0.1",
-    "walk": "^2.3.14",
     "warehouse-models": "^6.0.1",
     "winston": "~2.3.1",
     "zipline": "^1.0.0"
