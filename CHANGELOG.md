@@ -1,5 +1,7 @@
 # CHANGELOG
 
+### 6.2.0
+
 - add route PUT /builds/:pkg/:env? for sending fully built assets
 
 ### 6.1.2
