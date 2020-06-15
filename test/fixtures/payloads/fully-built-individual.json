@@ -1,0 +1,76 @@
+{
+   "_id":"fully-built-individual",
+   "name":"fully-built-individual",
+   "description":"try to see what a package payload is like",
+   "dist-tags":{
+      "latest":"1.0.0"
+   },
+   "versions":{
+      "1.0.0":{
+         "name":"fully-built-individual",
+         "version":"1.0.0",
+         "description":"try to see what a package payload is like",
+         "main":"index.js",
+         "scripts":{
+            "test":"echo \"Error: no test specified\" && exit 1"
+         },
+         "author":"",
+         "license":"ISC",
+         "dependencies":{
+            "slay":"^3.1.1"
+         },
+         "devDependencies":{
+            "assume":"^2.2.0"
+         },
+         "readme":"### TEST A PACKAGE PAYLOAD",
+         "readmeFilename":"README.md",
+         "_id":"fully-built-individuald@1.0.0",
+         "_nodeVersion":"10.19.0",
+         "_npmVersion":"6.13.4",
+         "_npmUser":{
+            "name":"garbage!!user",
+            "email":"anyvalid@email.com"
+         },
+         "maintainers":[
+            {
+               "name":"garbage!!user",
+               "email":"anyvalid@email.com"
+            }
+         ],
+         "dist":{
+            "integrity":"sha512-J1JAImCjTKb1OABNSwkvzfHV58SwcbzVWWkAJs/DdB0/nZp2ojDFBNq/YhEiiUEqWLTSTkKUtJH0nnYg547RMw==",
+            "shasum":"fd8fb4945785db161a7aafcd78f5f29fb74d5198",
+            "tarball":"http://localhost:3676/fully-built-individual/-/fully-built-individual-1.0.0.tgz"
+         }
+      }
+   },
+   "readme":"### TEST A PACKAGE PAYLOAD",
+   "maintainers":[
+      {
+         "name":"garbage!!user",
+         "email":"anyvalid@email.com"
+      }
+   ],
+   "_attachments":{
+      "a-class.js":{
+         "content_type":"application/javascript",
+         "data":"Y2xhc3MgVGVzdCB7CiAgY29uc3RydWN0b3Iob3B0cykgewogICAgdGhpcy5sb2cgPSBvcHRzLmxvZwogICAgdGhpcy5udW1iZXIgPSA1CiAgfQogIGxvZ01lc3NhZ2UobWVzc2FnZSkgewogICAgcmV0dXJuIHRoaXMubG9nKG1lc3NhZ2UpOwogIH0KfQ==",
+         "length":192
+      },
+      "depends-on-others.js": {
+         "content_type":"application/javascript",
+         "data": "aW1wb3J0IG91dHB1dCBmcm9tICdzdWItZGlyL2EnCgpjb25zb2xlLmxvZyhvdXRwdXQpOw==",
+         "length":72
+      },
+      "peach-blossom.jpg": {
+         "content_type":"image/jpeg",
+         "data": "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",
+         "length":2852
+      },
+      "hello.txt": {
+         "content_type":"text/plain",
+         "data": "aGVsbG93b3JsZCE=",
+         "length":16
+      }
+   }
+}

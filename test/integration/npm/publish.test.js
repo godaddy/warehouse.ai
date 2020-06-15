@@ -57,7 +57,7 @@ describe('npm publish', function () {
 
     macros.publishOk(context)(function () {
       assume(context.app.publisher.carpenter.build).to.be.called();
-       assume(context.app.publisher.carpenter.build).to.be.calledWithMatch({
+      assume(context.app.publisher.carpenter.build).to.be.calledWithMatch({
         data: { payload: sinon.match.any, promote: true }
       });
       assume(context.app.publisher.carpenter.build).to.be.calledAfter(context.registry.cacheRequest);
