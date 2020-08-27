@@ -1,7 +1,7 @@
 # Warehouse.ai
 Warehouse.ai
 
-## Version: 5.1.4
+## Version: 6.2.0
 
 ### /assets/files/{pkg}/{env}
 
@@ -175,50 +175,26 @@ Cancel the specified build.
 
 ### /builds/{pkg}
 
-#### GET
+#### PUT
 ##### Summary:
 
-Gets the builds for a package.
+Puts a fully built npm publish payload structure
 
 ##### Parameters
 
 | Name | Located in | Description | Required | Schema |
 | ---- | ---------- | ----------- | -------- | ---- |
 | pkg | path | The package name | Yes | string |
+| _attachments | requst body | The fully built asset | No | object |
+
+Note: The fully built asset can be both tarball and non-tarball content as long as
+it confirms to the [CouchDB attachment](https://docs.couchdb.org/en/stable/api/document/common.html#attachments) format.
 
 ##### Responses
 
 | Code | Description |
 | ---- | ----------- |
-| 200 | OK |
-| 400 | Bad Request |
-| 401 | Unauthorized |
-| 403 | Forbidden |
-| 404 | Not Found |
-| 500 | Internal Server Error |
-
-##### Security
-
-| Security Schema | Scopes |
-| --- | --- |
-| basicAuth | |
-
-#### POST
-##### Summary:
-
-Get build the builds for a package.
-
-##### Parameters
-
-| Name | Located in | Description | Required | Schema |
-| ---- | ---------- | ----------- | -------- | ---- |
-| pkg | path | The package name | Yes | string |
-
-##### Responses
-
-| Code | Description |
-| ---- | ----------- |
-| 200 | OK |
+| 204 | Success |
 | 400 | Bad Request |
 | 401 | Unauthorized |
 | 403 | Forbidden |
@@ -232,6 +208,39 @@ Get build the builds for a package.
 | basicAuth | |
 
 ### /builds/{pkg}/{env}
+
+#### PUT
+##### Summary:
+
+Puts a fully built npm publish payload structure
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| pkg | path | The package name | Yes | string |
+| env | path | The environment to put under  | Yes | string |
+| _attachments | requst body | The fully built asset | No | object |
+
+Note: The fully built asset can be both tarball and non-tarball content as long as
+it confirms to the [CouchDB attachment](https://docs.couchdb.org/en/stable/api/document/common.html#attachments) format.
+
+##### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 204 | Success |
+| 400 | Bad Request |
+| 401 | Unauthorized |
+| 403 | Forbidden |
+| 404 | Not Found |
+| 500 | Internal Server Error |
+
+##### Security
+
+| Security Schema | Scopes |
+| --- | --- |
+| basicAuth | |
 
 #### GET
 ##### Summary:
