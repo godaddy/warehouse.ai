@@ -27,9 +27,9 @@ fastify.decorate('verifyAuthentication', (request, reply, done) => {
   done();
 });
 
-const wrhs = warehouse(fastify);
+fastify.register(warehouse);
 
-wrhs.listen(process.env.PORT, err => {
+fastify.listen(process.env.PORT, err => {
   if (err) throw err;
 });
 ```
