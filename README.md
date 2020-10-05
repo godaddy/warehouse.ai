@@ -22,8 +22,9 @@ const fastify = createFastify({
   }
 });
 
+// Optional authentication on Warehouse protected routes
 fastify.decorate('verifyAuthentication', (request, reply, done) => {
-  // Define some authentication strategy for Warehouse protected routes
+  // Implement auth strategy here
   done();
 });
 
