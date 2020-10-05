@@ -49,5 +49,11 @@
   "bugs": {
     "url": "https://github.com/godaddy/warehouse.ai/issues"
   },
-  "homepage": "https://github.com/godaddy/warehouse.ai#readme"
+  "homepage": "https://github.com/godaddy/warehouse.ai#readme",
+  "prettier": {
+    "trailingComma": "none",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true
+  }
 }
