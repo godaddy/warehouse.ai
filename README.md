@@ -23,15 +23,15 @@ const fastify = createFastify({
 });
 
 // Optional authentication on Warehouse protected routes
-fastify.decorate('verifyAuthentication', (request, reply, done) => {
+fastify.decorate('verifyAuthentication', function (req, res, done) {
   // Implement auth strategy here
   done();
 });
 
 fastify.register(warehouse);
 
-fastify.ready(() => {
-  fastify.listen(fastify.config.port, err => {
+fastify.ready(function () {
+  fastify.listen(fastify.config.port, function (err) {
     if (err) throw err;
   });
 })
