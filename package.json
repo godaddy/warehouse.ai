@@ -16,9 +16,7 @@
   },
   "devDependencies": {
     "eslint": "^7.10.0",
-    "eslint-config-godaddy": "^4.0.0",
-    "eslint-plugin-json": "^2.1.2",
-    "eslint-plugin-mocha": "^8.0.0",
+    "eslint-config-godaddy": "^4.0.1",
     "fastify-cli": "^2.3.0",
     "nodemon": "^2.0.4",
     "standard-version": "^9.0.0",
