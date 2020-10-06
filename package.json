@@ -31,7 +31,7 @@
     "release": "standard-version -t ''",
     "test": "tap test/**/*.test.js",
     "start": "node lib/app.js",
-    "dev": "PORT=8080 node lib/app.js"
+    "dev": "nodemon lib/app.js"
   },
   "repository": {
     "type": "git",

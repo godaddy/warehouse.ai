@@ -30,7 +30,9 @@ fastify.decorate('verifyAuthentication', (request, reply, done) => {
 
 fastify.register(warehouse);
 
-fastify.listen(process.env.PORT, err => {
-  if (err) throw err;
-});
+fastify.ready(() => {
+  fastify.listen(fastify.config.port, err => {
+    if (err) throw err;
+  });
+})
 ```
