@@ -2,10 +2,38 @@
   "name": "warehouse.ai",
   "version": "7.0.0",
   "description": "Scalable Object Ledger and CDN",
-  "scripts": {},
+  "main": "lib/app.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "dependencies": {
+    "fastify": "^3.0.0",
+    "fastify-auth": "^1.0.1",
+    "fastify-autoload": "^3.3.0",
+    "fastify-plugin": "^2.3.0",
+    "pino": "^6.7.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.10.0",
+    "eslint-config-godaddy": "^4.0.1",
+    "fastify-cli": "^2.3.0",
+    "nodemon": "^2.0.4",
+    "standard-version": "^9.0.0",
+    "tap": "^14.0.0"
+  },
+  "scripts": {
+    "lint": "npm run prettier && npm run eslint",
+    "eslint": "eslint-godaddy --max-warnings 0 --ignore-pattern /coverage/ ./",
+    "prettier": "prettier --write 'lib/*.js'",
+    "release": "standard-version -t ''",
+    "test": "tap test/**/*.test.js",
+    "start": "node lib/app.js",
+    "dev": "nodemon lib/app.js"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/godaddy/warehouse.ai"
+    "url": "git+https://github.com/godaddy/warehouse.ai.git"
   },
   "keywords": [
     "warehouse",
@@ -16,6 +44,14 @@
   ],
   "author": "GoDaddy.com Operating Company LLC",
   "license": "MIT",
-  "dependencies": {},
-  "devDependencies": {}
+  "bugs": {
+    "url": "https://github.com/godaddy/warehouse.ai/issues"
+  },
+  "homepage": "https://github.com/godaddy/warehouse.ai#readme",
+  "prettier": {
+    "trailingComma": "none",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true
+  }
 }
