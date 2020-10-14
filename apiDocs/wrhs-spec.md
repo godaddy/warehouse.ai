@@ -185,10 +185,10 @@ Puts a fully built npm publish payload structure
 | Name | Located in | Description | Required | Schema |
 | ---- | ---------- | ----------- | -------- | ---- |
 | pkg | path | The package name | Yes | string |
-| _attachments | requst body | The fully built asset | No | object |
+| _attachments | request body | The fully built asset | No | object |
 
 Note: The fully built asset can be both tarball and non-tarball content as long as
-it confirms to the [CouchDB attachment](https://docs.couchdb.org/en/stable/api/document/common.html#attachments) format.
+it conforms to the [CouchDB attachment](https://docs.couchdb.org/en/stable/api/document/common.html#attachments) format.
 
 ##### Responses
 
@@ -220,10 +220,10 @@ Puts a fully built npm publish payload structure
 | ---- | ---------- | ----------- | -------- | ---- |
 | pkg | path | The package name | Yes | string |
 | env | path | The environment to put under  | Yes | string |
-| _attachments | requst body | The fully built asset | No | object |
+| _attachments | request body | The fully built asset | No | object |
 
 Note: The fully built asset can be both tarball and non-tarball content as long as
-it confirms to the [CouchDB attachment](https://docs.couchdb.org/en/stable/api/document/common.html#attachments) format.
+it conforms to the [CouchDB attachment](https://docs.couchdb.org/en/stable/api/document/common.html#attachments) format.
 
 ##### Responses
 
