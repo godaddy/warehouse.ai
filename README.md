@@ -256,6 +256,7 @@ GET  /builds/:pkg/:env/:version       # Get build information
 GET  /builds/:pkg/:env/:version/meta  # Get build information
 POST /builds/:pkg                     # Ad-hoc build
 POST /builds/compose                  # Trigger multiple builds
+PUT  /builds/:pkg/:env/:locale?       # Upload an already-built asset
 ```
 
 To use the fingerprinted assets from the CDN the build information can be
@@ -467,13 +468,16 @@ has network access to that registry so that `npm install` can succeed.
 
 ## Tests
 
-Run an AWS local cloud stack, pull `latest` [localstack].
+Run an AWS local cloud stack, pull `0.11.3` [localstack].
 This requires `docker` [to be setup][docker].
 
 ```sh
-docker pull localstack/localstack:latest
+docker pull localstack/localstack:0.11.3
 npm run localstack
 ```
+
+> `localstack` had a breaking change of some sort in 0.11.4 and later that breaks our tests. We will investigate and
+> fix soon.
 
 Run tests in a separate terminal.
 

@@ -5,7 +5,7 @@
     "methods": ["GET"]
   },
   "s3": {
-    "endpoint": "http://localhost:4572"
+    "endpoint": "http://localhost:4566"
   },
   "bffs": {
     "prefix": "wrhs",
@@ -16,10 +16,10 @@
           "accessKeyId": "fakeId",
           "secretAccessKey": "fakeKey",
           "provider": "amazon",
-          "endpoint": "http://localhost:4572",
+          "endpoint": "http://localhost:4566",
           "forcePathBucket": true
         },
-        "url": "http://localhost:4572"
+        "url": "http://localhost:4566"
       },
       "test": {
         "acl": "public-read",
@@ -27,10 +27,10 @@
           "accessKeyId": "fakeId",
           "secretAccessKey": "fakeKey",
           "provider": "amazon",
-          "endpoint": "http://localhost:4572",
+          "endpoint": "http://localhost:4566",
           "forcePathBucket": true
         },
-        "url": "http://localhost:4572"
+        "url": "http://localhost:4566"
       },
       "dev": {
         "acl": "public-read",
@@ -38,10 +38,10 @@
           "accessKeyId": "fakeId",
           "secretAccessKey": "fakeKey",
           "provider": "amazon",
-          "endpoint": "http://localhost:4572",
+          "endpoint": "http://localhost:4566",
           "forcePathBucket": true
         },
-        "url": "http://localhost:4572"
+        "url": "http://localhost:4566"
       }
     }
   },
@@ -62,7 +62,7 @@
     }
   },
   "database": {
-    "endpoint": "http://localhost:4569",
+    "endpoint": "http://localhost:4566",
     "region": "us-east-1"
   },
   "retry": {

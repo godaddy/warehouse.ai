@@ -1,7 +1,7 @@
 # Warehouse.ai
 Warehouse.ai
 
-## Version: 6.2.0
+## Version: 6.3.0
 
 ### /assets/files/{pkg}/{env}
 
@@ -173,46 +173,12 @@ Cancel the specified build.
 | --- | --- |
 | basicAuth | |
 
-### /builds/{pkg}
-
-#### PUT
-##### Summary:
-
-Puts a fully built npm publish payload structure
-
-##### Parameters
-
-| Name | Located in | Description | Required | Schema |
-| ---- | ---------- | ----------- | -------- | ---- |
-| pkg | path | The package name | Yes | string |
-| _attachments | request body | The fully built asset | No | object |
-
-Note: The fully built asset can be both tarball and non-tarball content as long as
-it conforms to the [CouchDB attachment](https://docs.couchdb.org/en/stable/api/document/common.html#attachments) format.
-
-##### Responses
-
-| Code | Description |
-| ---- | ----------- |
-| 204 | Success |
-| 400 | Bad Request |
-| 401 | Unauthorized |
-| 403 | Forbidden |
-| 404 | Not Found |
-| 500 | Internal Server Error |
-
-##### Security
-
-| Security Schema | Scopes |
-| --- | --- |
-| basicAuth | |
-
 ### /builds/{pkg}/{env}
 
 #### PUT
 ##### Summary:
 
-Puts a fully built npm publish payload structure
+Puts a fully built npm publish payload structure. Locale is assumed to be `en-US`.
 
 ##### Parameters
 
@@ -225,6 +191,8 @@ Puts a fully built npm publish payload structure
 Note: The fully built asset can be both tarball and non-tarball content as long as
 it conforms to the [CouchDB attachment](https://docs.couchdb.org/en/stable/api/document/common.html#attachments) format.
 
+Tarballs must contain a `package/dist` directory structure in which asset files must be stored.
+
 ##### Responses
 
 | Code | Description |
@@ -234,6 +202,47 @@ it conforms to the [CouchDB attachment](https://docs.couchdb.org/en/stable/api/d
 | 401 | Unauthorized |
 | 403 | Forbidden |
 | 404 | Not Found |
+| 409 | Conflict - build with the specified name/version in `en-US` already exists |
+| 500 | Internal Server Error |
+
+##### Security
+
+| Security Schema | Scopes |
+| --- | --- |
+| basicAuth | |
+
+### /builds/{pkg}/{env}/{locale}
+
+#### PUT
+##### Summary:
+
+Puts a fully built npm publish payload structure. If a package was previously uploaded with different locale(s), this
+API will add an additional build for the new locale.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| pkg | path | The package name | Yes | string |
+| env | path | The environment to put under  | Yes | string |
+| locale | path | The locale being put | Yes | string |
+| _attachments | request body | The fully built asset | No | object |
+
+Note: The fully built asset can be both tarball and non-tarball content as long as
+it conforms to the [CouchDB attachment](https://docs.couchdb.org/en/stable/api/document/common.html#attachments) format.
+
+Tarballs must contain a `package/dist` directory structure in which asset files must be stored.
+
+##### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 204 | Success |
+| 400 | Bad Request |
+| 401 | Unauthorized |
+| 403 | Forbidden |
+| 404 | Not Found |
+| 409 | Conflict - build with the specified name/version/locale already exists |
 | 500 | Internal Server Error |
 
 ##### Security
