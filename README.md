@@ -472,12 +472,11 @@ Run an AWS local cloud stack, pull `0.11.3` [localstack].
 This requires `docker` [to be setup][docker].
 
 ```sh
-docker pull localstack/localstack:0.11.3
-npm run localstack
+npm run localstack # pulls correct localstack image if not already available and runs it
 ```
 
 > `localstack` had a breaking change of some sort in 0.11.4 and later that breaks our tests. We will investigate and
-> fix soon.
+> fix soon. See #93.
 
 Run tests in a separate terminal.
 

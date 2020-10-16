@@ -222,7 +222,7 @@ describe('/builds/*', function () {
     });
   });
 
-  describe('PUT /builds/:pkg/:env? can put a built payload with tarball', function () {
+  describe('PUT /builds/:pkg/:env can put a built payload with tarball', function () {
     after(function (next) {
       const fullyBuiltAssetSpec = {
         name: 'fully-built-tarball',
@@ -254,7 +254,7 @@ describe('/builds/*', function () {
     });
   });
 
-  describe('PUT /builds/:pkg/:env? can put a built payload with individual files', function () {
+  describe('PUT /builds/:pkg/:env can put a built payload with individual files', function () {
     after(function (next) {
       const fullyBuiltAssetSpec = {
         name: 'fully-built-individual',
@@ -285,7 +285,7 @@ describe('/builds/*', function () {
     });
   });
 
-  describe('PUT /builds/:pkg/:env? can put a built payload for an existing package in a new locale', function () {
+  describe('PUT /builds/:pkg/:env/:locale? can put a built payload for an existing package in a new locale', function () {
     after(function (next) {
       const fullyBuiltAssetSpecs = [{
         name: 'fully-built-individual',
@@ -303,6 +303,7 @@ describe('/builds/*', function () {
         helpers.cleanupRecordsAndUnpublish(app, { fullyBuiltAssetSpec, file })),
       next);
     });
+
     it('can put a built payload for an existing package in a new locale', async () => {
       try {
         const testPkg = JSON.parse(fs.readFileSync('test/fixtures/payloads/fully-built-individual.json', 'utf-8'));
@@ -332,7 +333,7 @@ describe('/builds/*', function () {
     });
   });
 
-  describe('PUT /builds/:pkg/:env? throws 409 error if version/locale already exists', function () {
+  describe('PUT /builds/:pkg/:env/:locale? throws 409 error if version/locale already exists', function () {
     after(function (next) {
       const fullyBuiltAssetSpecs = [{
         name: 'fully-built-version',
