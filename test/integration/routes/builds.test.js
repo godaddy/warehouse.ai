@@ -1,4 +1,4 @@
-/* eslint no-sync:0, max-nested-callbacks:0, no-undefined:0*/
+/* eslint no-sync:0, max-nested-callbacks:0, no-undefined:0, max-statements: 0 */
 'use strict';
 
 var fs = require('fs'),
@@ -222,7 +222,7 @@ describe('/builds/*', function () {
     });
   });
 
-  describe('PUT /builds/:pkg/:env? can put a built payload with tarball', function () {
+  describe('PUT /builds/:pkg/:env can put a built payload with tarball', function () {
     after(function (next) {
       const fullyBuiltAssetSpec = {
         name: 'fully-built-tarball',
@@ -241,7 +241,7 @@ describe('/builds/*', function () {
         const res = await req({
           method: 'PUT',
           uri: address(app, {
-            pathname: `builds/${name}/`
+            pathname: `builds/${name}/dev`
           }),
           json: testPkg,
           resolveWithFullResponse: true
@@ -254,7 +254,7 @@ describe('/builds/*', function () {
     });
   });
 
-  describe('PUT /builds/:pkg/:env? can put a built payload with individual files', function () {
+  describe('PUT /builds/:pkg/:env can put a built payload with individual files', function () {
     after(function (next) {
       const fullyBuiltAssetSpec = {
         name: 'fully-built-individual',
@@ -272,7 +272,7 @@ describe('/builds/*', function () {
         const res = await req({
           method: 'PUT',
           uri: address(app, {
-            pathname: `builds/${name}/`
+            pathname: `builds/${name}/dev`
           }),
           json: testPkg,
           resolveWithFullResponse: true
@@ -285,33 +285,109 @@ describe('/builds/*', function () {
     });
   });
 
-  describe('PUT /builds/:pkg/:env? throws 403 error if version already exists', function () {
+  describe('PUT /builds/:pkg/:env/:locale? can put a built payload for an existing package in a new locale', function () {
     after(function (next) {
-      const fullyBuiltAssetSpec = {
+      const fullyBuiltAssetSpecs = [{
+        name: 'fully-built-individual',
+        version: '1.0.0',
+        env: 'dev',
+        locale: 'en-US'
+      }, {
+        name: 'fully-built-individual',
+        version: '1.0.0',
+        env: 'dev',
+        locale: 'nl-NL'
+      }];
+      const file = path.join(helpers.dirs.payloads, 'fully-built-individual.json');
+      async.series(fullyBuiltAssetSpecs.map(fullyBuiltAssetSpec =>
+        helpers.cleanupRecordsAndUnpublish(app, { fullyBuiltAssetSpec, file })),
+      next);
+    });
+
+    it('can put a built payload for an existing package in a new locale', async () => {
+      try {
+        const testPkg = JSON.parse(fs.readFileSync('test/fixtures/payloads/fully-built-individual.json', 'utf-8'));
+        let res = await req({
+          method: 'PUT',
+          uri: address(app, {
+            pathname: `builds/${name}/dev`
+          }),
+          json: testPkg,
+          resolveWithFullResponse: true
+        });
+        assume(res.statusCode).equals(204);
+
+        res = await req({
+          method: 'PUT',
+          uri: address(app, {
+            pathname: `builds/${name}/dev/nl-NL`
+          }),
+          json: testPkg,
+          resolveWithFullResponse: true
+        });
+        assume(res.statusCode).equals(204);
+      } catch (ex) {
+        // we should not be here
+        assume(ex).is.a('undefined');
+      }
+    });
+  });
+
+  describe('PUT /builds/:pkg/:env/:locale? throws 409 error if version/locale already exists', function () {
+    after(function (next) {
+      const fullyBuiltAssetSpecs = [{
         name: 'fully-built-version',
         version: '1.0.0',
         env: 'dev'
-      };
+      }, {
+        name: 'fully-built-version',
+        version: '1.0.0',
+        env: 'dev',
+        locale: 'nl-NL'
+      }];
       const file = path.join(helpers.dirs.payloads, 'fully-built-version.json');
-      async.series([
-        helpers.cleanupRecordsAndUnpublish(app, { fullyBuiltAssetSpec, file })
-      ], next);
+      async.series(fullyBuiltAssetSpecs.map(fullyBuiltAssetSpec =>
+        helpers.cleanupRecordsAndUnpublish(app, { fullyBuiltAssetSpec, file })),
+      next);
     });
 
-    it('throws 403 error if version already exists', async () => {
+    it('throws 409 error if version already exists', async () => {
       const testPkg = JSON.parse(fs.readFileSync('test/fixtures/payloads/fully-built-version.json', 'utf-8'));
+      let initialUploadsDone = false;
       try {
-        await app.manager.addVersionRecord('fully-built-version', '1.0.0', testPkg);
+        let res = await req({
+          method: 'PUT',
+          uri: address(app, {
+            pathname: `builds/${name}/dev`
+          }),
+          json: testPkg,
+          resolveWithFullResponse: true
+        });
+        assume(res.statusCode).equals(204);
+
+        res = await req({
+          method: 'PUT',
+          uri: address(app, {
+            pathname: `builds/${name}/dev/nl-NL`
+          }),
+          json: testPkg,
+          resolveWithFullResponse: true
+        });
+        assume(res.statusCode).equals(204);
+        initialUploadsDone = true;
+
+        // This one should fail since we already have nl-NL build
         await req({
           method: 'PUT',
           uri: address(app, {
-            pathname: `builds/${name}/`
+            pathname: `builds/${name}/dev/nl-NL`
           }),
           json: testPkg,
           resolveWithFullResponse: true
         });
       } catch (ex) {
-        assume(ex.statusCode).equals(403);
+        assume(initialUploadsDone).is.true();
+        assume(ex.statusCode).equals(409);
       }
     });
   });

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 6.3.0
+
+- PUT route adjusted to support locales, return 409 instead of 403 on conflict
+
 ### 6.2.0
 
 - add route PUT /builds/:pkg/:env? for sending fully built assets
