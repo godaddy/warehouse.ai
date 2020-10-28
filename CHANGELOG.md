@@ -1,5 +1,7 @@
 # CHANGELOG
 
+### 6.4.0
+
 - Remove `PUT /builds/:pkg/:env/:locale` in favor of `PUT /builds/:pkg/:env?locale=...`
 
 ### 6.3.0
