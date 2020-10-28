@@ -62,7 +62,6 @@ describe('/api-docs', function () {
       '"/builds"',
       '"/builds/cancel/{pkg}/{version}/{env}"',
       '"/builds/{pkg}/{env}"',
-      '"/builds/{pkg}/{env}/{locale}"',
       '"/builds/{pkg}/{env}/{version}"',
       '"/healthcheck"',
       '"/packages/search"',
