@@ -285,7 +285,7 @@ describe('/builds/*', function () {
     });
   });
 
-  describe('PUT /builds/:pkg/:env/:locale? can put a built payload for an existing package in a new locale', function () {
+  describe('PUT /builds/:pkg/:env can put a built payload for an existing package in a new locale', function () {
     after(function (next) {
       const fullyBuiltAssetSpecs = [{
         name: 'fully-built-individual',
@@ -320,7 +320,10 @@ describe('/builds/*', function () {
         res = await req({
           method: 'PUT',
           uri: address(app, {
-            pathname: `builds/${name}/dev/nl-NL`
+            pathname: `builds/${name}/dev`,
+            query: {
+              locale: 'nl-NL'
+            }
           }),
           json: testPkg,
           resolveWithFullResponse: true
@@ -333,7 +336,7 @@ describe('/builds/*', function () {
     });
   });
 
-  describe('PUT /builds/:pkg/:env/:locale? throws 409 error if version/locale already exists', function () {
+  describe('PUT /builds/:pkg/:env throws 409 error if version/locale already exists', function () {
     after(function (next) {
       const fullyBuiltAssetSpecs = [{
         name: 'fully-built-version',
@@ -368,7 +371,10 @@ describe('/builds/*', function () {
         res = await req({
           method: 'PUT',
           uri: address(app, {
-            pathname: `builds/${name}/dev/nl-NL`
+            pathname: `builds/${name}/dev`,
+            query: {
+              locale: 'nl-NL'
+            }
           }),
           json: testPkg,
           resolveWithFullResponse: true
@@ -380,7 +386,10 @@ describe('/builds/*', function () {
         await req({
           method: 'PUT',
           uri: address(app, {
-            pathname: `builds/${name}/dev/nl-NL`
+            pathname: `builds/${name}/dev`,
+            query: {
+              locale: 'nl-NL'
+            }
           }),
           json: testPkg,
           resolveWithFullResponse: true

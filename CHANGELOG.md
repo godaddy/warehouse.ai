@@ -1,5 +1,7 @@
 # CHANGELOG
 
+- Remove `PUT /builds/:pkg/:env/:locale` in favor of `PUT /builds/:pkg/:env?locale=...`
+
 ### 6.3.0
 
 - PUT route adjusted to support locales, return 409 instead of 403 on conflict
