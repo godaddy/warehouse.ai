@@ -28,7 +28,7 @@
   "scripts": {
     "lint": "npm run prettier && npm run eslint",
     "eslint": "eslint-godaddy --max-warnings 0 --ignore-pattern /coverage/ ./",
-    "prettier": "prettier --write 'lib/*.js'",
+    "prettier": "prettier --write lib",
     "release": "standard-version -t ''",
     "test": "tap test/**/*.test.js",
     "start": "node lib/app.js",
