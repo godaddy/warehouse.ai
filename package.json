@@ -8,6 +8,7 @@
     "test": "test"
   },
   "dependencies": {
+    "aws-sdk": "^2.786.0",
     "fastify": "^3.0.0",
     "fastify-auth": "^1.0.1",
     "fastify-autoload": "^3.3.0",
@@ -19,6 +20,7 @@
     "eslint-config-godaddy": "^4.0.1",
     "fastify-cli": "^2.3.0",
     "nodemon": "^2.0.4",
+    "prettier": "^2.1.2",
     "standard-version": "^9.0.0",
     "tap": "^14.0.0"
   },
