@@ -4,7 +4,7 @@ const tables = {
   [`${NAMESPACE}-objects`]: {
     KeySchema: [
       {
-        AttributeName: 'name',
+        AttributeName: 'keyname',
         KeyType: 'HASH'
       },
       {
@@ -14,7 +14,7 @@ const tables = {
     ],
     AttributeDefinitions: [
       {
-        AttributeName: 'name',
+        AttributeName: 'keyname',
         AttributeType: 'S'
       },
       {
