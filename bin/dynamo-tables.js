@@ -83,6 +83,5 @@ const tables = {
 
 module.exports = {
   tables,
-  tableNames: Object.keys(tables),
-  regions: ['us-west-2']
+  tableNames: Object.keys(tables)
 };

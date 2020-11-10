@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 const { DynamoDB } = require('aws-sdk');
-const { regions } = require('./dynamo-tables');
 const DynamoTools = require('./dynamo-tools');
 
+const regions = ['us-west-2'];
 const clients = regions.reduce((acc, region) => {
   acc[region] = new DynamoDB({
     accessKeyId: 'fakeKeyId',
@@ -14,6 +14,6 @@ const clients = regions.reduce((acc, region) => {
   return acc;
 }, {});
 
-const tools = new DynamoTools(clients);
+const tools = new DynamoTools({ clients, regions });
 // eslint-disable-next-line no-console
 tools.createTables().catch(console.error);

@@ -2,11 +2,12 @@
 
 /* eslint-disable no-console */
 
-const { tables, tableNames, regions } = require('./dynamo-tables');
+const { tables, tableNames } = require('./dynamo-tables');
 
 class DynamoTools {
-  constructor(clients) {
+  constructor({ clients, regions }) {
     this._clients = clients;
+    this._regions = regions;
   }
 
   async getTableStatus(region, tableName) {
@@ -58,7 +59,7 @@ class DynamoTools {
 
   async createTables() {
     await Promise.all(
-      regions.map(async (region) => {
+      this._regions.map(async (region) => {
         return this.createTablesInRegion(region);
       })
     );
