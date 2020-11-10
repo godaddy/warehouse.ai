@@ -8,7 +8,7 @@ const clients = regions.reduce((acc, region) => {
   acc[region] = new DynamoDB({
     accessKeyId: 'fakeKeyId',
     secretAccessKey: 'fakeSecretAccessKey',
-    endpoint: 'http://localhost:4569',
+    endpoint: 'http://localhost:4566',
     region
   });
   return acc;
