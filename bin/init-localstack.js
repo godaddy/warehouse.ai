@@ -14,6 +14,6 @@ const clients = regions.reduce((acc, region) => {
   return acc;
 }, {});
 
-
 const tools = new DynamoTools(clients);
-tools.createTables();
+// eslint-disable-next-line no-console
+tools.createTables().catch(console.error);

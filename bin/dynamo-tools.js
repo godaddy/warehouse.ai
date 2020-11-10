@@ -13,7 +13,9 @@ class DynamoTools {
     const client = this._clients[region];
     let status;
     try {
-      const ret = await client.describeTable({ TableName: tableName }).promise();
+      const ret = await client
+        .describeTable({ TableName: tableName })
+        .promise();
       status = ret.Table.TableStatus;
       console.log(`Current status for ${region}/${tableName} is ${status}`);
     } catch (error) {
@@ -21,7 +23,7 @@ class DynamoTools {
     }
     return status;
   }
-  
+
   async waitUntilTableCreated(region, tableName) {
     let status = await this.getTableStatus(region, tableName);
     while (status !== 'ACTIVE') {
@@ -29,7 +31,7 @@ class DynamoTools {
       status = await this.getTableStatus(region, tableName);
     }
   }
-  
+
   async createTable(region, tableName, createTableParameters) {
     const client = this._clients[region];
     try {
@@ -45,7 +47,7 @@ class DynamoTools {
     await this.waitUntilTableCreated(region, tableName);
     console.log(`createTable ${region}/${tableName} complete`);
   }
-  
+
   async createTablesInRegion(region) {
     await Promise.all(
       tableNames.map((tableName) => {
@@ -53,7 +55,7 @@ class DynamoTools {
       })
     );
   }
-  
+
   async createTables() {
     await Promise.all(
       regions.map(async (region) => {
