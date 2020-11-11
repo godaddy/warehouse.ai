@@ -46,6 +46,36 @@ const tables = {
       {
         AttributeName: 'variant',
         AttributeType: 'S'
+      },
+      {
+        AttributeName: 'keyname',
+        AttributeType: 'S'
+      },
+      {
+        AttributeName: 'env',
+        AttributeType: 'S'
+      }
+    ],
+    GlobalSecondaryIndexes: [
+      {
+        IndexName: 'keyname-env-index',
+        KeySchema: [
+          {
+            AttributeName: 'keyname',
+            KeyType: 'HASH'
+          },
+          {
+            AttributeName: 'env',
+            KeyType: 'RANGE'
+          }
+        ],
+        Projection: {
+          ProjectionType: 'ALL'
+        },
+        ProvisionedThroughput: {
+          ReadCapacityUnits: 5,
+          WriteCapacityUnits: 5
+        }
       }
     ],
     ProvisionedThroughput: {
