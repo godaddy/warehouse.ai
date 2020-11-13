@@ -15,11 +15,7 @@ class DynamoTools {
     try {
       const { Buckets: buckets } = await this._client.listBuckets().promise();
       const names = buckets.map(({ Name: name }) => name);
-      if (names.includes(bucketName)) {
-        status = 'CREATED';
-      } else {
-        status = 'NOT_CREATED';
-      }
+      status = names.includes(bucketName) ? 'CREATED' : 'NOT_CREATED';
       console.log(
         `Current status for ${this._region}/${bucketName} is ${status}`
       );
