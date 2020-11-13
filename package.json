@@ -34,7 +34,7 @@
     "test": "tap test/**/*.test.js",
     "start": "node lib/app.js",
     "dev": "LOCALSTACK=1 AWS_ACCESS_KEY_ID=foobar AWS_SECRET_ACCESS_KEY=foobar nodemon lib/app.js",
-    "localstack": "docker run -it -p 4566:4566 -p 9999:8080 -e SERVICES=dynamodb -e DEBUG=1 --rm localstack/localstack:0.11.6"
+    "localstack": "docker run -it -p 4566:4566 -p 9999:8080 -e SERVICES=dynamodb,s3 -e DEBUG=1 --rm localstack/localstack:0.11.6"
   },
   "repository": {
     "type": "git",
