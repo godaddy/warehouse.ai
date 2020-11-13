@@ -8,10 +8,10 @@ const { bucketNames } = require('./s3-buckets');
  * @typedef {import('aws-sdk').S3} AwsS3
  */
 
-/* Class for helping creating DynamoDB tables */
-class DynamoTools {
+/* Class for helping creating S3 buckets */
+class S3Tools {
   /**
-   * Create a `DynamoTools` instance.
+   * Create a `S3Tools` instance.
    * @param {AwsS3} client - AWS S3 client instance
    * @param {string} region - AWS region
    */
@@ -90,4 +90,4 @@ class DynamoTools {
   }
 }
 
-module.exports = DynamoTools;
+module.exports = S3Tools;
