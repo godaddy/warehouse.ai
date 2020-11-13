@@ -7,6 +7,7 @@ const { tables, tableNames } = require('./dynamo-tables');
 /**
  * @typedef {import('aws-sdk').DynamoDB} AwsDynamoDB
  * @typedef {Object.<string, AwsDynamoDB>} DynamoClients
+ * @typedef {import('aws-sdk').DynamoDB.CreateTableInput} DynamoCreateTableParams
  */
 
 /* Class for helping creating DynamoDB tables */
@@ -61,7 +62,7 @@ class DynamoTools {
    * Create application tables in specific AWS region.
    * @param {string} region - AWS region
    * @param {string} tableName - DynamoDB table name
-   * @param {Object} createTableParameters - Create table AWS SDK parameters
+   * @param {DynamoCreateTableParams} createTableParameters - Create table AWS SDK parameters
    * @returns {Promise<any>} Operation result
    */
   async createTable(region, tableName, createTableParameters) {
