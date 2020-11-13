@@ -6,15 +6,16 @@ const { tables, tableNames } = require('./dynamo-tables');
 
 /**
  * @typedef {import('aws-sdk').DynamoDB} AwsDynamoDB
- * @type {{ DynamoClients: Object.<string, AwsDynamoDB> }}
+ * @typedef {Object.<string, AwsDynamoDB>} DynamoClients
  */
 
 /* Class for helping creating DynamoDB tables */
 class DynamoTools {
   /**
    * Create a `DynamoTools` instance.
-   * @param {DynamoClients} clients - AWS DynamoDB clients per region
-   * @param {string[]} region - AWS regions
+   * @param {Object} opts - Constructor parameters
+   * @param {DynamoClients} opts.clients - AWS DynamoDB clients per region
+   * @param {string[]} opts.regions - AWS regions
    */
   constructor({ clients, regions }) {
     this._clients = clients;
