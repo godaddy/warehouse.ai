@@ -33,6 +33,7 @@ const s3Tools = new S3Tools({
 });
 
 Promise.all([dynamoTools.createTables(), s3Tools.createBuckets()])
-  .then('Localstack initialized')
+  // eslint-disable-next-line no-console
+  .then(() => console.info('Localstack initialized'))
   // eslint-disable-next-line no-console
   .catch(console.error);
