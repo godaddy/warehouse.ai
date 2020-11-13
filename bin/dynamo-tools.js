@@ -49,16 +49,16 @@ class DynamoTools {
     console.log(`createTable ${region}/${tableName} complete`);
   }
 
-  async createTablesInRegion(region) {
-    await Promise.all(
+  createTablesInRegion(region) {
+    return Promise.all(
       tableNames.map((tableName) => {
         return this.createTable(region, tableName, tables[tableName]);
       })
     );
   }
 
-  async createTables() {
-    await Promise.all(
+  createTables() {
+    return Promise.all(
       this._regions.map(async (region) => {
         return this.createTablesInRegion(region);
       })

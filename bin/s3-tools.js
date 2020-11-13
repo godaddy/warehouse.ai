@@ -52,8 +52,8 @@ class DynamoTools {
     console.log(`createBucket ${this._region}/${bucketName} complete`);
   }
 
-  async createBuckets() {
-    await Promise.all(
+  createBuckets() {
+    return Promise.all(
       bucketNames.map((name) => {
         return this.createBucket(name);
       })
