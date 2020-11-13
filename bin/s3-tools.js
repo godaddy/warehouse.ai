@@ -4,12 +4,27 @@
 
 const { bucketNames } = require('./s3-buckets');
 
+/**
+ * @typedef {import('aws-sdk').S3} AwsS3
+ */
+
+/* Class for helping creating DynamoDB tables */
 class DynamoTools {
+  /**
+   * Create a `DynamoTools` instance.
+   * @param {AwsS3} client - AWS S3 client instance
+   * @param {string} region - AWS region
+   */
   constructor({ client, region }) {
     this._client = client;
     this._region = region;
   }
 
+  /**
+   * Return the bucket status.
+   * @param {string} bucketName - Bucket name
+   * @returns {Promise<string>} Bucket status
+   */
   async getBucketStatus(bucketName) {
     let status;
     try {
@@ -25,6 +40,11 @@ class DynamoTools {
     return status;
   }
 
+  /**
+   * Function that does not resolve until bucket is created.
+   * @param {string} bucketName - Bucket name
+   * @returns {Promise<any>} Operation resolver
+   */
   async waitUntilBucketCreated(bucketName) {
     let status = await this.getBucketStatus(bucketName);
     while (status !== 'CREATED') {
@@ -33,6 +53,11 @@ class DynamoTools {
     }
   }
 
+  /**
+   * Create a bucket.
+   * @param {string} bucketName - Bucket name
+   * @returns {Promise<any>} Operation result
+   */
   async createBucket(bucketName) {
     try {
       console.log(`Creating ${this._region}/${bucketName}`);
@@ -52,6 +77,10 @@ class DynamoTools {
     console.log(`createBucket ${this._region}/${bucketName} complete`);
   }
 
+  /**
+   * Create application buckets.
+   * @returns {Promise<any>} Operation result
+   */
   createBuckets() {
     return Promise.all(
       bucketNames.map((name) => {
