@@ -36,3 +36,23 @@ fastify.ready(function () {
   });
 })
 ```
+
+### Development
+
+Warehouse uses [Localstack] and [Docker] for local development.
+
+To properly run the application locally, open one terminal session and run:
+
+```
+npm run localstack
+```
+
+Then, open another terminal session and run:
+
+```
+npm run init-localstack
+npm run dev
+```
+
+[Docker]: https://www.docker.com
+[Localstack]: https://github.com/localstack/localstack
