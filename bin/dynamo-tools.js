@@ -22,6 +22,12 @@ class DynamoTools {
     this._regions = regions;
   }
 
+  /**
+   * Return the table status.
+   * @param {string} region - AWS region
+   * @param {string} tableName - DynamoDB table name
+   * @returns {Promise<string>} Bucket status
+   */
   async getTableStatus(region, tableName) {
     const client = this._clients[region];
     let status;
@@ -37,6 +43,12 @@ class DynamoTools {
     return status;
   }
 
+  /**
+   * Function that does not resolve until table is created.
+   * @param {string} region - AWS region
+   * @param {string} tableName - DynamoDB table name
+   * @returns {Promise<any>} Operation resolver
+   */
   async waitUntilTableCreated(region, tableName) {
     let status = await this.getTableStatus(region, tableName);
     while (status !== 'ACTIVE') {
@@ -45,6 +57,13 @@ class DynamoTools {
     }
   }
 
+  /**
+   * Create application tables in specific AWS region.
+   * @param {string} region - AWS region
+   * @param {string} tableName - DynamoDB table name
+   * @param {Object} createTableParameters - Create table AWS SDK parameters
+   * @returns {Promise<any>} Operation result
+   */
   async createTable(region, tableName, createTableParameters) {
     const client = this._clients[region];
     try {
@@ -61,6 +80,11 @@ class DynamoTools {
     console.log(`createTable ${region}/${tableName} complete`);
   }
 
+  /**
+   * Create application tables in specific AWS region.
+   * @param {string} region - AWS region
+   * @returns {Promise<any>} Operation result
+   */
   createTablesInRegion(region) {
     return Promise.all(
       tableNames.map((tableName) => {
@@ -69,6 +93,10 @@ class DynamoTools {
     );
   }
 
+  /**
+   * Create application tables.
+   * @returns {Promise<any>} Operation result
+   */
   createTables() {
     return Promise.all(
       this._regions.map(async (region) => {
