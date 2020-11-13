@@ -12,8 +12,9 @@ const { bucketNames } = require('./s3-buckets');
 class S3Tools {
   /**
    * Create a `S3Tools` instance.
-   * @param {AwsS3} client - AWS S3 client instance
-   * @param {string} region - AWS region
+   * @param {Object} opts - Constructor parameters
+   * @param {AwsS3} opts.client - AWS S3 client instance
+   * @param {string} opts.region - AWS region
    */
   constructor({ client, region }) {
     this._client = client;
