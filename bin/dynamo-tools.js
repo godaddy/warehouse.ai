@@ -6,8 +6,8 @@ const { tables, tableNames } = require('./dynamo-tables');
 
 /**
  * @typedef {import('aws-sdk').DynamoDB} AwsDynamoDB
- * @typedef {Object.<string, AwsDynamoDB>} DynamoClients
- * @typedef {import('aws-sdk').DynamoDB.CreateTableInput} DynamoCreateTableParams
+ * @typedef {Object<string, AwsDynamoDB>} DynamoClients
+ * @typedef {AwsDynamoDB.CreateTableInput} DynamoCreateTableParams
  */
 
 /* Class for helping creating DynamoDB tables */

@@ -44,7 +44,7 @@ class S3Tools {
   /**
    * Function that does not resolve until bucket is created.
    * @param {string} bucketName - Bucket name
-   * @returns {Promise<any>} Operation resolver
+   * @returns {Promise<void>} Operation resolver
    */
   async waitUntilBucketCreated(bucketName) {
     let status = await this.getBucketStatus(bucketName);
@@ -57,7 +57,7 @@ class S3Tools {
   /**
    * Create a bucket.
    * @param {string} bucketName - Bucket name
-   * @returns {Promise<any>} Operation result
+   * @returns {Promise<void>} Operation result
    */
   async createBucket(bucketName) {
     try {
@@ -80,7 +80,7 @@ class S3Tools {
 
   /**
    * Create application buckets.
-   * @returns {Promise<any>} Operation result
+   * @returns {Promise<void>} Operation result
    */
   createBuckets() {
     return Promise.all(
