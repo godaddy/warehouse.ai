@@ -15,6 +15,7 @@
     "fastify-autoload": "^3.3.0",
     "fastify-plugin": "^2.3.0",
     "fastify-sensible": "^3.0.1",
+    "fingerprinting": "^1.0.1",
     "pino": "^6.7.0"
   },
   "devDependencies": {
@@ -33,8 +34,9 @@
     "release": "standard-version -t ''",
     "test": "tap test/**/*.test.js",
     "start": "node lib/app.js",
+    "init-localstack": "./bin/init-localstack.js",
     "dev": "LOCALSTACK=1 AWS_ACCESS_KEY_ID=foobar AWS_SECRET_ACCESS_KEY=foobar nodemon lib/app.js",
-    "localstack": "docker run -it -p 4566:4566 -p 9999:8080 -e SERVICES=dynamodb -e DEBUG=1 --rm localstack/localstack:0.11.6"
+    "localstack": "docker run -it -p 4566:4566 -p 9999:8080 -e SERVICES=dynamodb,s3 -e DEBUG=1 --rm localstack/localstack:0.11.6"
   },
   "repository": {
     "type": "git",
