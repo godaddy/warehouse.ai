@@ -29,14 +29,14 @@ class S3Tools {
   async getBucketStatus(bucketName) {
     let status;
     try {
-      const { Buckets: buckets } = await this._client.listBuckets().promise();
-      const names = buckets.map(({ Name: name }) => name);
-      status = names.includes(bucketName) ? 'CREATED' : 'NOT_CREATED';
+      await this._client.headBucket({ Bucket: bucketName }).promise();
+      status = 'CREATED';
       console.log(
         `Current status for ${this._region}/${bucketName} is ${status}`
       );
     } catch (error) {
-      console.log(`listBuckets - ${error.message}`);
+      status = 'NOT_CREATED';
+      console.log(`headBucket - ${error.message}`);
     }
     return status;
   }
