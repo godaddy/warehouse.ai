@@ -44,7 +44,7 @@ class S3Tools {
   /**
    * Function that does not resolve until bucket is created.
    * @param {string} bucketName - Bucket name
-   * @returns {Promise<any>} Operation resolver
+   * @returns {Promise<void>} Operation resolver
    */
   async waitUntilBucketCreated(bucketName) {
     let status = await this.getBucketStatus(bucketName);
