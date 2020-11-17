@@ -80,7 +80,7 @@ class S3Tools {
 
   /**
    * Create application buckets.
-   * @returns {Promise<any>} Operation result
+   * @returns {Promise<void>} Operation result
    */
   createBuckets() {
     return Promise.all(
