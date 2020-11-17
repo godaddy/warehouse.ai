@@ -57,7 +57,7 @@ class S3Tools {
   /**
    * Create a bucket.
    * @param {string} bucketName - Bucket name
-   * @returns {Promise<any>} Operation result
+   * @returns {Promise<void>} Operation result
    */
   async createBucket(bucketName) {
     try {
