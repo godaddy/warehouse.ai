@@ -1,5 +1,5 @@
 {
-  "swagger": "2.0",
+  "openapi": "3.0.2",
   "info": {
     "title": "Warehouse",
     "version": "7.0.0",
@@ -35,13 +35,20 @@
             "in": "query",
             "name": "version"
           },
-          { "type": "string", "required": false, "in": "query", "name": "env" }
+          { "type": "string", "required": false, "in": "query", "name": "env" },
+          { "type": "string", "required": true, "in": "path", "name": "name" }
         ],
         "responses": { "200": { "description": "Default Response" } }
       }
     },
     "/head/{name}/{env}": {
-      "get": { "responses": { "200": { "description": "Default Response" } } }
+      "get": {
+        "parameters": [
+          { "type": "string", "required": true, "in": "path", "name": "name" },
+          { "type": "string", "required": true, "in": "path", "name": "env" }
+        ],
+        "responses": { "200": { "description": "Default Response" } }
+      }
     },
     "/objects": {
       "post": {
@@ -68,6 +75,10 @@
     },
     "/objects/{name}/{env}": {
       "delete": {
+        "parameters": [
+          { "type": "string", "required": true, "in": "path", "name": "name" },
+          { "type": "string", "required": true, "in": "path", "name": "env" }
+        ],
         "responses": { "200": { "description": "Default Response" } }
       },
       "put": {
@@ -80,7 +91,9 @@
               "required": ["head"],
               "properties": { "head": { "type": "string" } }
             }
-          }
+          },
+          { "type": "string", "required": true, "in": "path", "name": "name" },
+          { "type": "string", "required": true, "in": "path", "name": "env" }
         ],
         "responses": { "200": { "description": "Default Response" } }
       }
@@ -93,10 +106,21 @@
             "required": false,
             "in": "query",
             "name": "variant"
+          },
+          { "type": "string", "required": true, "in": "path", "name": "name" },
+          { "type": "string", "required": true, "in": "path", "name": "env" },
+          {
+            "type": "string",
+            "required": true,
+            "in": "path",
+            "name": "version"
           }
         ],
         "responses": { "200": { "description": "Default Response" } }
       }
+    },
+    "/": {
+      "get": { "responses": { "200": { "description": "Default Response" } } }
     }
   }
 }
