@@ -1,0 +1,102 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Warehouse",
+    "version": "7.0.0",
+    "description": "Warehouse API endpoints"
+  },
+  "definitions": {},
+  "paths": {
+    "/cdn": {
+      "post": {
+        "parameters": [
+          {
+            "type": ["string", "number"],
+            "required": false,
+            "in": "query",
+            "name": "expiration"
+          }
+        ],
+        "responses": { "200": { "description": "Default Response" } }
+      }
+    },
+    "/objects/{name}": {
+      "get": {
+        "parameters": [
+          {
+            "type": "string",
+            "required": false,
+            "in": "query",
+            "name": "accepted_variants"
+          },
+          {
+            "type": "string",
+            "required": false,
+            "in": "query",
+            "name": "version"
+          },
+          { "type": "string", "required": false, "in": "query", "name": "env" }
+        ],
+        "responses": { "200": { "description": "Default Response" } }
+      }
+    },
+    "/head/{name}/{env}": {
+      "get": { "responses": { "200": { "description": "Default Response" } } }
+    },
+    "/objects": {
+      "post": {
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "required": ["name", "version", "env", "data"],
+              "properties": {
+                "name": { "type": "string" },
+                "version": { "type": "string" },
+                "env": { "type": "string" },
+                "variant": { "type": "string" },
+                "expiration": { "type": ["string", "number"] },
+                "data": { "type": ["object", "string"] }
+              }
+            }
+          }
+        ],
+        "responses": { "200": { "description": "Default Response" } }
+      }
+    },
+    "/objects/{name}/{env}": {
+      "delete": {
+        "responses": { "200": { "description": "Default Response" } }
+      },
+      "put": {
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "required": ["head"],
+              "properties": { "head": { "type": "string" } }
+            }
+          }
+        ],
+        "responses": { "200": { "description": "Default Response" } }
+      }
+    },
+    "/objects/{name}/{env}/{version}": {
+      "delete": {
+        "parameters": [
+          {
+            "type": "string",
+            "required": false,
+            "in": "query",
+            "name": "variant"
+          }
+        ],
+        "responses": { "200": { "description": "Default Response" } }
+      }
+    }
+  }
+}
