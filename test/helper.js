@@ -1,10 +1,17 @@
 const createFastify = require('fastify');
-const warehouse = require('../lib/app');
+const fp = require('fastify-plugin');
+const warehouse = require('../lib/warehouse');
 
 function build(t) {
-  const fastify = createFastify({ logger: 'info' });
+  const fastify = createFastify({
+    logger: {
+      level: 'debug',
+      prettyPrint: true
+    }
+  });
   fastify.decorate('verifyAuthentication', async function () {});
-  fastify.register(warehouse);
+  // Expose all decorators for testing purposes
+  fastify.register(fp(warehouse), { useLocalstack: true });
   t.tearDown(fastify.close.bind(fastify));
   return fastify;
 }
