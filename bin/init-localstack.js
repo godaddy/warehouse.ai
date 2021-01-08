@@ -11,6 +11,7 @@ const credentials = {
   secretAccessKey: 'fakeSecretAccessKey'
 };
 
+// eslint-disable-next-line
 const endpoint = process.env.LOCALSTACK_URL || 'http://localhost:4566';
 
 const dynamoClients = dynamoRegions.reduce((acc, region) => {

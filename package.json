@@ -36,6 +36,7 @@
     "prettier": "prettier --write lib bin test",
     "release": "standard-version -t ''",
     "test": "tap test/**/*.test.js",
+    "posttest": "npm run eslint",
     "start": "node lib/app.js",
     "init-localstack": "./bin/init-localstack.js",
     "dev": "LOCALSTACK=1 nodemon lib/app.js",
