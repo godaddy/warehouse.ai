@@ -1,6 +1,6 @@
 name: Test
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   test:
@@ -14,7 +14,6 @@ jobs:
         image: localstack/localstack:0.11.6
         ports:
           - 4566:4566
-          - 9999:9999
     steps:
       - uses: actions/checkout@v2
         with:
