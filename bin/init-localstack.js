@@ -5,11 +5,19 @@ const DynamoTools = require('./dynamo-tools');
 const S3Tools = require('./s3-tools');
 
 const dynamoRegions = ['us-west-2'];
+
+const credentials = {
+  accessKeyId: 'fakeKeyId',
+  secretAccessKey: 'fakeSecretAccessKey'
+};
+
+// eslint-disable-next-line
+const endpoint = process.env.LOCALSTACK_URL || 'http://localhost:4566';
+
 const dynamoClients = dynamoRegions.reduce((acc, region) => {
   acc[region] = new DynamoDB({
-    accessKeyId: 'fakeKeyId',
-    secretAccessKey: 'fakeSecretAccessKey',
-    endpoint: 'http://localhost:4566',
+    endpoint,
+    credentials,
     region
   });
   return acc;
@@ -23,9 +31,8 @@ const dynamoTools = new DynamoTools({
 const s3Region = 'us-west-2';
 const s3Tools = new S3Tools({
   client: new S3({
-    accessKeyId: 'fakeKeyId',
-    secretAccessKey: 'fakeSecretAccessKey',
-    endpoint: 'http://localhost:4566',
+    endpoint,
+    credentials,
     s3ForcePathStyle: true,
     region: s3Region
   }),
