@@ -11,7 +11,10 @@ function build(t) {
   });
   fastify.decorate('verifyAuthentication', async function () {});
   // Expose all decorators for testing purposes
-  fastify.register(fp(warehouse), { useLocalstack: true });
+  fastify.register(fp(warehouse), {
+    useLocalstack: true,
+    cdnBaseUrl: 'https://cdn-example.com'
+  });
   t.tearDown(fastify.close.bind(fastify));
   return fastify;
 }
