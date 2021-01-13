@@ -1,3 +1,6 @@
 {
-  "extends": "godaddy"
+  "extends": "godaddy",
+  "rules": {
+    "valid-jsdoc": 0
+  }
 }

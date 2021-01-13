@@ -36,7 +36,8 @@ test('CDN API', async (t) => {
       ],
       files: [
         {
-          url: 'https://cdn-example.com/71fbac4eca64da6727d4a9c9cd00e353/main.js',
+          url:
+            'https://cdn-example.com/71fbac4eca64da6727d4a9c9cd00e353/main.js',
           metadata: {
             css: false,
             js: true,
