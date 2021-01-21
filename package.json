@@ -45,7 +45,7 @@
     "async": "^3.1.0",
     "authboot": "^2.0.1",
     "aws-liveness": "^1.1.0",
-    "aws-sdk": "^2.567.0",
+    "aws-sdk": "^2.814.0",
     "basic-auth": "^2.0.0",
     "bffs": "^7.1.0",
     "body-parser": "^1.19.0",
