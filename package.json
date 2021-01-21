@@ -63,7 +63,7 @@
     "failure": "1.1.x",
     "fingerprinting": "^1.0.1",
     "gjallarhorn": "^1.2.1",
-    "http-proxy": "^1.18.0",
+    "http-proxy": "^1.18.1",
     "hyperquest": "^2.1.3",
     "ioredis": "^4.16.0",
     "json-try-parse": "^1.0.0",
