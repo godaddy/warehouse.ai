@@ -39,9 +39,9 @@ paths:
                         url:
                           type: string
                         metadata:
-                          type: object
-                          nullable: true
                           additionalProperties: true
+                          nullable: true
+                          type: object
   "/objects/{name}":
     get:
       parameters:
@@ -110,8 +110,8 @@ paths:
                 type: object
                 properties:
                   headVersion:
-                    type: string
                     nullable: true
+                    type: string
                   latestVersion:
                     type: string
   /objects:
