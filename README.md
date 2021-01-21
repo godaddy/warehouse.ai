@@ -256,6 +256,7 @@ GET  /builds/:pkg/:env/:version       # Get build information
 GET  /builds/:pkg/:env/:version/meta  # Get build information
 POST /builds/:pkg                     # Ad-hoc build
 POST /builds/compose                  # Trigger multiple builds
+PUT  /builds/:pkg/:env/:locale?       # Upload an already-built asset
 ```
 
 To use the fingerprinted assets from the CDN the build information can be
@@ -382,13 +383,37 @@ First, add these parameters in your `package.json`:
 +  }
  }
 ```
-
 This indicates to `warehouse.ai` that you're building with `webpack` for the
 appropriate locales. Currently, 3 build systems are supported, `webpack`, `es*`,
 and `browserify`. These additional systems are further detailed
 [here](https://github.com/godaddy/carpenterd#identification-of-build-system-type).
 Very simply, you can change the `build` keyword in your `package.json` to invoke
 these build tools.
+
+
+We also have a configuration option added to the `wrhs` property in the
+`package.json` if you want to disable auto promotion behavior during publish.
+
+```diff
+ {
+   "name": "yet-another-js-framework",
+   "scripts": {
+     "build": "webpack && npm run minify",
+     "minify": "run-some-minification-tool"
+   },
+   "build": "webpack",
+   "locales": [
+     "en-US",
+     "es-MX"
+   ],
+   "publishConfig": {
+     "registry": "https://wherever-you-deployed-warehouse.ai"
+   }
++  "wrhs": {
++    "autoPromoteOnPublish": false
++  }
+}
+```
 
 Next, add a `wrhs.toml` at the top-level directory, with following contents,
 indicating which assets are to be served by default in each environment:
@@ -443,13 +468,15 @@ has network access to that registry so that `npm install` can succeed.
 
 ## Tests
 
-Run an AWS local cloud stack, pull `latest` [localstack].
+Run an AWS local cloud stack, pull `0.11.3` [localstack].
 This requires `docker` [to be setup][docker].
 
 ```sh
-docker pull localstack/localstack:latest
-npm run localstack
+npm run localstack # pulls correct localstack image if not already available and runs it
 ```
+
+> `localstack` had a breaking change of some sort in 0.11.4 and later that breaks our tests. We will investigate and
+> fix soon. See #93.
 
 Run tests in a separate terminal.
 

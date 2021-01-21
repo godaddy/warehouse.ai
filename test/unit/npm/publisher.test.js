@@ -12,6 +12,8 @@ const macros = require('../../macros');
 const { dirs } = require('../../helpers');
 const async = require('async');
 
+assume.use(require('assume-sinon'));
+
 const { PassThrough, Readable } = require('stream');
 
 const Publisher = mocks.publisher();
@@ -127,7 +129,7 @@ describe('npm/publisher.js', function () {
         return successStream;
       });
 
-      publisher.build('whatever', 'emit an error', function (err) {
+      publisher.build({ name: 'whatever', payload: 'emit an error', pkg: {} }, function (err) {
         assume(err).is.falsey();
         assume(publisher.log.warn).is.calledWith('carpenter failed to build, will try again (1 left)');
         done();

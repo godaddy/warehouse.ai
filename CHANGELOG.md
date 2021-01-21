@@ -1,5 +1,33 @@
 # CHANGELOG
 
+### 6.4.0
+
+- Remove `PUT /builds/:pkg/:env/:locale` in favor of `PUT /builds/:pkg/:env?locale=...`
+
+### 6.3.0
+
+- PUT route adjusted to support locales, return 409 instead of 403 on conflict
+
+### 6.2.0
+
+- add route PUT /builds/:pkg/:env? for sending fully built assets
+
+### 6.1.2
+
+- Do not let undefined override valid region
+
+### 6.1.1
+
+- Configure env var to properly override config for dynamo region
+
+### 6.1.0
+
+- [#83] Support configurable `wrhs.autoPromoteOnPublish` value in `package.json`
+
+### 6.0.1
+
+- Allow `DATABASE_REGION` env var to configure dynamo region
+
 ### 6.0.0
 
 - [#71] Use DynamoDB based models.
@@ -39,3 +67,4 @@
 [#61]: https://github.com/godaddy/warehouse.ai/pull/61
 [#64]: https://github.com/godaddy/warehouse.ai/pull/64
 [#71]: https://github.com/godaddy/warehouse.ai/pull/71
+[#83]: https://github.com/godaddy/warehouse.ai/pull/83

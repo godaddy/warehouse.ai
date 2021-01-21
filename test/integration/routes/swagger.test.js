@@ -61,7 +61,6 @@ describe('/api-docs', function () {
       '"/builds/-/meta/{pkg}/{version}"',
       '"/builds"',
       '"/builds/cancel/{pkg}/{version}/{env}"',
-      '"/builds/{pkg}"',
       '"/builds/{pkg}/{env}"',
       '"/builds/{pkg}/{env}/{version}"',
       '"/healthcheck"',
