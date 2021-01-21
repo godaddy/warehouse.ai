@@ -11,10 +11,11 @@ const { bucketNames } = require('./s3-buckets');
 /* Class for helping creating S3 buckets */
 class S3Tools {
   /**
-   * Create a `S3Tools` instance.
-   * @param {Object} opts - Constructor parameters
-   * @param {AwsS3} opts.client - AWS S3 client instance
-   * @param {string} opts.region - AWS region
+   * Create a `S3Tools` instance
+   *
+   * @param {Object} opts Constructor parameters
+   * @param {AwsS3} opts.client AWS S3 client instance
+   * @param {string} opts.region AWS region
    */
   constructor({ client, region }) {
     this._client = client;
@@ -22,8 +23,9 @@ class S3Tools {
   }
 
   /**
-   * Return the bucket status.
-   * @param {string} bucketName - Bucket name
+   * Return the bucket status
+   *
+   * @param {string} bucketName Bucket name
    * @returns {Promise<string>} Bucket status
    */
   async getBucketStatus(bucketName) {
@@ -42,8 +44,9 @@ class S3Tools {
   }
 
   /**
-   * Function that does not resolve until bucket is created.
-   * @param {string} bucketName - Bucket name
+   * Function that does not resolve until bucket is created
+   *
+   * @param {string} bucketName Bucket name
    * @returns {Promise<void>} Operation resolver
    */
   async waitUntilBucketCreated(bucketName) {
@@ -55,8 +58,8 @@ class S3Tools {
   }
 
   /**
-   * Create a bucket.
-   * @param {string} bucketName - Bucket name
+   * Create a bucket
+   * @param {string} bucketName Bucket name
    * @returns {Promise<void>} Operation result
    */
   async createBucket(bucketName) {
@@ -79,7 +82,8 @@ class S3Tools {
   }
 
   /**
-   * Create application buckets.
+   * Create application buckets
+   *
    * @returns {Promise<void>} Operation result
    */
   createBuckets() {

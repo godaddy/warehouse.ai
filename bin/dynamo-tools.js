@@ -13,10 +13,11 @@ const { tables, tableNames } = require('./dynamo-tables');
 /* Class for helping creating DynamoDB tables */
 class DynamoTools {
   /**
-   * Create a `DynamoTools` instance.
-   * @param {Object} opts - Constructor parameters
-   * @param {DynamoClients} opts.clients - AWS DynamoDB clients per region
-   * @param {string[]} opts.regions - AWS regions
+   * Create a `DynamoTools` instance
+   *
+   * @param {Object} opts Constructor parameters
+   * @param {DynamoClients} opts.clients AWS DynamoDB clients per region
+   * @param {string[]} opts.regions AWS regions
    */
   constructor({ clients, regions }) {
     this._clients = clients;
@@ -24,9 +25,10 @@ class DynamoTools {
   }
 
   /**
-   * Return the table status.
-   * @param {string} region - AWS region
-   * @param {string} tableName - DynamoDB table name
+   * Return the table status
+   *
+   * @param {string} region AWS region
+   * @param {string} tableName DynamoDB table name
    * @returns {Promise<string>} Bucket status
    */
   async getTableStatus(region, tableName) {
@@ -45,9 +47,10 @@ class DynamoTools {
   }
 
   /**
-   * Function that does not resolve until table is created.
-   * @param {string} region - AWS region
-   * @param {string} tableName - DynamoDB table name
+   * Function that does not resolve until table is created
+   *
+   * @param {string} region AWS region
+   * @param {string} tableName DynamoDB table name
    * @returns {Promise<any>} Operation resolver
    */
   async waitUntilTableCreated(region, tableName) {
@@ -59,10 +62,11 @@ class DynamoTools {
   }
 
   /**
-   * Create application tables in specific AWS region.
-   * @param {string} region - AWS region
-   * @param {string} tableName - DynamoDB table name
-   * @param {DynamoCreateTableParams} createTableParameters - Create table AWS SDK parameters
+   * Create application tables in specific AWS region
+   *
+   * @param {string} region AWS region
+   * @param {string} tableName DynamoDB table name
+   * @param {DynamoCreateTableParams} createTableParameters Create table AWS SDK parameters
    * @returns {Promise<any>} Operation result
    */
   async createTable(region, tableName, createTableParameters) {
@@ -82,8 +86,9 @@ class DynamoTools {
   }
 
   /**
-   * Create application tables in specific AWS region.
-   * @param {string} region - AWS region
+   * Create application tables in specific AWS region
+   *
+   * @param {string} region AWS region
    * @returns {Promise<any>} Operation result
    */
   createTablesInRegion(region) {
@@ -95,7 +100,8 @@ class DynamoTools {
   }
 
   /**
-   * Create application tables.
+   * Create application tables
+   *
    * @returns {Promise<any>} Operation result
    */
   createTables() {
