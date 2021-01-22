@@ -1,0 +1,230 @@
+openapi: 3.0.2
+info:
+  title: warehouse.ai
+  version: 7.0.0
+  description: Scalable Object Ledger and CDN
+definitions: {}
+paths:
+  /cdn:
+    post:
+      parameters:
+        - required: false
+          in: query
+          name: expiration
+          schema:
+            oneOf:
+              - type: string
+              - type: number
+      responses:
+        "201":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  fingerprints:
+                    type: array
+                    items:
+                      type: string
+                  recommended:
+                    type: array
+                    items:
+                      type: string
+                  files:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        url:
+                          type: string
+                        metadata:
+                          additionalProperties: true
+                          nullable: true
+                          type: object
+  "/objects/{name}":
+    get:
+      parameters:
+        - required: false
+          in: query
+          name: accepted_variants
+          schema:
+            type: string
+        - required: false
+          in: query
+          name: version
+          schema:
+            type: string
+        - required: false
+          in: query
+          name: env
+          schema:
+            type: string
+        - required: true
+          in: path
+          name: name
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    env:
+                      type: string
+                    version:
+                      type: string
+                    data:
+                      additionalProperties: true
+                      oneOf:
+                        - type: string
+                        - type: object
+                    variant:
+                      type: string
+  "/head/{name}/{env}":
+    get:
+      parameters:
+        - required: true
+          in: path
+          name: name
+          schema:
+            type: string
+        - required: true
+          in: path
+          name: env
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  headVersion:
+                    nullable: true
+                    type: string
+                  latestVersion:
+                    type: string
+  /objects:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - version
+                - data
+              properties:
+                name:
+                  type: string
+                version:
+                  type: string
+                env:
+                  type: string
+                variant:
+                  type: string
+                expiration:
+                  oneOf:
+                    - type: string
+                    - type: number
+                data:
+                  oneOf:
+                    - type: object
+                    - type: string
+      responses:
+        "201":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  created:
+                    type: boolean
+  "/objects/{name}/{env}":
+    delete:
+      parameters:
+        - required: true
+          in: path
+          name: name
+          schema:
+            type: string
+        - required: true
+          in: path
+          name: env
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Default Response
+    put:
+      parameters:
+        - required: true
+          in: path
+          name: name
+          schema:
+            type: string
+        - required: true
+          in: path
+          name: env
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - head
+              properties:
+                head:
+                  type: string
+      responses:
+        "204":
+          description: Default Response
+  "/objects/{name}/{env}/{version}":
+    delete:
+      parameters:
+        - required: false
+          in: query
+          name: variant
+          schema:
+            type: string
+        - required: true
+          in: path
+          name: name
+          schema:
+            type: string
+        - required: true
+          in: path
+          name: env
+          schema:
+            type: string
+        - required: true
+          in: path
+          name: version
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Default Response
+  /:
+    get:
+      responses:
+        "200":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: string
