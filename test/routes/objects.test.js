@@ -1,12 +1,18 @@
 /* eslint-disable no-shadow */
 
 const { test } = require('tap');
-const { build, createObject, getHead, getObject } = require('../helper');
+const {
+  build,
+  createObject,
+  getHead,
+  getObject,
+  setHead
+} = require('../helper');
 
 test('Objects API', async (t) => {
   const fastify = build(t);
 
-  t.plan(6);
+  t.plan(9);
 
   t.test('create object', async (t) => {
     t.plan(3);
@@ -181,7 +187,15 @@ test('Objects API', async (t) => {
     t.plan(2);
 
     await createObject(fastify, {
-      name: 'myObject',
+      name: 'myNewAwesomeObject',
+      version: '3.0.1',
+      env: 'development',
+      data: 'data from CDN api',
+      variant: 'fr-CA'
+    });
+
+    await createObject(fastify, {
+      name: 'myNewAwesomeObject',
       version: '3.0.2',
       env: 'development',
       data: 'data from CDN api',
@@ -190,7 +204,7 @@ test('Objects API', async (t) => {
 
     const res = await fastify.inject({
       method: 'DELETE',
-      url: '/objects/myObject/development/3.0.2',
+      url: '/objects/myNewAwesomeObject/development',
       headers: {
         'Content-type': 'application/json'
       }
@@ -199,11 +213,156 @@ test('Objects API', async (t) => {
     t.equal(res.statusCode, 204);
 
     const obj = await getObject(fastify, {
-      name: 'myObject',
-      env: 'development',
-      version: '3.0.2'
+      name: 'newObject',
+      env: 'development'
     });
 
     t.equal(obj, null);
+  });
+
+  t.test('delete latest object version', async (t) => {
+    t.plan(4);
+
+    await createObject(fastify, {
+      name: 'newObject',
+      version: '3.0.1',
+      env: 'development',
+      data: 'data from CDN api',
+      variant: 'fr-CA'
+    });
+
+    await setHead(fastify, {
+      name: 'newObject',
+      env: 'development',
+      version: '3.0.1'
+    });
+
+    await createObject(fastify, {
+      name: 'newObject',
+      version: '3.0.2',
+      env: 'development',
+      data: 'data from CDN api',
+      variant: 'fr-CA'
+    });
+
+    const res = await fastify.inject({
+      method: 'DELETE',
+      url: '/objects/newObject/development/3.0.2',
+      headers: {
+        'Content-type': 'application/json'
+      }
+    });
+
+    t.equal(res.statusCode, 204);
+
+    const [obj302, objHead] = await Promise.all([
+      getObject(fastify, {
+        name: 'newObject',
+        env: 'development',
+        version: '3.0.2'
+      }),
+      getHead(fastify, {
+        name: 'newObject',
+        env: 'development'
+      })
+    ]);
+
+    t.equal(obj302, null);
+    t.equal(objHead.latestVersion, '3.0.1');
+    t.equal(objHead.headVersion, '3.0.1');
+  });
+
+  t.test('delete head object version', async (t) => {
+    t.plan(4);
+
+    await createObject(fastify, {
+      name: 'newObjectX',
+      version: '3.0.1',
+      env: 'production',
+      data: 'data from CDN api',
+      variant: 'fr-CA'
+    });
+
+    await setHead(fastify, {
+      name: 'newObjectX',
+      env: 'production',
+      version: '3.0.1'
+    });
+
+    await createObject(fastify, {
+      name: 'newObjectX',
+      version: '3.0.2',
+      env: 'production',
+      data: 'data from CDN api',
+      variant: 'fr-CA'
+    });
+
+    const res = await fastify.inject({
+      method: 'DELETE',
+      url: '/objects/newObjectX/production/3.0.1',
+      headers: {
+        'Content-type': 'application/json'
+      }
+    });
+
+    t.equal(res.statusCode, 204);
+
+    const [obj301, objHead] = await Promise.all([
+      getObject(fastify, {
+        name: 'newObjectX',
+        env: 'production',
+        version: '3.0.1'
+      }),
+      getHead(fastify, {
+        name: 'newObjectX',
+        env: 'production'
+      })
+    ]);
+
+    t.equal(obj301, null);
+    t.equal(objHead.headVersion, null);
+    t.equal(objHead.latestVersion, '3.0.2');
+  });
+
+  t.test('delete all object versions', async (t) => {
+    t.plan(3);
+
+    await createObject(fastify, {
+      name: 'newObjectA',
+      version: '3.0.1',
+      env: 'test',
+      data: 'data from CDN api',
+      variant: 'en-US'
+    });
+
+    await setHead(fastify, {
+      name: 'newObjectA',
+      env: 'test',
+      version: '3.0.1'
+    });
+
+    const res = await fastify.inject({
+      method: 'DELETE',
+      url: '/objects/newObjectA/test/3.0.1',
+      headers: {
+        'Content-type': 'application/json'
+      }
+    });
+
+    t.equal(res.statusCode, 204);
+
+    const [obj, objHead] = await Promise.all([
+      getHead(fastify, {
+        name: 'newObjectA',
+        env: 'test'
+      }),
+      getHead(fastify, {
+        name: 'newObjectA',
+        env: 'test'
+      })
+    ]);
+
+    t.equal(obj, null);
+    t.equal(objHead, null);
   });
 });
