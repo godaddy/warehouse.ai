@@ -105,9 +105,9 @@ test('Objects API', async (t) => {
   });
 
   t.test('set object head', async (t) => {
-    t.plan(2);
+    t.plan(3);
 
-    const resBadReq = await fastify.inject({
+    const resNotFound = await fastify.inject({
       method: 'PUT',
       url: '/objects/myObject/development',
       headers: {
@@ -118,7 +118,7 @@ test('Objects API', async (t) => {
       })
     });
 
-    t.equal(resBadReq.statusCode, 404);
+    t.equal(resNotFound.statusCode, 404);
 
     const resOK = await fastify.inject({
       method: 'PUT',
@@ -132,6 +132,19 @@ test('Objects API', async (t) => {
     });
 
     t.equal(resOK.statusCode, 204);
+
+    const resBadReq = await fastify.inject({
+      method: 'PUT',
+      url: '/objects/myObject/development',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      payload: JSON.stringify({
+        head: '3.0.2'
+      })
+    });
+
+    t.equal(resBadReq.statusCode, 400);
   });
 
   t.test('get object head', async (t) => {
