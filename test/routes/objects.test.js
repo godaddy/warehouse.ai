@@ -5,6 +5,7 @@ const {
   build,
   createObject,
   getHead,
+  getHistoryRecords,
   getObject,
   setHead
 } = require('../helper');
@@ -105,7 +106,7 @@ test('Objects API', async (t) => {
   });
 
   t.test('set object head', async (t) => {
-    t.plan(3);
+    t.plan(6);
 
     const resNotFound = await fastify.inject({
       method: 'PUT',
@@ -132,6 +133,14 @@ test('Objects API', async (t) => {
     });
 
     t.equal(resOK.statusCode, 204);
+
+    const historyRecords = await getHistoryRecords(fastify, {
+      name: 'myObject',
+      env: 'development'
+    });
+    t.equal(historyRecords.length, 1);
+    t.equal(historyRecords[0].headVersion, '3.0.2');
+    t.equal(historyRecords[0].prevTimestamp, null);
 
     const resBadReq = await fastify.inject({
       method: 'PUT',
