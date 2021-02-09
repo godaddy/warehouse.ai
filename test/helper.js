@@ -43,17 +43,41 @@ async function getHead(f, { name, env }) {
     }
   });
 
-  if (res.statusCode > 399) {
+  if (res.statusCode === 404) {
+    return null;
+  } else if (res.statusCode > 399) {
     throw new Error('An error occourred while getting the object head');
   }
 
   return JSON.parse(res.payload);
 }
 
+async function setHead(f, { name, env, version }) {
+  const res = await f.inject({
+    method: 'PUT',
+    url: `/objects/${name}/${env}`,
+    headers: {
+      'Content-type': 'application/json'
+    },
+    payload: JSON.stringify({ head: version })
+  });
+
+  if (res.statusCode > 399) {
+    throw new Error('An error occourred while setting the object head');
+  }
+}
+
 async function getObject(f, { name, env, version }) {
+  let url;
+  if (version) {
+    url = `/objects/${name}?env=${env}&version=${version}`;
+  } else {
+    url = `/objects/${name}?env=${env}`;
+  }
+
   const res = await f.inject({
     method: 'GET',
-    url: `/objects/${name}?env=${env}&version=${version}`
+    url
   });
 
   if (res.statusCode === 404) {
@@ -69,5 +93,6 @@ module.exports = {
   build,
   createObject,
   getHead,
-  getObject
+  getObject,
+  setHead
 };
