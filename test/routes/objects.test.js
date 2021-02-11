@@ -142,7 +142,7 @@ test('Objects API', async (t) => {
     t.equal(historyRecords[0].headVersion, '3.0.2');
     t.equal(historyRecords[0].prevTimestamp, null);
 
-    const resBadReq = await fastify.inject({
+    const res409Req = await fastify.inject({
       method: 'PUT',
       url: '/objects/myObject/development',
       headers: {
@@ -153,7 +153,7 @@ test('Objects API', async (t) => {
       })
     });
 
-    t.equal(resBadReq.statusCode, 400);
+    t.equal(res409Req.statusCode, 409);
   });
 
   t.test('get object head', async (t) => {
