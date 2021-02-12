@@ -5,6 +5,7 @@ const {
   build,
   createObject,
   getHead,
+  getHistoryRecords,
   getObject,
   setHead
 } = require('../helper');
@@ -105,9 +106,9 @@ test('Objects API', async (t) => {
   });
 
   t.test('set object head', async (t) => {
-    t.plan(2);
+    t.plan(6);
 
-    const resBadReq = await fastify.inject({
+    const resNotFound = await fastify.inject({
       method: 'PUT',
       url: '/objects/myObject/development',
       headers: {
@@ -118,7 +119,7 @@ test('Objects API', async (t) => {
       })
     });
 
-    t.equal(resBadReq.statusCode, 404);
+    t.equal(resNotFound.statusCode, 404);
 
     const resOK = await fastify.inject({
       method: 'PUT',
@@ -132,6 +133,27 @@ test('Objects API', async (t) => {
     });
 
     t.equal(resOK.statusCode, 204);
+
+    const historyRecords = await getHistoryRecords(fastify, {
+      name: 'myObject',
+      env: 'development'
+    });
+    t.equal(historyRecords.length, 1);
+    t.equal(historyRecords[0].headVersion, '3.0.2');
+    t.equal(historyRecords[0].prevTimestamp, null);
+
+    const res409Req = await fastify.inject({
+      method: 'PUT',
+      url: '/objects/myObject/development',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      payload: JSON.stringify({
+        head: '3.0.2'
+      })
+    });
+
+    t.equal(res409Req.statusCode, 409);
   });
 
   t.test('get object head', async (t) => {
