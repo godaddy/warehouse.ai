@@ -3,7 +3,6 @@ info:
   title: warehouse.ai
   version: 7.0.0
   description: Scalable Object Ledger and CDN
-definitions: {}
 paths:
   /cdn:
     post:
@@ -168,6 +167,11 @@ paths:
       responses:
         "204":
           description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
     put:
       parameters:
         - required: true
@@ -193,6 +197,11 @@ paths:
       responses:
         "204":
           description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
   "/objects/{name}/{env}/{version}":
     delete:
       parameters:
@@ -219,6 +228,42 @@ paths:
       responses:
         "204":
           description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+  "/objects/{name}/{env}/rollback":
+    put:
+      parameters:
+        - required: true
+          in: path
+          name: name
+          schema:
+            type: string
+        - required: true
+          in: path
+          name: env
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hops:
+                  type: number
+                  minimum: 1
+                  maximum: 20
+      responses:
+        "204":
+          description: Default Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
   /:
     get:
       responses:
