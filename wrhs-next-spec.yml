@@ -3,6 +3,7 @@ info:
   title: warehouse.ai
   version: 7.0.0
   description: Scalable Object Ledger and CDN
+definitions: {}
 paths:
   /cdn:
     post:
