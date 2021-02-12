@@ -168,11 +168,6 @@ paths:
       responses:
         "204":
           description: Default Response
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
     put:
       parameters:
         - required: true
@@ -198,11 +193,6 @@ paths:
       responses:
         "204":
           description: Default Response
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
   "/objects/{name}/{env}/{version}":
     delete:
       parameters:
@@ -229,11 +219,6 @@ paths:
       responses:
         "204":
           description: Default Response
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
   "/objects/{name}/{env}/rollback":
     put:
       parameters:
@@ -260,11 +245,6 @@ paths:
       responses:
         "204":
           description: Default Response
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
   /:
     get:
       responses:
