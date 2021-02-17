@@ -13,7 +13,7 @@ const {
 test('Objects API', async (t) => {
   const fastify = build(t);
 
-  t.plan(9);
+  t.plan(10);
 
   t.test('create object', async (t) => {
     t.plan(3);
@@ -387,4 +387,123 @@ test('Objects API', async (t) => {
     t.equal(obj, null);
     t.equal(objHead, null);
   });
+
+  /* eslint-disable max-statements */
+  t.test('rollback head', async (t) => {
+    t.plan(7);
+
+    for (const version of ['1.0.0', '1.0.1', '1.0.2', '2.0.0']) {
+      await createObject(fastify, {
+        name: 'rollbackObjA',
+        env: 'ote',
+        data: 'data from CDN api',
+        version
+      });
+    }
+
+    // Return 404 since head has never been set previusly
+    const res404NoHeadSet = await fastify.inject({
+      method: 'PUT',
+      url: '/objects/rollbackObjA/ote/rollback',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      payload: JSON.stringify({
+        hops: 1
+      })
+    });
+
+    t.equal(res404NoHeadSet.statusCode, 404);
+
+    await setHead(fastify, {
+      name: 'rollbackObjA',
+      env: 'ote',
+      version: '1.0.0'
+    });
+
+    // Return 404 since head no previus version to rollback
+    const res404NoPrev = await fastify.inject({
+      method: 'PUT',
+      url: '/objects/rollbackObjA/ote/rollback',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      payload: JSON.stringify({
+        hops: 1
+      })
+    });
+
+    t.equal(res404NoPrev.statusCode, 404);
+
+    await setHead(fastify, {
+      name: 'rollbackObjA',
+      env: 'ote',
+      version: '1.0.1'
+    });
+
+    // Rollback to version 1.0.0
+    const resOKHop1 = await fastify.inject({
+      method: 'PUT',
+      url: '/objects/rollbackObjA/ote/rollback',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      payload: JSON.stringify({
+        hops: 1
+      })
+    });
+
+    t.equal(resOKHop1.statusCode, 204);
+
+    const head100 = await getHead(fastify, {
+      name: 'rollbackObjA',
+      env: 'ote'
+    });
+
+    t.deepEqual(head100, { headVersion: '1.0.0', latestVersion: '2.0.0' });
+
+    // Return 409 since head is already rolledback to version 1.0.0
+    const res409Already = await fastify.inject({
+      method: 'PUT',
+      url: '/objects/rollbackObjA/ote/rollback',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      payload: JSON.stringify({
+        hops: 2
+      })
+    });
+
+    t.equal(res409Already.statusCode, 409);
+
+    for (const version of ['1.0.1', '1.0.2', '2.0.0']) {
+      await setHead(fastify, {
+        name: 'rollbackObjA',
+        env: 'ote',
+        version
+      });
+    }
+
+    // Rollback to version 1.0.1
+    const resOKHop2 = await fastify.inject({
+      method: 'PUT',
+      url: '/objects/rollbackObjA/ote/rollback',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      payload: JSON.stringify({
+        hops: 2
+      })
+    });
+
+    t.equal(resOKHop2.statusCode, 204);
+
+    const head101 = await getHead(fastify, {
+      name: 'rollbackObjA',
+      env: 'ote'
+    });
+
+    t.deepEqual(head101, { headVersion: '1.0.1', latestVersion: '2.0.0' });
+  });
+  /* eslint-enable max-statements */
 });

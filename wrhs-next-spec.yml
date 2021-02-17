@@ -219,6 +219,33 @@ paths:
       responses:
         "204":
           description: Default Response
+  "/objects/{name}/{env}/rollback":
+    put:
+      parameters:
+        - required: true
+          in: path
+          name: name
+          schema:
+            type: string
+        - required: true
+          in: path
+          name: env
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                hops:
+                  type: number
+                  minimum: 1
+                  maximum: 20
+                  default: 1
+      responses:
+        "204":
+          description: Default Response
   /:
     get:
       responses:
