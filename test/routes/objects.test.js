@@ -401,8 +401,8 @@ test('Objects API', async (t) => {
       });
     }
 
-    // Return 409 since head has never been set previusly
-    const res409NoHeadSet = await fastify.inject({
+    // Return 404 since head has never been set previusly
+    const res404NoHeadSet = await fastify.inject({
       method: 'PUT',
       url: '/objects/rollbackObjA/ote/rollback',
       headers: {
@@ -413,7 +413,7 @@ test('Objects API', async (t) => {
       })
     });
 
-    t.equal(res409NoHeadSet.statusCode, 409);
+    t.equal(res404NoHeadSet.statusCode, 404);
 
     await setHead(fastify, {
       name: 'rollbackObjA',
@@ -421,8 +421,8 @@ test('Objects API', async (t) => {
       version: '1.0.0'
     });
 
-    // Return 409 since head no previus version to rollback
-    const res409NoPrev = await fastify.inject({
+    // Return 404 since head no previus version to rollback
+    const res404NoPrev = await fastify.inject({
       method: 'PUT',
       url: '/objects/rollbackObjA/ote/rollback',
       headers: {
@@ -433,7 +433,7 @@ test('Objects API', async (t) => {
       })
     });
 
-    t.equal(res409NoPrev.statusCode, 409);
+    t.equal(res404NoPrev.statusCode, 404);
 
     await setHead(fastify, {
       name: 'rollbackObjA',
