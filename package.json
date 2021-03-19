@@ -1,6 +1,6 @@
 {
   "name": "warehouse.ai",
-  "version": "7.0.0-alpha.4",
+  "version": "7.0.0-alpha.5",
   "description": "Scalable Object Ledger and CDN",
   "main": "lib/app.js",
   "directories": {
