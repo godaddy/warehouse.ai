@@ -83,7 +83,7 @@ const tables = {
       WriteCapacityUnits: 5
     }
   },
-  [`${NAMESPACE}-objects-history`]: {
+  [`${NAMESPACE}-object-history`]: {
     KeySchema: [
       {
         AttributeName: 'id',
