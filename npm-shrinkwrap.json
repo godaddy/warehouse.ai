@@ -1,11 +1,11 @@
 {
   "name": "warehouse.ai",
-  "version": "7.0.0-alpha.5",
+  "version": "7.0.0-alpha.6",
   "lockfileVersion": 2,
   "requires": true,
   "packages": {
     "": {
-      "version": "7.0.0-alpha.5",
+      "version": "7.0.0-alpha.6",
       "license": "MIT",
       "dependencies": {
         "compare-versions": "^3.6.0",

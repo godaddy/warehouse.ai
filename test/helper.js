@@ -2,7 +2,7 @@ const createFastify = require('fastify');
 const fp = require('fastify-plugin');
 const warehouse = require('../lib/warehouse');
 
-const OBJECTS_HISTORY_TABLE = 'warehouse-objects-history';
+const OBJECT_HISTORY_TABLE = 'warehouse-object-history';
 
 function build(t) {
   const fastify = createFastify({
@@ -97,7 +97,7 @@ async function getHistoryRecords(f, { name, env }) {
     ExpressionAttributeValues: {
       ':id': `${name}_${env}`
     },
-    TableName: OBJECTS_HISTORY_TABLE
+    TableName: OBJECT_HISTORY_TABLE
   };
   const { Items: items } = await f.dynamo.query(params).promise();
   return items;
