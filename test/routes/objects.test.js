@@ -61,6 +61,14 @@ test('Objects API', async (t) => {
 
     await createObject(fastify, {
       name: 'myObject',
+      version: '3.0.2',
+      env: 'development',
+      data: 'data from CDN api',
+      variant: 'en-US'
+    });
+
+    await createObject(fastify, {
+      name: 'myObject',
       version: '3.0.3',
       env: 'development',
       data: 'data from CDN api',
@@ -88,7 +96,7 @@ test('Objects API', async (t) => {
     const res302 = await fastify.inject({
       method: 'GET',
       url:
-        '/objects/myObject?env=development&version=3.0.2&accepted_variants=en-US'
+        '/objects/myObject?env=development&version=3.0.2&accepted_variants=en-GB,en-US'
     });
 
     t.equal(res302.statusCode, 200);
@@ -100,7 +108,7 @@ test('Objects API', async (t) => {
         env: 'development',
         version: '3.0.2',
         data: 'data from CDN api',
-        variant: 'en-US'
+        variant: 'en-GB'
       }
     ]);
   });
