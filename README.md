@@ -4,7 +4,7 @@ Scalable Object Ledger and CDN.
 
 ## Introducing Warehouse 7
 
-Warehouse 7, also known as Warehouse Next, is a scalabe object ledger and cdn system for powering dynamic web applications. The new system has been entirly redisgned using a lightway and flexible architecture.
+Warehouse 7, also known as Warehouse Next, is a scalabe object ledger and cdn system for powering dynamic web applications. The new system has been entirly redisgned using a lightweight, portable and flexible architecture.
 
 While designing the new system, it made sense to add a higher level of abstraction.
 The idea is expose a generic Object API and a CDN service. The user can use the CDN service to upload the desired assets while using the Object API to store the metadata of the assets (e.g., file urls, etc.)
