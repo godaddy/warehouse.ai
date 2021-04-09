@@ -14,7 +14,7 @@ The Object API acts as generic ledger and it can be used by a third-party system
 Warehouse can be used for different use cases in different ways. At GoDaddy we mainly use it for storing and serving our web applications compiled assets. Our apps workflow can be summarized as following:
 
 1. Engineers create a new service or package version and release it (e.g., `npm publish`, `git push <tag>`)
-1. A CICD workflow is triggered and run the Webpack builds
+1. A CICD workflow is triggered and runs the Webpack builds
 1. When all builds are completed, the CICD workflow uploads the assets to Warehouse
 
 ## Get Started
@@ -193,13 +193,13 @@ Warehouse comes along with a [CLI] that can be used to interact with the API and
 Option 1:
 
 ```bash
-wrhs upload /dev/myFilesFolder @ux/sales-header --env development --version 1.21.5 --variant en_US --expiration 365d
+wrhs upload /dev/myFilesFolder @org/service --env development --version 1.21.5 --variant en-US --expiration 365d
 ```
 
 Option 2:
 
 ```bash
-wrhs cdn upload /dev/myFilesFolder --expiration 365d | wrhs object create @ux/sales-header --env development --version 1.21.5 --variant en_US --expiration 365d
+wrhs cdn upload /dev/myFilesFolder --expiration 365d | wrhs object create @org/service --env development --version 1.21.5 --variant en-US --expiration 365d
 ```
 
 #### Upload new asset
@@ -221,13 +221,13 @@ wrhs cdn upload /dev/myFile.ext --expiration 365d --metadata '{ "beep": "boop" }
 With `data` argument:
 
 ```bash
-wrhs object create @ux/sales-header --env development --version 1.21.5 --variant en_US --expiration 365d --data '{ "foo": "bar" }'
+wrhs object create @org/service --env development --version 1.21.5 --variant en-US --expiration 365d --data '{ "foo": "bar" }'
 ```
 
 With `data` pipe:
 
 ```bash
-echo -n '{ "foo": "bar" }' | wrhs object create @ux/sales-header --env development --version 1.21.5 --variant en_US --expiration 365d
+echo -n '{ "foo": "bar" }' | wrhs object create @org/service --env development --version 1.21.5 --variant en-US --expiration 365d
 ```
 
 #### Get object
@@ -235,13 +235,13 @@ echo -n '{ "foo": "bar" }' | wrhs object create @ux/sales-header --env developme
 All variants:
 
 ```bash
-wrhs object get @ux/sales-header --env development --version 1.21.5
+wrhs object get @org/service --env development --version 1.21.5
 ```
 
 Specific variant:
 
 ```bash
-wrhs object get @ux/sales-header --env development --version 1.21.5 --accept-variants pt_BR,pt,en_US
+wrhs object get @org/service --env development --version 1.21.5 --accept-variants pt-BR,pt,en-US
 ```
 
 Using `--accept-variants` flag, it returns the highest priority variant found. If no `accept-variants` are found, a `404` is returned. 
@@ -251,13 +251,13 @@ Using `--accept-variants` flag, it returns the highest priority variant found. I
 > Promotion simply moves the object version head creating a record in the object history. Promotion happens for all the object variants at once.
 
 ```bash
-wrhs object set-head @ux/sales-header --env development --version 1.21.6
+wrhs object set-head @org/service --env development --version 1.21.6
 ```
 
 #### Rollback object head
 
 ```bash
-wrhs object rollback-head @ux/sales-header --env development --version 1.21.4
+wrhs object rollback-head @org/service --env development --version 1.21.4
 ```
 
 If `--version` argument is omitted, Warehouse will rollback to the previous version.
