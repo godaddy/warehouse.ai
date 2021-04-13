@@ -6,8 +6,7 @@ Scalable Object Ledger and CDN.
 
 Warehouse 7 is a scalable object ledger and CDN management system for powering dynamic web applications. The new system has been entirely redesigned using a lightweight, portable, and flexible architecture.
 
-While designing the new system, it made sense to add a higher level of abstraction.
-The idea is expose a generic Object API and a CDN service. The user can use the CDN service to upload the desired assets while using the Object API to store the metadata of the assets (e.g., file urls, etc.)
+While designing the new system, it made sense to add a higher level of abstraction. The idea is to expose a generic Object API and a CDN management API separately. The user can use the CDN API to upload the desired assets while using the Object API to store the metadata of those assets (e.g., file urls, etc.).
 
 The Object API acts as generic ledger and it can be used to store any type of data. In particular, the Object API is good at storing versioned JSON data that may have one or more "head" version(s) for one or more "environment(s)"; for example, "production" and "staging".
 
