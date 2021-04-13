@@ -13,7 +13,7 @@ The Object API acts as generic ledger and it can be used to store any type of da
 Warehouse can be used for different use cases in different ways. At GoDaddy we mainly use it for storing and serving our web applications' compiled browser-side assets. Our applications' workflow can be summarized as follows:
 
 1. Engineers create a new service or package version and release it (e.g., `npm publish`, `git push <tag>`)
-1. A CICD workflow is triggered and runs the Webpack builds
+1. A CICD workflow is triggered and runs the builds (e.g., webpack)
 1. When all builds are completed, the CICD workflow uploads the assets to Warehouse using the CDN API
 1. Metadata for those assets on the CDN are stored in the Object API to allow application servers to fetch the URL(s) for the latest assets for a given environment.
 
