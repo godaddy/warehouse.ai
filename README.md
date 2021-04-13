@@ -10,7 +10,7 @@ While designing the new system, it made sense to add a higher level of abstracti
 
 The Object API acts as generic ledger and it can be used to store any type of data. In particular, the Object API is good at storing versioned JSON data that may have one or more "head" version(s) for one or more "environment(s)"; for example, "production" and "staging".
 
-Warehouse can be used for different use cases in different ways. At GoDaddy we mainly use it for storing and serving our web applications compiled assets. Our apps workflow can be summarized as following:
+Warehouse can be used for different use cases in different ways. At GoDaddy we mainly use it for storing and serving our web applications' compiled browser-side assets. Our applications' workflow can be summarized as follows:
 
 1. Engineers create a new service or package version and release it (e.g., `npm publish`, `git push <tag>`)
 1. A CICD workflow is triggered and runs the Webpack builds
