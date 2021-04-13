@@ -9,7 +9,7 @@ Warehouse 7 is a scalable object ledger and CDN management system for powering d
 While designing the new system, it made sense to add a higher level of abstraction.
 The idea is expose a generic Object API and a CDN service. The user can use the CDN service to upload the desired assets while using the Object API to store the metadata of the assets (e.g., file urls, etc.)
 
-The Object API acts as generic ledger and it can be used by a third-party system to store any type of data.
+The Object API acts as generic ledger and it can be used to store any type of data. In particular, the Object API is good at storing versioned JSON data that may have one or more "head" version(s) for one or more "environment(s)"; for example, "production" and "staging".
 
 Warehouse can be used for different use cases in different ways. At GoDaddy we mainly use it for storing and serving our web applications compiled assets. Our apps workflow can be summarized as following:
 
