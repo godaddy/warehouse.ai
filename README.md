@@ -19,6 +19,8 @@ Warehouse can be used for different use cases in different ways. At GoDaddy we m
 
 ## Get Started
 
+Warehouse is a Node.js web service running on Fastify. It stores data in Amazon's DynamoDB.
+
 ### Quick Start
 
 ```bash
