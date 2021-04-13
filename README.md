@@ -31,6 +31,8 @@ npm start
 
 ### Programmatic Usage
 
+If you need further customization of Warehouse such as authentication and/or custom logging, you may wrap it using a `fastify` application.
+
 ```js
 const createFastify = require('fastify');
 const warehouse = require('warehouse.ai');
