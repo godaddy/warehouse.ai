@@ -14,7 +14,8 @@ Warehouse can be used for different use cases in different ways. At GoDaddy we m
 
 1. Engineers create a new service or package version and release it (e.g., `npm publish`, `git push <tag>`)
 1. A CICD workflow is triggered and runs the Webpack builds
-1. When all builds are completed, the CICD workflow uploads the assets to Warehouse
+1. When all builds are completed, the CICD workflow uploads the assets to Warehouse using the CDN API
+1. Metadata for those assets on the CDN are stored in the Object API to allow application servers to fetch the URL(s) for the latest assets for a given environment.
 
 ## Get Started
 
