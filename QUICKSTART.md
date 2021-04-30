@@ -29,7 +29,7 @@ The config file uses a JSON-like syntax:
 
 ## Push an asset to Warehouse
 
-In this example we assume that we have an application call `example-app` that uses Warehouse to store and distrubute its assets. The application has two assets called `script.js` and `style.css`, and it runs in three separate environemnts: `development`, `test` and `production`. The assets for each environments are compiled with different parameters, therefore each enviroment references to different CDN files (files in different environments have different fingerprint).
+In this example we assume that we have an application call `example-app` that uses Warehouse to store and distrubute its assets. The application has two assets called `script.js` and `style.css`, and it runs in three separate environemnts: `development`, `test` and `production`. The app has only one locale: `en-US`. The assets for each environments are compiled with different parameters, therefore each enviroment references to different CDN files (files in different environments have different fingerprint).
 
 Our application assets can be compiled with the `NODE_ENV=<env> npm run build` command where `<env>` is the environment for which the assets are getting builded for.
 
@@ -45,7 +45,7 @@ Then we can push the assets to Warehouse using the CLI:
 
 ```sh
 # Upload and register assets
-wrhs upload /example-app/dist example-app --env development --version 1.0.0
+wrhs upload /example-app/dist example-app --env development --version 1.0.0 --variant en-US
 
 # Set version 1.0.0 as current
 wrhs object set-head example-app --env development --version 1.0.0
