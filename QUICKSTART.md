@@ -1,4 +1,4 @@
-# Quick Str
+# Quick Start
 
 This guide covers how you can quickly get started using Warehouse.
 This guide does not cover how to deploy and secure Warehouse on your own infrastructure.
