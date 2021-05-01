@@ -59,6 +59,13 @@ Now the application backend can call Warehouse API to obtain:
 ```js
 const Request = require('wrhs/src/utils/request');
 
+const {
+  NODE_ENV,
+  WRHS_ENDPOINT,
+  WRHS_USERNAME,
+  WRHS_PASSWORD
+} = process.env;
+
 const wrhs = new Request({
   baseUrl: WRHS_ENDPOINT,
   username: WRHS_USERNAME,
@@ -68,6 +75,8 @@ const wrhs = new Request({
 (async function () {
   const { headVersion } = await wrhs.get(`/head/example-app/${NODE_ENV}`);
 
+  // headVersion is '1.0.0'
+
   const [variant] = await wrhs.get('/objects/example-app', {
     accepted_variants: 'en-US',
     env: NODE_ENV,
@@ -75,6 +84,8 @@ const wrhs = new Request({
   });
 
   for (const file of variant.data.files) {
+    // https://mycdn.com/71fbac4eca64da6727d4a9c9cd00e353/script.js
+    // https://mycdn.com/574d0c0f86b220913f60ee7aae20ec6a/style.css
     console.log(file.url)
   }
 })();
