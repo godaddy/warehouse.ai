@@ -56,4 +56,28 @@ Now the application backend can call Warehouse API to obtain:
 1. The current app version
 1. The asset urls
 
+```js
+const Request = require('wrhs/src/utils/request');
+
+const wrhs = new Request({
+  baseUrl: WRHS_ENDPOINT,
+  username: WRHS_USERNAME,
+  password: WRHS_PASSWORD
+});
+
+(async function () {
+  const { headVersion } = await wrhs.get(`/head/example-app/${NODE_ENV}`);
+
+  const [variant] = await wrhs.get('/objects/example-app', {
+    accepted_variants: 'en-US',
+    env: NODE_ENV,
+    version: headVersion
+  });
+
+  for (const file of variant.data.files) {
+    console.log(file.url)
+  }
+})();
+```
+
 Finally, whenever version `1.0.0` is ready to go `test` and/or `production`, simply repeat the previous steps changing the environment parameter.
