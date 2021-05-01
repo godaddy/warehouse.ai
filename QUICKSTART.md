@@ -73,9 +73,8 @@ const wrhs = new Request({
 });
 
 (async function () {
+    // headVersion is '1.0.0'
   const { headVersion } = await wrhs.get(`/head/example-app/${NODE_ENV}`);
-
-  // headVersion is '1.0.0'
 
   const [variant] = await wrhs.get('/objects/example-app', {
     accepted_variants: 'en-US',
