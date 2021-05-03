@@ -12,13 +12,13 @@ Configuration declared via the `wrhs.toml` is not supported anymore. After movin
 
 ## Run your own builds
 
-Building capabilities have been removed. You must now build your assets yourself.
+Building capabilities have been removed. You must now build the assets yourself.
 
 ### Example: Webpack build
 
-One of the most popular way to compile and build assets is Webpack. Let's imagine you want to deploy to Warehouse an application call `my-app` in which you use webpack to build the app assets.
+Webpack is a popular system to compile, optimize and build frontend applications. Let's imagine you want to deploy to Warehouse an application call `my-app` in which you use webpack to build the app assets.
 
-Assuming your `webpack.config.js` file looks like:
+Assuming your `webpack.config.js` file:
 
 ```js
 const path = require('path');
@@ -41,8 +41,16 @@ module.exports = {
 
 Running `NODE_ENV=development LOCALE=en-US npm run build` will build your app for the `development` environment and `en-US` locale.
 
+The you can use the CLI to upload and register the assets:
+
+```bash
+wrhs upload /my-app/dist example-app --env development --version 1.0.0 --variant en-US
+```
+
 You must build your app for each environment/locale commbination you may need. 
 
 Each build assets must then being properly uploaded to Warehouse using the CLI or the http API directly.
 
 If your app assets are the same across all your enviroments you may choose to build and upload the files only once and simply update the enviroment head when you need. Please note that Warehouse does not rebuild things in your behalf.
+
+> In the real world, you probably want to automate this using a CICD system such as Jenkins, or Github Actions.
