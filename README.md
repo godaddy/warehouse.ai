@@ -109,6 +109,12 @@ Optional query parameters:
 }
 ```
 
+#### Get object head
+
+```json5
+GET /head/:name/:env
+```
+
 #### Update object head
 
 ```json5
