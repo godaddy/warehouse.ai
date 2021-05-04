@@ -41,11 +41,17 @@ module.exports = {
 
 Running `NODE_ENV=development LOCALE=en-US npm run build` will build your app for the `development` environment and `en-US` locale.
 
-The you can use the CLI to upload and register the assets:
+The you can use the CLI to upload, register, and promote the assets:
 
 ```bash
+# Upload and register v1.0.0 assets
 wrhs upload /my-app/dist example-app --env development --version 1.0.0 --variant en-US
+
+# Set v1.0.0 as current
+wrhs object set-head my-app --env development --version 1.0.0
 ```
+
+> You can defer to updated the head until the new version is ready to be deployed. Each environment has its own head. This means you can upload the assets for all the enviroments at once, and update each individual head whenver the new version is ready to be deployed to that specific environment.
 
 You must build your app for each environment/locale commbination you may need. 
 
