@@ -51,6 +51,6 @@ You must build your app for each environment/locale commbination you may need.
 
 Each build assets must then being properly uploaded to Warehouse using the CLI or the http API directly.
 
-If your app assets are the same across all your enviroments you may choose to build and upload the files only once and simply update the enviroment head when you need. Please note that Warehouse does not rebuild things in your behalf.
+If your app assets are the same across all your environments, you may choose to build and upload the files only once and simply update the environment head when you need. Please note that Warehouse does not rebuild things on your behalf per environment.
 
 > In the real world, you probably want to automate this using a CICD system such as Jenkins, or Github Actions.
