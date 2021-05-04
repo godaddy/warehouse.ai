@@ -23,9 +23,18 @@ Assuming your `webpack.config.js` file:
 ```js
 const path = require('path');
 const { EnvironmentPlugin } = require('webpack');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        test: /\.js(\?.*)?$/i,
+      })
+    ]
+  },
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
