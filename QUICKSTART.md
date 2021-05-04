@@ -57,7 +57,7 @@ Now the application backend can call Warehouse API to obtain:
 1. The asset urls
 
 ```js
-const Request = require('wrhs/src/utils/request');
+const { Request } = require('@wrhs/utils');
 
 const {
   NODE_ENV,
