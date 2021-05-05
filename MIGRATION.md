@@ -9,7 +9,7 @@ At the same time we removed building capabilities support. From now on, teams mu
 ## No more wrhs.toml
 
 Configuration declared via the `wrhs.toml` is not supported anymore. After moving to the new system, you can safely remove the file. If you were turning on the minification capability via the `wrhs.toml`, you now have to implement minification directly in your building pipeline.
-There are many ways to achive this. At GoDaddy we use [terser](https://github.com/terser/terser) webpack plugin whcih can be easily activated via the `webpack.config.js` file of your application:
+There are many ways to achive this. At GoDaddy we use [terser](https://github.com/terser/terser) webpack plugin which can be easily activated via the `webpack.config.js` file of your application:
 
 ```js
 const TerserPlugin = require('terser-webpack-plugin');
