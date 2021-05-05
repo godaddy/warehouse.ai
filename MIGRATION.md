@@ -16,7 +16,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   optimization: {
-    minimize: true,
+    minimize: true, // or perhaps `process.env.NODE_ENV === 'production'` to minify only in PROD
     minimizer: [new TerserPlugin()]
   }
 };
