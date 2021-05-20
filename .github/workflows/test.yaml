@@ -1,0 +1,27 @@
+name: Test
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      LOCALSTACK: 1
+      LOCALSTACK_URL: http://127.0.0.1:4566
+    services:
+      localstack:
+        image: localstack/localstack:0.11.6
+        ports:
+          - 4566:4566
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - run: npm i -g npm@7.6.3
+      - run: npm ci
+      - run: npm run init-localstack
+      - run: npm test

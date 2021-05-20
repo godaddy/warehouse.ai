@@ -1,7 +1,3 @@
 {
-  "extends": "godaddy",
-  "rules": {
-    "strict": 0,
-    "no-shadow": 0
-  }
+  "extends": "godaddy"
 }
