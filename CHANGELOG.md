@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 6.5.0
+
+- Add security logging support
+
 ### 6.4.0
 
 - Remove `PUT /builds/:pkg/:env/:locale` in favor of `PUT /builds/:pkg/:env?locale=...`
