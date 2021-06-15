@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 6.5.1
+
+- Fix broken legancy deps
+
 ### 6.5.0
 
 - Add security logging support

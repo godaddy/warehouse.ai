@@ -1,6 +1,6 @@
 {
   "name": "warehouse.ai",
-  "version": "6.5.0",
+  "version": "6.5.1",
   "description": "Modular front-end development through checks, automatic builds, and CDNs.",
   "main": "./lib/index.js",
   "bin": {
@@ -20,9 +20,7 @@
     "localstack": "docker run -it -p 4566:4566 --rm localstack/localstack:0.11.3",
     "sandbox": "npm-registry-echo",
     "swagger": "swagger-jsdoc-deref -d ./lib/swagger.js -o ./lib/wrhs-spec.json",
-    "apiDocs": "npm run swagger && json2yaml ./lib/wrhs-spec.json > ./lib/wrhs-spec.yaml && swagger-markdown -i ./lib/wrhs-spec.yaml -o ./apiDocs/wrhs-spec.md",
-    "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "apiDocs": "npm run swagger && json2yaml ./lib/wrhs-spec.json > ./lib/wrhs-spec.yaml && swagger-markdown -i ./lib/wrhs-spec.yaml -o ./apiDocs/wrhs-spec.md"
   },
   "repository": {
     "type": "git",
@@ -44,10 +42,10 @@
     "@jsdevtools/readdir-enhanced": "^6.0.3",
     "@wrhs/release-line": "^2.0.0",
     "access-control": "^1.0.0",
-    "async": "^3.2.0",
+    "async": "^3.1.0",
     "authboot": "^2.0.1",
     "aws-liveness": "^1.1.0",
-    "aws-sdk": "^2.814.0",
+    "aws-sdk": "^2.567.0",
     "basic-auth": "^2.0.0",
     "bffs": "^7.1.0",
     "body-parser": "^1.19.0",
@@ -65,9 +63,9 @@
     "failure": "1.1.x",
     "fingerprinting": "^1.0.1",
     "gjallarhorn": "^1.2.1",
-    "http-proxy": "^1.18.1",
+    "http-proxy": "^1.18.0",
     "hyperquest": "^2.1.3",
-    "ioredis": "^4.16.0",
+    "ioredis": "^4.14.1",
     "json-try-parse": "^1.0.0",
     "lodash.merge": "^4.6.2",
     "mime": "^2.4.4",
@@ -79,21 +77,20 @@
     "p-limit": "^2.2.1",
     "passport": "^0.4.0",
     "passport-npm": "2.0.0",
-    "readable-stream": "^3.6.0",
+    "readable-stream": "^3.4.0",
     "retryme": "^1.1.0",
     "semver": "^6.3.0",
     "slay": "~1.0.2",
     "slay-config": "^2.3.0",
-    "slay-log": "^2.3.2",
+    "slay-log": "^2.1.0",
     "stringify-stream": "^1.0.3",
     "swagger-ui-express": "^4.1.2",
     "tar-fs": "^2.1.0",
     "through2": "~3.0.1",
     "tinythen": "^1.0.1",
     "warehouse-models": "^6.0.1",
-    "winston": "~2.4.4",
-    "zipline": "^1.0.0",
-    "snyk": "^1.438.0"
+    "winston": "~2.3.1",
+    "zipline": "^1.0.0"
   },
   "devDependencies": {
     "@wrhs/diagrams": "^1.0.0",
@@ -123,6 +120,5 @@
     "swagger-jsdoc-deref": "^1.0.0",
     "swagger-markdown": "^1.2.0",
     "tmp": "^0.1.0"
-  },
-  "snyk": true
+  }
 }
