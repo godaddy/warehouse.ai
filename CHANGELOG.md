@@ -2,6 +2,10 @@
 
 ### 6.5.1
 
+- Fix security deps and code typo
+
+### 6.5.1
+
 - Fix broken legancy deps
 
 ### 6.5.0
