@@ -1,3 +1,9 @@
+[![Version npm](https://img.shields.io/npm/v/warehouse.ai.svg?style=flat-square)](https://www.npmjs.com/package/warehouse.ai)
+[![License](https://img.shields.io/npm/l/warehouse.ai.svg?style=flat-square)](https://github.com/godaddy/warehouse.ai/blob/master/LICENSE)
+[![npm Downloads](https://img.shields.io/npm/dm/warehouse.ai.svg?style=flat-square)](https://npmcharts.com/compare/warehouse.ai?minimal=true)
+[![Build Status](https://travis-ci.org/godaddy/warehouse.ai.svg?branch=master)](https://travis-ci.org/godaddy/warehouse.ai)
+[![Dependencies](https://img.shields.io/david/godaddy/warehouse.ai.svg?style=flat-square)](https://github.com/godaddy/warehouse.ai/blob/master/package.json)
+
 # warehouse.ai
 
 Warehouse is a scalable object ledger and CDN management system for powering dynamic web applications.
