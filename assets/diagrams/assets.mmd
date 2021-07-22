@@ -1,9 +1,0 @@
-graph LR
-A(fa:fa-server warehouse.ai)
-B{fa:fa-database No-SQL Database}
-C(fa:fa-lightbulb web service)
-D[fa:fa-laptop visitor browser]
-
-C --> |"serve response with CDN assets"| D
-B --> |"fetch metadata"| A
-C --> |"fetch build CDN metadata - wrhs.ai-client"| A
