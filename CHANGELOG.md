@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [7.1.0](https://github.com/godaddy/warehouse.ai/compare/7.0.0...7.1.0) (2021-11-29)
+
+
+### Features
+
+* **cache:** properly handle http caching headers ([#135](https://github.com/godaddy/warehouse.ai/issues/135)) ([d90e8f5](https://github.com/godaddy/warehouse.ai/commit/d90e8f5e53396cdd5ee6149d9c0fdff7de400830))
+
 ## [7.0.0](https://github.com/godaddy/warehouse.ai/compare/6.4.0...7.0.0) (2021-07-22)
 
 
