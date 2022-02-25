@@ -15,6 +15,11 @@ paths:
             oneOf:
               - type: string
               - type: number
+        - required: false
+          in: query
+          name: cdn_base_url
+          schema:
+            type: string
       responses:
         "201":
           description: Default Response
