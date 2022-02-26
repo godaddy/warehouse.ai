@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [7.2.0](https://github.com/godaddy/warehouse.ai/compare/7.1.0...7.2.0) (2022-02-26)
+
+
+### Features
+
+* support custom cdnBaseUrl ([6de56d9](https://github.com/godaddy/warehouse.ai/commit/6de56d9a2506b569fcb66061713e3a22685afa3c))
+
 ## [7.1.0](https://github.com/godaddy/warehouse.ai/compare/7.0.0...7.1.0) (2021-11-29)
 
 
