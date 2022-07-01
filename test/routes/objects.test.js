@@ -49,7 +49,7 @@ test('Objects API', async (t) => {
   });
 
   t.test('get objects', async (t) => {
-    t.plan(6);
+    t.plan(4);
 
     await createObject(fastify, {
       name: 'myObject',
