@@ -53,6 +53,30 @@ test('Objects API', async (t) => {
 
     await createObject(fastify, {
       name: 'myObject',
+      version: '3.0.1',
+      env: 'development',
+      data: 'data from CDN api',
+      variant: 'en-GB'
+    });
+
+    await createObject(fastify, {
+      name: 'myObject',
+      version: '3.0.1',
+      env: 'development',
+      data: 'data from CDN api',
+      variant: 'en-US'
+    });
+
+    await createObject(fastify, {
+      name: 'myObject',
+      version: '3.0.2',
+      env: 'development',
+      data: 'data from CDN api',
+      variant: 'en-US'
+    });
+
+    await createObject(fastify, {
+      name: 'myObject',
       version: '3.0.2',
       env: 'development',
       data: 'data from CDN api',
@@ -61,18 +85,10 @@ test('Objects API', async (t) => {
 
     await createObject(fastify, {
       name: 'myObject',
-      version: '3.0.2',
-      env: 'development',
-      data: 'data from CDN api',
-      variant: 'en-US'
-    });
-
-    await createObject(fastify, {
-      name: 'myObject',
       version: '3.0.3',
       env: 'development',
       data: 'data from CDN api',
-      variant: 'en-US'
+      variant: 'en-GB'
     });
 
     const resLast = await fastify.inject({
@@ -89,9 +105,15 @@ test('Objects API', async (t) => {
         env: 'development',
         version: '3.0.3',
         data: 'data from CDN api',
-        variant: 'en-US'
+        variant: 'en-GB'
       }
     ]);
+
+    await setHead(fastify, {
+      name: 'myObject',
+      env: 'development',
+      version: '3.0.1'
+    });
 
     const res302 = await fastify.inject({
       method: 'GET',
@@ -109,6 +131,24 @@ test('Objects API', async (t) => {
         version: '3.0.2',
         data: 'data from CDN api',
         variant: 'en-GB'
+      }
+    ]);
+
+    const resHead = await fastify.inject({
+      method: 'GET',
+      url: '/objects/myObject?env=development'
+    });
+
+    t.equal(resHead.statusCode, 200);
+
+    const bodyHead = JSON.parse(resHead.payload);
+    t.deepEqual(bodyHead, [
+      {
+        name: 'myObject',
+        env: 'development',
+        version: '3.0.1',
+        data: 'data from CDN api',
+        variant: 'en-US'
       }
     ]);
   });
