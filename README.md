@@ -57,7 +57,7 @@ fastify.ready(function () {
   fastify.listen(fastify.config.port, function (err) {
     if (err) throw err;
   });
-})
+});
 ```
 
 ## API
@@ -74,9 +74,9 @@ Optional query parameters:
 
 ```json5
 {
-  "accept_variants": "<variants>", // if not specified it returns all variants
-  "version": "<version>", // if not specified it returns the latest version
-  "env": "<env>" // if not specified it defaults to `production`
+  accept_variants: '<variants>', // if not specified it returns all variants
+  version: '<version>', // if not specified it returns the head version (or latest if the head is not set)
+  env: '<env>' // if not specified it defaults to `production`
 }
 ```
 
@@ -111,7 +111,7 @@ Optional query parameters:
 
 ```json5
 {
-  "variant": "<variant>", // if not specified deletes all variants
+  variant: '<variant>' // if not specified deletes all variants
 }
 ```
 
@@ -145,9 +145,9 @@ Optional query parameters:
 
 ```json5
 {
-  "expiration": "<expiration>", // if not specified, default to never
+  expiration: '<expiration>' // if not specified, default to never
 }
-``` 
+```
 
 Binary data can be a specific file, or a tarball containing multiple files.
 
@@ -165,25 +165,25 @@ will make the API returning the following response:
 
 ```json5
 {
-  "fingerprints": [
-    "0c0383549608cf3b4b01e8f3d15f7ce8.gz",
-    "a013ff249608cf3b4b01e7rta6388817.gz"
+  fingerprints: [
+    '0c0383549608cf3b4b01e8f3d15f7ce8.gz',
+    'a013ff249608cf3b4b01e7rta6388817.gz'
   ],
-  "recommended": [
-    "0c0383549608cf3b4b01e8f3d15f7ce8/main.js",
-    "a013ff249608cf3b4b01e7rta6388817/main.css"
+  recommended: [
+    '0c0383549608cf3b4b01e8f3d15f7ce8/main.js',
+    'a013ff249608cf3b4b01e7rta6388817/main.css'
   ],
-  "files": [
+  files: [
     {
-      "url": "https://cdn.com/0c0383549608cf3b4b01e8f3d15f7ce8/main.js",
-      "metadata": {
-        "foo": "bar"
+      url: 'https://cdn.com/0c0383549608cf3b4b01e8f3d15f7ce8/main.js',
+      metadata: {
+        foo: 'bar'
       }
     },
     {
-      "url": "https://cdn.com/a013ff249608cf3b4b01e7rta6388817/main.css",
-      "metadata": {
-        "beep": "boop"
+      url: 'https://cdn.com/a013ff249608cf3b4b01e7rta6388817/main.css',
+      metadata: {
+        beep: 'boop'
       }
     }
   ]
@@ -256,9 +256,9 @@ Specific variant:
 wrhs object get @org/service --env development --version 1.21.5 --accept-variants pt-BR,pt,en-US
 ```
 
-Using `--accept-variants` flag, it returns the highest priority variant found. If no `accept-variants` are found, a `404` is returned. 
+Using `--accept-variants` flag, it returns the highest priority variant found. If no `accept-variants` are found, a `404` is returned.
 
-#### Update object head 
+#### Update object head
 
 > Promotion simply moves the object version head creating a record in the object history. Promotion happens for all the object variants at once.
 
@@ -291,6 +291,6 @@ npm run init-localstack
 npm run dev
 ```
 
-[Docker]: https://www.docker.com
-[Localstack]: https://github.com/localstack/localstack
-[CLI]: https://github.com/warehouseai/wrhs
+[docker]: https://www.docker.com
+[localstack]: https://github.com/localstack/localstack
+[cli]: https://github.com/warehouseai/wrhs
