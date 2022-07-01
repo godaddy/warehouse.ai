@@ -148,7 +148,7 @@ test('Objects API', async (t) => {
         env: 'development',
         version: '3.0.1',
         data: 'data from CDN api',
-        variant: 'en-US'
+        variant: 'en-GB'
       }
     ]);
   });
