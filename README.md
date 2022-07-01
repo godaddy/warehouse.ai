@@ -75,7 +75,7 @@ Optional query parameters:
 ```json5
 {
   "accept_variants": "<variants>", // if not specified it returns all variants
-  "version": "<version>", // if not specified it returns the latest version
+  "version": "<version>", // if not specified it returns the head version (or latest if head not found)
   "env": "<env>" // if not specified it defaults to `production`
 }
 ```
