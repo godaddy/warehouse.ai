@@ -53,22 +53,6 @@ test('Objects API', async (t) => {
 
     await createObject(fastify, {
       name: 'myObject',
-      version: '3.0.1',
-      env: 'development',
-      data: 'data from CDN api',
-      variant: 'en-GB'
-    });
-
-    await createObject(fastify, {
-      name: 'myObject',
-      version: '3.0.1',
-      env: 'development',
-      data: 'data from CDN api',
-      variant: 'en-US'
-    });
-
-    await createObject(fastify, {
-      name: 'myObject',
       version: '3.0.2',
       env: 'development',
       data: 'data from CDN api',
@@ -88,7 +72,7 @@ test('Objects API', async (t) => {
       version: '3.0.3',
       env: 'development',
       data: 'data from CDN api',
-      variant: 'en-GB'
+      variant: 'en-US'
     });
 
     const resLast = await fastify.inject({
@@ -105,15 +89,9 @@ test('Objects API', async (t) => {
         env: 'development',
         version: '3.0.3',
         data: 'data from CDN api',
-        variant: 'en-GB'
+        variant: 'en-US'
       }
     ]);
-
-    await setHead(fastify, {
-      name: 'myObject',
-      env: 'development',
-      version: '3.0.1'
-    });
 
     const res302 = await fastify.inject({
       method: 'GET',
@@ -134,28 +112,34 @@ test('Objects API', async (t) => {
       }
     ]);
 
+    await setHead(fastify, {
+      name: 'myObject',
+      env: 'development',
+      version: '3.0.2'
+    });
+
     const resHead = await fastify.inject({
       method: 'GET',
       url: '/objects/myObject?env=development'
     });
 
-    t.equal(resHead.statusCode, 200);
+    t.equal(resLast.statusCode, 200);
 
     const bodyHead = JSON.parse(resHead.payload);
     t.deepEqual(bodyHead, [
       {
         name: 'myObject',
         env: 'development',
-        version: '3.0.1',
+        version: '3.0.2',
         data: 'data from CDN api',
-        variant: 'en-GB'
+        variant: 'en-US'
       },
       {
         name: 'myObject',
         env: 'development',
-        version: '3.0.1',
+        version: '3.0.2',
         data: 'data from CDN api',
-        variant: 'en-US'
+        variant: 'en-GB'
       }
     ]);
   });
