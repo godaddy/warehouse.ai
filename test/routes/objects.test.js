@@ -56,7 +56,7 @@ test('Objects API', async (t) => {
       version: '3.0.2',
       env: 'development',
       data: 'data from CDN api',
-      variant: 'en-GB'
+      variant: 'en-US'
     });
 
     await createObject(fastify, {
@@ -64,7 +64,7 @@ test('Objects API', async (t) => {
       version: '3.0.2',
       env: 'development',
       data: 'data from CDN api',
-      variant: 'en-US'
+      variant: 'en-GB'
     });
 
     await createObject(fastify, {
@@ -114,7 +114,7 @@ test('Objects API', async (t) => {
   });
 
   t.test('set object head', async (t) => {
-    t.plan(6);
+    t.plan(8);
 
     const resNotFound = await fastify.inject({
       method: 'PUT',
@@ -162,6 +162,31 @@ test('Objects API', async (t) => {
     });
 
     t.equal(res409Req.statusCode, 409);
+
+    const resHead = await fastify.inject({
+      method: 'GET',
+      url: '/objects/myObject?env=development'
+    });
+
+    t.equal(resHead.statusCode, 200);
+
+    const bodyHead = JSON.parse(resHead.payload);
+    t.deepEqual(bodyHead, [
+      {
+        name: 'myObject',
+        env: 'development',
+        version: '3.0.2',
+        data: 'data from CDN api',
+        variant: 'en-GB'
+      },
+      {
+        name: 'myObject',
+        env: 'development',
+        version: '3.0.2',
+        data: 'data from CDN api',
+        variant: 'en-US'
+      }
+    ]);
   });
 
   t.test('get object head', async (t) => {
