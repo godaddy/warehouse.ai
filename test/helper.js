@@ -103,11 +103,44 @@ async function getHistoryRecords(f, { name, env }) {
   return items;
 }
 
+async function createEnv(f, data) {
+  const res = await f.inject({
+    method: 'POST',
+    url: `/envs/${data.name}`,
+    headers: {
+      'Content-type': 'application/json'
+    },
+    payload: JSON.stringify({ env: data.env })
+  });
+
+  if (res.statusCode > 399) {
+    throw new Error('An error occourred while creating a new object');
+  }
+}
+
+async function getEnvs(f, data) {
+  const res = await f.inject({
+    method: 'GET',
+    url: `/envs/${data.name}`,
+    headers: {
+      'Content-type': 'application/json'
+    }
+  });
+
+  if (res.statusCode > 399) {
+    throw new Error('An error occourred while getting the object envs');
+  }
+
+  return JSON.parse(res.payload);
+}
+
 module.exports = {
   build,
   createObject,
   getHead,
   getHistoryRecords,
   getObject,
-  setHead
+  setHead,
+  createEnv,
+  getEnvs
 };

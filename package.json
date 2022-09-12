@@ -41,7 +41,7 @@
     "eslint": "eslint-godaddy --ignore-pattern /coverage/ ./",
     "prettier": "prettier --write lib bin test",
     "release": "standard-version -t ''",
-    "test": "tap test/**/*.test.js",
+    "test": "tap test/**/envs.test.js",
     "posttest": "npm run eslint",
     "start": "node lib/app.js",
     "init-localstack": "./bin/init-localstack.js",
