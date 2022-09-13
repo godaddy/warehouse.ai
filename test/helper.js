@@ -106,7 +106,7 @@ async function getHistoryRecords(f, { name, env }) {
 async function createEnv(f, data) {
   const res = await f.inject({
     method: 'POST',
-    url: `/envs/${data.name}`,
+    url: `/objects/${data.name}/envs`,
     headers: {
       'Content-type': 'application/json'
     },
@@ -114,14 +114,29 @@ async function createEnv(f, data) {
   });
 
   if (res.statusCode > 399) {
-    throw new Error('An error occourred while creating a new object');
+    throw new Error('An error occourred while creating a new env');
+  }
+}
+
+async function createEnvAlias(f, data) {
+  const res = await f.inject({
+    method: 'POST',
+    url: `/objects/${data.name}/envs/${data.env}/aliases`,
+    headers: {
+      'Content-type': 'application/json'
+    },
+    payload: JSON.stringify({ alias: data.alias })
+  });
+
+  if (res.statusCode > 399) {
+    throw new Error('An error occourred while creating a new env alias');
   }
 }
 
 async function getEnvs(f, data) {
   const res = await f.inject({
     method: 'GET',
-    url: `/envs/${data.name}`,
+    url: `/objects/${data.name}/envs`,
     headers: {
       'Content-type': 'application/json'
     }
@@ -129,6 +144,22 @@ async function getEnvs(f, data) {
 
   if (res.statusCode > 399) {
     throw new Error('An error occourred while getting the object envs');
+  }
+
+  return JSON.parse(res.payload);
+}
+
+async function getEnv(f, data) {
+  const res = await f.inject({
+    method: 'GET',
+    url: `/objects/${data.name}/envs/${data.env}`,
+    headers: {
+      'Content-type': 'application/json'
+    }
+  });
+
+  if (res.statusCode > 399) {
+    throw new Error('An error occourred while getting the object env');
   }
 
   return JSON.parse(res.payload);
@@ -142,5 +173,7 @@ module.exports = {
   getObject,
   setHead,
   createEnv,
-  getEnvs
+  createEnvAlias,
+  getEnvs,
+  getEnv
 };
