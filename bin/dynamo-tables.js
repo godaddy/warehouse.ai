@@ -108,6 +108,58 @@ const tables = {
       ReadCapacityUnits: 5,
       WriteCapacityUnits: 5
     }
+  },
+  [`${NAMESPACE}-envs`]: {
+    KeySchema: [
+      {
+        AttributeName: 'keyname',
+        KeyType: 'HASH'
+      },
+      {
+        AttributeName: 'env',
+        KeyType: 'RANGE'
+      }
+    ],
+    AttributeDefinitions: [
+      {
+        AttributeName: 'keyname',
+        AttributeType: 'S'
+      },
+      {
+        AttributeName: 'env',
+        AttributeType: 'S'
+      }
+    ],
+    ProvisionedThroughput: {
+      ReadCapacityUnits: 5,
+      WriteCapacityUnits: 5
+    }
+  },
+  [`${NAMESPACE}-env-aliases`]: {
+    KeySchema: [
+      {
+        AttributeName: 'keyname',
+        KeyType: 'HASH'
+      },
+      {
+        AttributeName: 'alias',
+        KeyType: 'RANGE'
+      }
+    ],
+    AttributeDefinitions: [
+      {
+        AttributeName: 'keyname',
+        AttributeType: 'S'
+      },
+      {
+        AttributeName: 'alias',
+        AttributeType: 'S'
+      }
+    ],
+    ProvisionedThroughput: {
+      ReadCapacityUnits: 5,
+      WriteCapacityUnits: 5
+    }
   }
 };
 
