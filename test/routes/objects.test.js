@@ -680,7 +680,7 @@ test('Objects API', async (t) => {
     const body = JSON.parse(res.payload);
     t.same(body, {
       statusCode: 400,
-      error: 'Bad request',
+      error: 'Bad Request',
       message:
         'You must define at least one an enviroment or specify one with this request to create one'
     });
