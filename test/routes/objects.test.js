@@ -10,7 +10,8 @@ const {
   getObject,
   setHead,
   createEnv,
-  getEnvs
+  getEnvs,
+  createEnvAlias
 } = require('../helper');
 
 test('Objects API', async (t) => {
@@ -631,50 +632,59 @@ test('Objects API', async (t) => {
     ]);
   });
 
-  t.test('create an object in a predefinied enviroment', async (t) => {
-    t.plan(4);
+  t.test(
+    'create an object in a predefinied enviroment using alias',
+    async (t) => {
+      t.plan(4);
 
-    await createEnv(fastify, {
-      name: 'preObj2',
-      env: 'devo'
-    });
-
-    const headBefore = await getHeads(fastify, {
-      name: 'preObj2'
-    });
-    t.same(headBefore, []);
-
-    const res = await fastify.inject({
-      method: 'POST',
-      url: '/objects',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      payload: JSON.stringify({
+      await createEnv(fastify, {
         name: 'preObj2',
-        version: '1.0.1',
+        env: 'devo'
+      });
+
+      await createEnvAlias(fastify, {
+        name: 'preObj2',
         env: 'devo',
-        data: 'data from CDN api',
-        variant: 'en-US'
-      })
-    });
+        alias: 'development'
+      });
 
-    t.equal(res.statusCode, 201);
+      const headBefore = await getHeads(fastify, {
+        name: 'preObj2'
+      });
+      t.same(headBefore, []);
 
-    const body = JSON.parse(res.payload);
-    t.same(body, { created: true });
+      const res = await fastify.inject({
+        method: 'POST',
+        url: '/objects',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        payload: JSON.stringify({
+          name: 'preObj2',
+          version: '1.0.1',
+          env: 'development',
+          data: 'data from CDN api',
+          variant: 'en-US'
+        })
+      });
 
-    const headAfter = await getHeads(fastify, {
-      name: 'preObj2'
-    });
-    t.same(headAfter, [
-      {
-        enviroment: 'devo',
-        headVersion: null,
-        latestVersion: '1.0.1'
-      }
-    ]);
-  });
+      t.equal(res.statusCode, 201);
+
+      const body = JSON.parse(res.payload);
+      t.same(body, { created: true });
+
+      const headAfter = await getHeads(fastify, {
+        name: 'preObj2'
+      });
+      t.same(headAfter, [
+        {
+          enviroment: 'devo',
+          headVersion: null,
+          latestVersion: '1.0.1'
+        }
+      ]);
+    }
+  );
 
   t.test('fail to create an object in all predefined envs', async (t) => {
     t.plan(4);
