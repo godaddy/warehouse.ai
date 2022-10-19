@@ -1,4 +1,4 @@
-/* eslint-disable no-shadow */
+/* eslint-disable no-shadow, max-statements */
 
 const { test } = require('tap');
 const {
@@ -16,7 +16,7 @@ const {
 test('Objects API', async (t) => {
   const fastify = build(t);
 
-  t.plan(13);
+  t.plan(14);
 
   t.test('create object', async (t) => {
     t.plan(4);
@@ -98,7 +98,7 @@ test('Objects API', async (t) => {
     t.equal(resLast.statusCode, 200);
 
     const bodyLast = JSON.parse(resLast.payload);
-    t.deepEqual(bodyLast, [
+    t.same(bodyLast, [
       {
         name: 'myObject',
         env: 'development',
@@ -117,7 +117,7 @@ test('Objects API', async (t) => {
     t.equal(res302.statusCode, 200);
 
     const body302 = JSON.parse(res302.payload);
-    t.deepEqual(body302, [
+    t.same(body302, [
       {
         name: 'myObject',
         env: 'development',
@@ -186,7 +186,7 @@ test('Objects API', async (t) => {
     t.equal(resHead.statusCode, 200);
 
     const bodyHead = JSON.parse(resHead.payload);
-    t.deepEqual(bodyHead, [
+    t.same(bodyHead, [
       {
         name: 'myObject',
         env: 'development',
@@ -218,10 +218,33 @@ test('Objects API', async (t) => {
     t.equal(res.statusCode, 200);
 
     const head = JSON.parse(res.payload);
-    t.deepEqual(head, {
+    t.same(head, {
       headVersion: '3.0.2',
       latestVersion: '3.0.3'
     });
+  });
+
+  t.test('get object heads', async (t) => {
+    t.plan(2);
+
+    const res = await fastify.inject({
+      method: 'GET',
+      url: '/head/myObject',
+      headers: {
+        'Content-type': 'application/json'
+      }
+    });
+
+    t.equal(res.statusCode, 200);
+
+    const heads = JSON.parse(res.payload);
+    t.same(heads, [
+      {
+        enviroment: 'development',
+        headVersion: '3.0.2',
+        latestVersion: '3.0.3'
+      }
+    ]);
   });
 
   t.test('delete object variant', async (t) => {
@@ -242,7 +265,7 @@ test('Objects API', async (t) => {
       env: 'development',
       version: '3.0.2'
     });
-    t.deepEqual(obj, [
+    t.same(obj, [
       {
         name: 'myObject',
         env: 'development',
@@ -508,7 +531,7 @@ test('Objects API', async (t) => {
       env: 'ote'
     });
 
-    t.deepEqual(head100, { headVersion: '1.0.0', latestVersion: '2.0.0' });
+    t.same(head100, { headVersion: '1.0.0', latestVersion: '2.0.0' });
 
     // Return 409 since head is already rolledback to version 1.0.0
     const res409Already = await fastify.inject({
@@ -551,7 +574,7 @@ test('Objects API', async (t) => {
       env: 'ote'
     });
 
-    t.deepEqual(head101, { headVersion: '1.0.1', latestVersion: '2.0.0' });
+    t.same(head101, { headVersion: '1.0.1', latestVersion: '2.0.0' });
   });
 
   t.test('create object in all predefinied enviroments', async (t) => {

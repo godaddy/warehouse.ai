@@ -25,7 +25,7 @@ test('CDN API', async (t) => {
 
     t.equal(res.statusCode, 201);
 
-    t.deepEqual(JSON.parse(res.payload), {
+    t.same(JSON.parse(res.payload), {
       fingerprints: [
         '71fbac4eca64da6727d4a9c9cd00e353.gz',
         '574d0c0f86b220913f60ee7aae20ec6a.gz'
@@ -60,7 +60,7 @@ test('CDN API', async (t) => {
       .listObjectsV2({ Bucket: 'warehouse-cdn' })
       .promise();
     const filenames = files.map(({ Key }) => Key);
-    t.deepEqual(filenames, [
+    t.same(filenames, [
       '574d0c0f86b220913f60ee7aae20ec6a/main.css',
       '71fbac4eca64da6727d4a9c9cd00e353/main.js'
     ]);

@@ -6,7 +6,8 @@ const {
   getEnvs,
   getEnv,
   createEnv,
-  createEnvAlias
+  createEnvAlias,
+  createObject
 } = require('../helper');
 
 test('Enviroments API', async (t) => {
@@ -42,7 +43,16 @@ test('Enviroments API', async (t) => {
   });
 
   t.test('cannot create the same enviroment twice', async (t) => {
-    t.plan(4);
+    t.plan(2);
+
+    // This creates development enviroment together with the object variant
+    await createObject(fastify, {
+      name: 'myObjectA',
+      version: '2.0.0',
+      env: 'development',
+      data: 'data from CDN api',
+      variant: 'it-IT'
+    });
 
     const res = await fastify.inject({
       method: 'POST',
@@ -55,26 +65,10 @@ test('Enviroments API', async (t) => {
       })
     });
 
-    t.equal(res.statusCode, 201);
+    t.equal(res.statusCode, 409);
 
     const body = JSON.parse(res.payload);
-    t.same(body, { created: true });
-
-    const res2 = await fastify.inject({
-      method: 'POST',
-      url: '/objects/myObjectA/envs',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      payload: JSON.stringify({
-        env: 'development'
-      })
-    });
-
-    t.equal(res2.statusCode, 409);
-
-    const body2 = JSON.parse(res2.payload);
-    t.same(body2.message, 'Enviroment already exists');
+    t.same(body.message, 'Enviroment already exists');
   });
 
   t.test('get enviroments', async (t) => {
