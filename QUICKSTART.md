@@ -8,8 +8,8 @@ This guide does not cover how to deploy and secure Warehouse on your own infrast
 
 The following prerequisites are required for a successful use of Warehouse.
 
- - Warehouse service running and accessible via http
- - [Warehouse CLI](https://github.com/warehouseai/wrhs) installed
+- Warehouse service running and accessible via http
+- [Warehouse CLI](https://github.com/warehouseai/wrhs) installed
 
 ## Configuring the CLI
 
@@ -29,7 +29,7 @@ The config file uses a JSON-like syntax:
 
 ## Push an asset to Warehouse
 
-In this example we assume that we have an application call `example-app` that uses Warehouse to store and distrubute its assets. The application has two assets called `script.js` and `style.css`, and it runs in three separate environemnts: `development`, `test` and `production`. The app has only one locale: `en-US`. The assets for each environments are compiled with different parameters, therefore each enviroment references to different CDN files (files in different environments have different fingerprint).
+In this example we assume that we have an application call `example-app` that uses Warehouse to store and distrubute its assets. The application has two assets called `script.js` and `style.css`, and it runs in three separate environemnts: `development`, `test` and `production`. The app has only one locale: `en-US`. The assets for each environments are compiled with different parameters, therefore each environment references to different CDN files (files in different environments have different fingerprint).
 
 Our application assets can be compiled with the `NODE_ENV=<env> npm run build` command where `<env>` is the environment for which the assets are getting builded for.
 
@@ -59,12 +59,7 @@ Now the application backend can call Warehouse API to obtain:
 ```js
 const { Request } = require('@wrhs/utils');
 
-const {
-  NODE_ENV,
-  WRHS_ENDPOINT,
-  WRHS_USERNAME,
-  WRHS_PASSWORD
-} = process.env;
+const { NODE_ENV, WRHS_ENDPOINT, WRHS_USERNAME, WRHS_PASSWORD } = process.env;
 
 const wrhs = new Request({
   baseUrl: WRHS_ENDPOINT,
@@ -73,7 +68,7 @@ const wrhs = new Request({
 });
 
 (async function () {
-    // headVersion is '1.0.0'
+  // headVersion is '1.0.0'
   const { headVersion } = await wrhs.get(`/head/example-app/${NODE_ENV}`);
 
   const [variant] = await wrhs.get('/objects/example-app', {
@@ -85,7 +80,7 @@ const wrhs = new Request({
   for (const file of variant.data.files) {
     // https://mycdn.com/71fbac4eca64da6727d4a9c9cd00e353/script.js
     // https://mycdn.com/574d0c0f86b220913f60ee7aae20ec6a/style.css
-    console.log(file.url)
+    console.log(file.url);
   }
 })();
 ```

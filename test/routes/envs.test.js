@@ -10,12 +10,12 @@ const {
   createObject
 } = require('../helper');
 
-test('Enviroments API', async (t) => {
+test('Environments API', async (t) => {
   const fastify = build(t);
 
   t.plan(8);
 
-  t.test('create an enviroment', async (t) => {
+  t.test('create an environment', async (t) => {
     t.plan(3);
 
     const res = await fastify.inject({
@@ -42,10 +42,10 @@ test('Enviroments API', async (t) => {
     ]);
   });
 
-  t.test('cannot create the same enviroment twice', async (t) => {
+  t.test('cannot create the same environment twice', async (t) => {
     t.plan(2);
 
-    // This creates development enviroment together with the object variant
+    // This creates development environment together with the object variant
     await createObject(fastify, {
       name: 'myObjectA',
       version: '2.0.0',
@@ -68,10 +68,10 @@ test('Enviroments API', async (t) => {
     t.equal(res.statusCode, 409);
 
     const body = JSON.parse(res.payload);
-    t.same(body.message, 'Enviroment already exists');
+    t.same(body.message, 'Environment already exists');
   });
 
-  t.test('get enviroments', async (t) => {
+  t.test('get environments', async (t) => {
     t.plan(2);
 
     await createEnv(fastify, {
@@ -98,7 +98,7 @@ test('Enviroments API', async (t) => {
     ]);
   });
 
-  t.test('create an enviroment alias', async (t) => {
+  t.test('create an environment alias', async (t) => {
     t.plan(5);
 
     await createEnv(fastify, {
@@ -149,7 +149,7 @@ test('Enviroments API', async (t) => {
     });
   });
 
-  t.test('get enviroment using alias', async (t) => {
+  t.test('get environment using alias', async (t) => {
     t.plan(4);
 
     await createEnv(fastify, {
@@ -228,10 +228,10 @@ test('Enviroments API', async (t) => {
     t.equal(res2.statusCode, 409);
 
     const body2 = JSON.parse(res2.payload);
-    t.same(body2.message, 'Enviroment alias already exists');
+    t.same(body2.message, 'Environment alias already exists');
   });
 
-  t.test('cannot create an alias for a non existing enviroment', async (t) => {
+  t.test('cannot create an alias for a non existing environment', async (t) => {
     t.plan(2);
 
     const res = await fastify.inject({
@@ -248,7 +248,7 @@ test('Enviroments API', async (t) => {
     t.equal(res.statusCode, 404);
 
     const body = JSON.parse(res.payload);
-    t.same(body.message, 'Enviroment not found');
+    t.same(body.message, 'Environment not found');
   });
 
   t.test('cannot create the same alias for two different envs', async (t) => {
@@ -294,7 +294,7 @@ test('Enviroments API', async (t) => {
     t.equal(res2.statusCode, 409);
 
     const body2 = JSON.parse(res2.payload);
-    t.same(body2.message, 'Enviroment alias already exists');
+    t.same(body2.message, 'Environment alias already exists');
   });
 });
 

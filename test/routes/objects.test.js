@@ -241,7 +241,7 @@ test('Objects API', async (t) => {
     const heads = JSON.parse(res.payload);
     t.same(heads, [
       {
-        enviroment: 'development',
+        environment: 'development',
         headVersion: '3.0.2',
         latestVersion: '3.0.3'
       }
@@ -578,7 +578,7 @@ test('Objects API', async (t) => {
     t.same(head101, { headVersion: '1.0.1', latestVersion: '2.0.0' });
   });
 
-  t.test('create object in all predefinied enviroments', async (t) => {
+  t.test('create object in all predefinied environments', async (t) => {
     t.plan(3);
 
     await Promise.all([
@@ -620,12 +620,12 @@ test('Objects API', async (t) => {
     });
     t.same(head, [
       {
-        enviroment: 'prod',
+        environment: 'prod',
         headVersion: null,
         latestVersion: '1.0.0'
       },
       {
-        enviroment: 'test',
+        environment: 'test',
         headVersion: null,
         latestVersion: '1.0.0'
       }
@@ -633,7 +633,7 @@ test('Objects API', async (t) => {
   });
 
   t.test(
-    'create an object in a predefinied enviroment using alias',
+    'create an object in a predefinied environment using alias',
     async (t) => {
       t.plan(4);
 
@@ -678,7 +678,7 @@ test('Objects API', async (t) => {
       });
       t.same(headAfter, [
         {
-          enviroment: 'devo',
+          environment: 'devo',
           headVersion: null,
           latestVersion: '1.0.1'
         }
@@ -715,7 +715,7 @@ test('Objects API', async (t) => {
       statusCode: 400,
       error: 'Bad Request',
       message:
-        'You must define at least one an enviroment or specify one with this request to create one'
+        'You must define at least one an environment or specify one with this request to create one'
     });
 
     const headAfter = await getHeads(fastify, {

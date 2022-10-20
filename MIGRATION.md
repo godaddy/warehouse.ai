@@ -45,13 +45,13 @@ module.exports = {
     minimize: !isDev,
     minimizer: [
       new TerserPlugin({
-        test: /\.js(\?.*)?$/i,
+        test: /\.js(\?.*)?$/i
       })
     ]
   },
   output: {
     filename: 'main.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'dist')
   },
   plugins: [
     new EnvironmentPlugin({
@@ -74,9 +74,9 @@ wrhs upload /my-app/dist example-app --env development --version 1.0.0 --variant
 wrhs object set-head my-app --env development --version 1.0.0
 ```
 
-> You can defer updating the head until the new version is ready to be deployed. Each environment has its own head. This means you can upload the assets for all the enviroments at once, and update each individual head whenver the new version is ready to be deployed to that specific environment.
+> You can defer updating the head until the new version is ready to be deployed. Each environment has its own head. This means you can upload the assets for all the environments at once, and update each individual head whenver the new version is ready to be deployed to that specific environment.
 
-You must build your app for each environment/locale commbination you may need. 
+You must build your app for each environment/locale commbination you may need.
 
 Each build assets must then being properly uploaded to Warehouse using the CLI or the http API directly.
 
