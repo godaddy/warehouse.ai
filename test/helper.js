@@ -54,6 +54,22 @@ async function getHead(f, { name, env }) {
   return JSON.parse(res.payload);
 }
 
+async function getHeads(f, { name }) {
+  const res = await f.inject({
+    method: 'GET',
+    url: `/head/${name}`,
+    headers: {
+      'Content-type': 'application/json'
+    }
+  });
+
+  if (res.statusCode > 399) {
+    throw new Error('An error occourred while getting the object heads');
+  }
+
+  return JSON.parse(res.payload);
+}
+
 async function setHead(f, { name, env, version }) {
   const res = await f.inject({
     method: 'PUT',
@@ -169,6 +185,7 @@ module.exports = {
   build,
   createObject,
   getHead,
+  getHeads,
   getHistoryRecords,
   getObject,
   setHead,
