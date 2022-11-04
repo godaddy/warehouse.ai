@@ -17,7 +17,7 @@ const {
 test('Objects API', async (t) => {
   const fastify = build(t);
 
-  t.plan(14);
+  t.plan(15);
 
   t.test('create object', async (t) => {
     t.plan(4);
@@ -722,6 +722,45 @@ test('Objects API', async (t) => {
       name: 'preObj3'
     });
     t.same(headAfter, []);
+  });
+
+  t.test('get object versions', async (t) => {
+    t.plan(2);
+
+    await createObject(fastify, {
+      name: 'objV1',
+      version: '3.0.0',
+      env: 'development',
+      data: 'data from CDN api',
+      variant: 'fr-CA'
+    });
+    await createObject(fastify, {
+      name: 'objV1',
+      version: '3.0.1',
+      env: 'development',
+      data: 'data from CDN api',
+      variant: 'fr-CA'
+    });
+    await createObject(fastify, {
+      name: 'objV1',
+      version: '3.0.0',
+      env: 'test',
+      data: 'data from CDN api',
+      variant: 'fr-CA'
+    });
+
+    const res = await fastify.inject({
+      method: 'GET',
+      url: '/objects/objV1/versions'
+    });
+
+    t.equal(res.statusCode, 200);
+
+    const body = JSON.parse(res.payload);
+    t.same(body, [
+      { version: '3.0.1', environments: ['development'] },
+      { version: '3.0.0', environments: ['development', 'test'] }
+    ]);
   });
 
   /* eslint-enable max-statements */
