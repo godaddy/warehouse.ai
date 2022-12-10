@@ -273,6 +273,11 @@ test('Objects API', async (t) => {
         environment: 'development',
         headVersion: '3.0.2',
         latestVersion: '3.0.3'
+      },
+      {
+        environment: 'test',
+        headVersion: '3.0.2',
+        latestVersion: '3.0.2'
       }
     ]);
   });
