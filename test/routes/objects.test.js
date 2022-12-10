@@ -130,7 +130,7 @@ test('Objects API', async (t) => {
   });
 
   t.test('set object head', async (t) => {
-    t.plan(8);
+    t.plan(12);
 
     const resNotFound = await fastify.inject({
       method: 'PUT',
@@ -203,6 +203,35 @@ test('Objects API', async (t) => {
         variant: 'en-US'
       }
     ]);
+
+    await createObject(fastify, {
+      name: 'myObject',
+      version: '3.0.2',
+      env: 'test',
+      data: 'data from CDN api',
+      variant: 'en-US'
+    });
+
+    const resTest204 = await fastify.inject({
+      method: 'PUT',
+      url: '/objects/myObject/test',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      payload: JSON.stringify({
+        fromEnv: 'development'
+      })
+    });
+
+    t.equal(resTest204.statusCode, 204);
+
+    const testHistoryRecords = await getHistoryRecords(fastify, {
+      name: 'myObject',
+      env: 'test'
+    });
+    t.equal(testHistoryRecords.length, 1);
+    t.equal(testHistoryRecords[0].headVersion, '3.0.2');
+    t.equal(testHistoryRecords[0].prevTimestamp, null);
   });
 
   t.test('get object head', async (t) => {
