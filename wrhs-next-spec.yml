@@ -190,10 +190,10 @@ paths:
           application/json:
             schema:
               type: object
-              required:
-                - head
               properties:
                 head:
+                  type: string
+                fromEnv:
                   type: string
       responses:
         "204":
