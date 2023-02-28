@@ -826,7 +826,7 @@ test('Objects API', async (t) => {
       });
     }
 
-    // Fetch superObjX history change logs
+    // Fetch head change logs
     const logsResp = await fastify.inject({
       method: 'GET',
       url: '/logs/superObjX/ote',
