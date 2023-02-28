@@ -826,7 +826,7 @@ test('Objects API', async (t) => {
       });
     }
 
-    // Rollback to version 1.0.1
+    // Fetch superObjX history change logs
     const logsResp = await fastify.inject({
       method: 'GET',
       url: '/logs/superObjX/ote',
