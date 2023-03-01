@@ -17,7 +17,7 @@ const {
 test('Objects API', async (t) => {
   const fastify = build(t);
 
-  t.plan(15);
+  t.plan(16);
 
   t.test('create object', async (t) => {
     t.plan(4);
@@ -796,6 +796,53 @@ test('Objects API', async (t) => {
       { version: '3.0.0', environments: ['development', 'test'] }
     ]);
   });
-
   /* eslint-enable max-statements */
+
+  t.test('get head change logs', async (t) => {
+    t.plan(3);
+
+    for (const version of ['1.0.0', '1.0.1', '1.0.2', '1.1.0', '2.0.0']) {
+      await createObject(fastify, {
+        name: 'superObjX',
+        env: 'ote',
+        data: 'data from CDN api',
+        version
+      });
+    }
+
+    for (const version of [
+      '1.0.0',
+      '1.0.1',
+      '1.0.2',
+      '1.1.0',
+      '2.0.0',
+      '1.1.0',
+      '2.0.0'
+    ]) {
+      await setHead(fastify, {
+        name: 'superObjX',
+        env: 'ote',
+        version
+      });
+    }
+
+    // Fetch head change logs
+    const logsResp = await fastify.inject({
+      method: 'GET',
+      url: '/logs/superObjX/ote',
+      headers: {
+        'Content-type': 'application/json'
+      }
+    });
+
+    t.equal(logsResp.statusCode, 200);
+
+    const body = JSON.parse(logsResp.payload);
+    t.equal(body.length, 7);
+
+    t.same(
+      body.map((item) => item.version),
+      ['1.0.0', '1.0.1', '1.0.2', '1.1.0', '2.0.0', '1.1.0', '2.0.0'].reverse()
+    );
+  });
 });
