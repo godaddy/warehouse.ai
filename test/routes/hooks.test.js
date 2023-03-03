@@ -3,7 +3,7 @@
 const { test } = require('tap');
 const { build, getHook, createHook, createObject } = require('../helper');
 
-test('Environments API', async (t) => {
+test('Hooks API', async (t) => {
   const fastify = build(t);
 
   t.plan(3);
