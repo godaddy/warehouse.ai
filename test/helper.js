@@ -17,7 +17,7 @@ function build(t) {
     useLocalstack: true,
     cdnBaseUrl: 'https://cdn-example.com'
   });
-  t.tearDown(fastify.close.bind(fastify));
+  t.teardown(fastify.close.bind(fastify));
   return fastify;
 }
 
@@ -181,6 +181,55 @@ async function getEnv(f, data) {
   return JSON.parse(res.payload);
 }
 
+async function createHook(f, data) {
+  const res = await f.inject({
+    method: 'POST',
+    url: `/objects/${data.name}/hooks`,
+    headers: {
+      'Content-type': 'application/json'
+    },
+    payload: JSON.stringify({ url: data.url })
+  });
+
+  if (res.statusCode > 399) {
+    throw new Error('An error occourred while creating a new hook');
+  }
+
+  return JSON.parse(res.payload).id;
+}
+
+async function getHooks(f, data) {
+  const res = await f.inject({
+    method: 'GET',
+    url: `/objects/${data.name}/hooks`,
+    headers: {
+      'Content-type': 'application/json'
+    }
+  });
+
+  if (res.statusCode > 399) {
+    throw new Error('An error occourred while getting the object hooks');
+  }
+
+  return JSON.parse(res.payload);
+}
+
+async function getHook(f, data) {
+  const res = await f.inject({
+    method: 'GET',
+    url: `/objects/${data.name}/hooks/${data.id}`,
+    headers: {
+      'Content-type': 'application/json'
+    }
+  });
+
+  if (res.statusCode > 399) {
+    throw new Error('An error occourred while getting the object hook');
+  }
+
+  return JSON.parse(res.payload);
+}
+
 module.exports = {
   build,
   createObject,
@@ -192,5 +241,8 @@ module.exports = {
   createEnv,
   createEnvAlias,
   getEnvs,
-  getEnv
+  getEnv,
+  createHook,
+  getHooks,
+  getHook
 };

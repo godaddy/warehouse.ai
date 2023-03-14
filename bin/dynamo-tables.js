@@ -160,6 +160,32 @@ const tables = {
       ReadCapacityUnits: 5,
       WriteCapacityUnits: 5
     }
+  },
+  [`${NAMESPACE}-hooks`]: {
+    KeySchema: [
+      {
+        AttributeName: 'keyname',
+        KeyType: 'HASH'
+      },
+      {
+        AttributeName: 'id',
+        KeyType: 'RANGE'
+      }
+    ],
+    AttributeDefinitions: [
+      {
+        AttributeName: 'keyname',
+        AttributeType: 'S'
+      },
+      {
+        AttributeName: 'id',
+        AttributeType: 'S'
+      }
+    ],
+    ProvisionedThroughput: {
+      ReadCapacityUnits: 5,
+      WriteCapacityUnits: 5
+    }
   }
 };
 
