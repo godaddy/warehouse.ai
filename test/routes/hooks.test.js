@@ -208,20 +208,6 @@ test('Hooks API', async (t) => {
       version: '1.0.0'
     });
 
-    // await createObject(fastify, {
-    //   name: 'triggerHookA',
-    //   version: '2.0.0',
-    //   env: 'development',
-    //   data: 'data from CDN api',
-    //   variant: 'en-US'
-    // });
-
-    // await setHead(fastify, {
-    //   name: 'triggerHookA',
-    //   env: 'development',
-    //   version: '2.0.0'
-    // });
-
     await new Promise((resolve) => {
       setTimeout(resolve, 1000);
     });
