@@ -73,7 +73,14 @@ test('Hooks API', async (t) => {
 
     const bodyAll = JSON.parse(resAll.payload);
     t.same(
-      bodyAll.sort((a, b) => b.url < a.url),
+      bodyAll.sort((a, b) => {
+        if (b.url < a.url) {
+          return -1;
+        } else if (b.url > a.url) {
+          return 1;
+        }
+        return 0;
+      }),
       [
         { name: 'hookObjectB', id: googleHookId, url: 'https://google.com' },
         { name: 'hookObjectB', id: godaddyHookId, url: 'https://godaddy.com' }
