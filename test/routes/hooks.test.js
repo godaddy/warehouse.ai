@@ -1,12 +1,19 @@
 /* eslint-disable no-shadow, max-statements */
 
 const { test } = require('tap');
-const { build, getHook, createHook, createObject } = require('../helper');
+const {
+  build,
+  getHook,
+  createHook,
+  createObject,
+  setHead
+} = require('../helper');
+const nock = require('nock');
 
 test('Hooks API', async (t) => {
   const fastify = build(t);
 
-  t.plan(3);
+  t.plan(4);
 
   t.test('create a hook', async (t) => {
     t.plan(2);
@@ -65,10 +72,20 @@ test('Hooks API', async (t) => {
     t.equal(resAll.statusCode, 200);
 
     const bodyAll = JSON.parse(resAll.payload);
-    t.same(bodyAll, [
-      { name: 'hookObjectB', id: googleHookId, url: 'https://google.com' },
-      { name: 'hookObjectB', id: godaddyHookId, url: 'https://godaddy.com' }
-    ]);
+    t.same(
+      bodyAll.sort((a, b) => {
+        if (b.url < a.url) {
+          return -1;
+        } else if (b.url > a.url) {
+          return 1;
+        }
+        return 0;
+      }),
+      [
+        { name: 'hookObjectB', id: googleHookId, url: 'https://google.com' },
+        { name: 'hookObjectB', id: godaddyHookId, url: 'https://godaddy.com' }
+      ]
+    );
 
     const resGodaddy = await fastify.inject({
       method: 'GET',
@@ -136,6 +153,74 @@ test('Hooks API', async (t) => {
     });
 
     t.equal(fiatHook.id, fiatHookId);
+  });
+
+  t.test('trigger hook on head changes', async (t) => {
+    t.plan(2);
+
+    await Promise.all([
+      createObject(fastify, {
+        name: 'triggerHookA',
+        version: '1.0.0',
+        env: 'development',
+        data: 'data from CDN api',
+        variant: 'en-US'
+      }),
+      createObject(fastify, {
+        name: 'triggerHookA',
+        version: '1.0.0',
+        env: 'test',
+        data: 'data from CDN api',
+        variant: 'en-US'
+      })
+    ]);
+
+    const scope01 = nock('http://uxp.godaddy.com')
+      .post('/webhooks', {
+        event: 'NEW_RELEASE',
+        data: {
+          object: 'triggerHookA',
+          environment: 'development',
+          version: '1.0.0',
+          previousVersion: null
+        }
+      })
+      .reply(200, { ok: true });
+
+    const scope02 = nock('http://xd.godaddy.com')
+      .post('/info', {
+        event: 'NEW_RELEASE',
+        data: {
+          object: 'triggerHookA',
+          environment: 'development',
+          version: '1.0.0',
+          previousVersion: null
+        }
+      })
+      .reply(200, { ok: true });
+
+    await createHook(fastify, {
+      name: 'triggerHookA',
+      url: 'http://uxp.godaddy.com/webhooks'
+    });
+
+    await createHook(fastify, {
+      name: 'triggerHookA',
+      url: 'http://xd.godaddy.com/info'
+    });
+
+    await setHead(fastify, {
+      name: 'triggerHookA',
+      env: 'development',
+      version: '1.0.0'
+    });
+
+    await new Promise((resolve) => {
+      setTimeout(resolve, 1000);
+    });
+
+    t.equal(scope01.isDone(), true);
+    t.equal(scope02.isDone(), true);
   });
 });
 
