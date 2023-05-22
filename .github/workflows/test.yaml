@@ -20,8 +20,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v1
         with:
-          node-version: 14
-      - run: npm i -g npm@7.6.3
+          node-version: 16
       - run: npm ci
       - run: npm run init-localstack
       - run: npm test

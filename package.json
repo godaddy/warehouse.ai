@@ -10,17 +10,17 @@
   "dependencies": {
     "compare-versions": "^3.6.0",
     "dotenv": "^8.2.0",
-    "fastify-auth": "^1.0.1",
-    "fastify-autoload": "^3.3.0",
-    "fastify-etag": "^2.1.0",
-    "fastify-sensible": "^3.0.1",
+    "fastify-auth": "^1.2.0",
+    "fastify-autoload": "^3.13.0",
+    "fastify-etag": "^2.2.0",
+    "fastify-sensible": "^3.2.0",
     "fastify-swagger": "^4.3.2",
     "fingerprinting": "^1.0.1",
-    "mime-types": "^2.1.29",
-    "ms": "^2.1.2",
+    "mime-types": "^2.1.35",
+    "ms": "^2.1.3",
     "node-fetch": "^2.6.9",
     "pino": "^6.7.0",
-    "tar": "^6.0.5",
+    "tar": "^6.1.15",
     "uuid": "^9.0.0"
   },
   "peerDependencies": {
@@ -29,15 +29,15 @@
     "fastify-plugin": ">= 3.0.0 < 4"
   },
   "devDependencies": {
-    "eslint": "^7.10.0",
-    "eslint-config-godaddy": "^4.0.1",
+    "eslint": "^8.41.0",
+    "eslint-config-godaddy": "^7.0.2",
     "fastify-cli": "^2.3.0",
-    "nock": "^13.3.0",
-    "nodemon": "^2.0.4",
+    "nock": "^13.3.1",
+    "nodemon": "^2.0.22",
     "pino-pretty": "^4.3.0",
-    "prettier": "^2.1.2",
-    "standard-version": "^9.0.0",
-    "tap": "^16.3.1"
+    "prettier": "^2.8.8",
+    "standard-version": "^9.5.0",
+    "tap": "^16.3.4"
   },
   "scripts": {
     "lint": "npm run prettier && npm run eslint",
