@@ -8,40 +8,42 @@
     "test": "test"
   },
   "dependencies": {
-    "compare-versions": "^3.6.0",
-    "dotenv": "^8.2.0",
+    "compare-versions": "^5.0.3",
+    "dotenv": "^16.0.3",
     "fastify-auth": "^1.2.0",
     "fastify-autoload": "^3.13.0",
     "fastify-etag": "^2.2.0",
     "fastify-sensible": "^3.2.0",
-    "fastify-swagger": "^4.3.2",
+    "fastify-swagger": "^5.2.0",
     "fingerprinting": "^1.0.1",
     "mime-types": "^2.1.35",
     "ms": "^2.1.3",
     "node-fetch": "^2.6.9",
-    "pino": "^6.7.0",
+    "pino": "^8.14.1",
     "tar": "^6.1.15",
     "uuid": "^9.0.0"
   },
   "peerDependencies": {
     "aws-sdk": ">= 2.800.0 < 3",
-    "fastify": ">= 3.0.0 < 4",
-    "fastify-plugin": ">= 3.0.0 < 4"
+    "fastify": ">= 3 < 4",
+    "fastify-plugin": ">= 3 < 4"
   },
   "devDependencies": {
+    "aws-sdk": "^2.1383.0",
     "eslint": "^8.41.0",
     "eslint-config-godaddy": "^7.0.2",
+    "fastify": "^3.29.5",
+    "fastify-plugin": "^4.5.0",
     "fastify-cli": "^2.3.0",
     "nock": "^13.3.1",
     "nodemon": "^2.0.22",
-    "pino-pretty": "^4.3.0",
-    "prettier": "^2.8.8",
+    "pino-pretty": "^10.0.0",
     "standard-version": "^9.5.0",
     "tap": "^16.3.4"
   },
   "scripts": {
-    "lint": "npm run prettier && npm run eslint",
-    "eslint": "eslint-godaddy --ignore-pattern /coverage/ ./",
+    "lint": "npm run eslint -- --fix",
+    "eslint": "eslint ./{bin,lib,test}/**/*.js",
     "prettier": "prettier --write lib bin test",
     "release": "standard-version -t ''",
     "test": "tap test/**/*.test.js",
@@ -49,7 +51,7 @@
     "start": "node lib/app.js",
     "init-localstack": "./bin/init-localstack.js",
     "dev": "LOCALSTACK=1 nodemon lib/app.js",
-    "localstack": "docker run -it -p 4566:4566 -p 9999:8080 -e SERVICES=dynamodb,s3 -e DEBUG=1 --rm localstack/localstack:0.11.6"
+    "localstack": "docker-compose up -d"
   },
   "repository": {
     "type": "git",
@@ -68,12 +70,6 @@
     "url": "https://github.com/godaddy/warehouse.ai/issues"
   },
   "homepage": "https://github.com/godaddy/warehouse.ai#readme",
-  "prettier": {
-    "trailingComma": "none",
-    "tabWidth": 2,
-    "semi": true,
-    "singleQuote": true
-  },
   "tap": {
     "check-coverage": false
   }

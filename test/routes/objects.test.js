@@ -111,8 +111,7 @@ test('Objects API', async (t) => {
 
     const res302 = await fastify.inject({
       method: 'GET',
-      url:
-        '/objects/myObject?env=development&version=3.0.2&accepted_variants=en-GB,en-US'
+      url: '/objects/myObject?env=development&version=3.0.2&accepted_variants=en-GB,en-US'
     });
 
     t.equal(res302.statusCode, 200);
