@@ -4,7 +4,7 @@ info:
   version: 7.2.0
   description: Scalable Object Ledger and CDN
 paths:
-  /cdn:
+  "/cdn":
     post:
       parameters:
         - required: false
@@ -442,7 +442,7 @@ paths:
                     releaseDate:
                       type: string
                       format: date-time
-  /:
+  "/":
     get:
       responses:
         "200":

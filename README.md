@@ -136,7 +136,7 @@ PUT /objects/:name/:env
 #### Upload new asset
 
 ```json5
-POST /assets
+POST /cdn
 
 <binary-data>
 ```

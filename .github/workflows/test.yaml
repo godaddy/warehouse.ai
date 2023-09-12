@@ -1,27 +1,35 @@
 name: Test
 
-on: [push]
+on: 
+  pull_request:
+    branches:
+      - "*"
+  push:
+    branches:
+      - "main"
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      LOCALSTACK: 1
-      LOCALSTACK_URL: http://127.0.0.1:4566
     services:
       localstack:
-        image: localstack/localstack:0.11.6
+        image: localstack/localstack
         ports:
           - 4566:4566
+        env:
+          SERVICES: dynamodb,s3
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
-          node-version: 14
-      - run: npm i -g npm@7.6.3
-      - run: npm ci
-      - run: npm run init-localstack
-      - run: npm test
+          node-version: 16
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Initialize Localstack
+        run: npm run init-localstack
+      
+      - name: Run Tests
+        run: npm test
