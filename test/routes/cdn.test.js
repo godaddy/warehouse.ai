@@ -23,27 +23,34 @@ test('CDN API', async (t) => {
 
     t.equal(res.statusCode, 201);
 
-    const payload = JSON.parse(res.payload);
-
-    t.ok(Array.isArray(payload.fingerprints), 'Fingerprints should be an array');
-    t.ok(payload.fingerprints.every((f) => /^[a-z0-9]+\.gz$/.test(f)), 'Every fingerprint should be an alphanumeric string followed by .gz');
-
-    t.ok(Array.isArray(payload.recommended), 'Recommended should be an array');
-    t.ok(
-      payload.recommended.every(
-        (f) => /^[a-z0-9]+\/main\.(js|css)$/.test(f)
-      ),
-      'Every recommended should be a fingerprint string followed by /main.js or /main.css'
-    );
-
-    t.ok(payload.files.every(file => /https:\/\/cdn-example\.com\/.*\/main\.(js|css)$/.test(file.url)), 'All file URLs should match the expected pattern');
-
-    const { Contents: files } = await fastify.s3
-      .listObjectsV2({ Bucket: 'warehouse-cdn' })
-      .promise();
-    const filenames = files.map(({ Key }) => Key);
-    t.ok(filenames.every(name => /.*\/main\.(js|css)$/.test(name)), 'All filenames should match the expected pattern');
-
+    t.same(JSON.parse(res.payload), {
+      fingerprints: [
+        '71fbac4eca64da6727d4a9c9cd00e353.gz',
+        '574d0c0f86b220913f60ee7aae20ec6a.gz'
+      ],
+      recommended: [
+        '71fbac4eca64da6727d4a9c9cd00e353/main.js',
+        '574d0c0f86b220913f60ee7aae20ec6a/main.css'
+      ],
+      files: [
+        {
+          url: 'https://cdn-example.com/71fbac4eca64da6727d4a9c9cd00e353/main.js',
+          metadata: {
+            css: false,
+            js: true,
+            foo: 'bar'
+          }
+        },
+        {
+          url: 'https://cdn-example.com/574d0c0f86b220913f60ee7aae20ec6a/main.css',
+          metadata: {
+            css: true,
+            js: false,
+            beep: 'boop'
+          }
+        }
+      ]
+    });
     t.end();
   });
 
@@ -64,7 +71,6 @@ test('CDN API', async (t) => {
     t.equal(res.statusCode, 201);
 
     const payload = JSON.parse(res.payload);
-
     const payloadFiles = payload.files.map(file => file.url);
 
     // file url is in format https://cdn-example.com/fingerPrintId0/main.js,
@@ -74,12 +80,34 @@ test('CDN API', async (t) => {
     const regex = new RegExp(`https://cdn-example\\.com/${fingerPrintId0}/main\\.(js|css)$`);
     t.ok(payloadFiles.every(file => regex.test(file)), 'All file URLs should match the expected pattern keeping the same fingerprint id');
 
-    const { Contents: files } = await fastify.s3
-      .listObjectsV2({ Bucket: 'warehouse-cdn' })
-      .promise();
-    const filenames = files.map(({ Key }) => Key);
-    t.ok(filenames.every(name => /.*\/main\.(js|css)$/.test(name)), 'All filenames should match the expected pattern');
-
+    t.same(payload, {
+      fingerprints: [
+        '318a308660ba069e74d756cdc854ca52.gz',
+        '318a308660ba069e74d756cdc854ca52.gz'
+      ],
+      recommended: [
+        '318a308660ba069e74d756cdc854ca52/main.js',
+        '318a308660ba069e74d756cdc854ca52/main.css'
+      ],
+      files: [
+        {
+          url: 'https://cdn-example.com/318a308660ba069e74d756cdc854ca52/main.js',
+          metadata: {
+            css: false,
+            js: true,
+            foo: 'bar'
+          }
+        },
+        {
+          url: 'https://cdn-example.com/318a308660ba069e74d756cdc854ca52/main.css',
+          metadata: {
+            css: true,
+            js: false,
+            beep: 'boop'
+          }
+        }
+      ]
+    });
     t.end();
   });
 });
