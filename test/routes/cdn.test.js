@@ -61,7 +61,7 @@ test('CDN API', async (t) => {
       '71fbac4eca64da6727d4a9c9cd00e353/main.js',
       '574d0c0f86b220913f60ee7aae20ec6a/main.css'
     ];
-  
+
     expectedFiles.forEach(file => {
       t.ok(filenames.includes(file), `${file} should be uploaded to the bucket`);
     });
