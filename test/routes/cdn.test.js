@@ -51,6 +51,21 @@ test('CDN API', async (t) => {
         }
       ]
     });
+
+    const { Contents: files } = await fastify.s3
+      .listObjectsV2({ Bucket: 'warehouse-cdn' })
+      .promise();
+    const filenames = files.map(({ Key }) => Key);
+
+    const expectedFiles = [
+      '71fbac4eca64da6727d4a9c9cd00e353/main.js',
+      '574d0c0f86b220913f60ee7aae20ec6a/main.css'
+    ];
+  
+    expectedFiles.forEach(file => {
+      t.ok(filenames.includes(file), `${file} should be uploaded to the bucket`);
+    });
+
     t.end();
   });
 
@@ -108,6 +123,20 @@ test('CDN API', async (t) => {
         }
       ]
     });
+
+    const { Contents: files } = await fastify.s3
+      .listObjectsV2({ Bucket: 'warehouse-cdn' })
+      .promise();
+    const filenames = files.map(({ Key }) => Key);
+    const expectedFiles = [
+      '318a308660ba069e74d756cdc854ca52/main.js',
+      '318a308660ba069e74d756cdc854ca52/main.css'
+    ];
+
+    expectedFiles.forEach(file => {
+      t.ok(filenames.includes(file), `${file} should be uploaded to the bucket`);
+    });
+
     t.end();
   });
 });
