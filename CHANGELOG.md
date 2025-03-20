@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 7.3.0
+
+- Introducing an option to have a single fingerprint id for all the files in a package so that the files can be co-located at runtime.
+
 ## [7.2.0](https://github.com/godaddy/warehouse.ai/compare/7.1.0...7.2.0) (2022-02-26)
 
 
