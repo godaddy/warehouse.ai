@@ -2,12 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## 7.3.0
+## [7.4.2](https://github.com/godaddy/warehouse.ai/compare/7.4.0...7.4.2) (2025-10-29)
 
-- Introducing an option to have a single fingerprint id for all the files in a package so that the files can be co-located at runtime.
+### Bug Fixes
+
+- Use base table query for checking version existense when setting a head version
+
+## [7.4.0](https://github.com/godaddy/warehouse.ai/compare/7.3.0...7.4.0)
+
+### Features
+* Introducing an option to have a single fingerprint id for all the files in a package so that the files can be co-located at runtime.
+
+## [7.3.0](https://github.com/godaddy/warehouse.ai/compare/7.2.0...7.3.0)
 
 ## [7.2.0](https://github.com/godaddy/warehouse.ai/compare/7.1.0...7.2.0) (2022-02-26)
-
 
 ### Features
 
