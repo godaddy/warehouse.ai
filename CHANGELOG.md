@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+- Remove ACL parameter from S3 uploads, rely on bucket policy for public access.
+
 ## [7.4.2](https://github.com/godaddy/warehouse.ai/compare/7.4.0...7.4.2) (2025-10-29)
 
 ### Bug Fixes
