@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       localstack:
-        image: localstack/localstack
+        image: localstack/localstack:1.4.0
         ports:
           - 4566:4566
         env:
