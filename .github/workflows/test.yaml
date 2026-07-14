@@ -1,6 +1,6 @@
 name: Test
 
-on: 
+on:
   pull_request:
     branches:
       - "*"
@@ -11,25 +11,41 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    services:
-      localstack:
-        image: localstack/localstack:1.4.0
-        ports:
-          - 4566:4566
-        env:
-          SERVICES: dynamodb,s3
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: us-west-2
+
+      - name: Login to ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Start GoldenStack
+        run: |
+          docker run -d \
+            --name goldenstack \
+            -p 4566:4566 \
+            -e SERVICES=dynamodb,s3 \
+            -v /var/run/docker.sock:/var/run/docker.sock \
+            764525110978.dkr.ecr.us-west-2.amazonaws.com/goldenstack:1
+
+      - name: Wait for GoldenStack
+        run: until curl -sf http://localhost:4566/_goldenstack/health; do sleep 2; done
+
       - uses: actions/setup-node@v3
         with:
           node-version: 16
+
       - name: Install Dependencies
         run: npm ci
 
-      - name: Initialize Localstack
-        run: npm run init-localstack
-      
+      - name: Initialize GoldenStack
+        run: npm run init-goldenstack
+
       - name: Run Tests
         run: npm test

@@ -14,7 +14,7 @@ function build(t) {
   fastify.decorate('verifyAuthentication', async function () {});
   // Expose all decorators for testing purposes
   fastify.register(fp(warehouse), {
-    useLocalstack: true,
+    useGoldenstack: true,
     cdnBaseUrl: 'https://cdn-example.com'
   });
   t.teardown(fastify.close.bind(fastify));

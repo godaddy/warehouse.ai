@@ -49,8 +49,10 @@
     "test": "tap test/**/*.test.js",
     "posttest": "npm run eslint",
     "start": "node lib/app.js",
+    "init-goldenstack": "./bin/init-goldenstack.js",
     "init-localstack": "./bin/init-localstack.js",
-    "dev": "LOCALSTACK=1 nodemon lib/app.js",
+    "dev": "GOLDENSTACK=1 nodemon lib/app.js",
+    "goldenstack": "docker-compose up -d",
     "localstack": "docker-compose up -d"
   },
   "repository": {

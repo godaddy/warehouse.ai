@@ -276,21 +276,21 @@ If `--version` argument is omitted, Warehouse will rollback to the previous vers
 
 ## Development
 
-Warehouse uses [Localstack] and [Docker] for local development.
+Warehouse uses [GoldenStack] and [Docker] for local development.
 
 To properly run the application locally, open one terminal session and run:
 
 ```
-npm run localstack
+npm run goldenstack
 ```
 
 Then, open another terminal session and run:
 
 ```
-npm run init-localstack
+npm run init-goldenstack
 npm run dev
 ```
 
 [Docker]: https://www.docker.com
-[Localstack]: https://github.com/localstack/localstack
+[GoldenStack]: https://github.com/godaddy/goldenstack
 [CLI]: https://github.com/warehouseai/wrhs
