@@ -8,7 +8,7 @@ function build(t) {
   const fastify = createFastify({
     logger: {
       level: 'debug',
-      prettyPrint: true
+      transport: { target: 'pino-pretty' }
     }
   });
   fastify.decorate('verifyAuthentication', async function () {});
