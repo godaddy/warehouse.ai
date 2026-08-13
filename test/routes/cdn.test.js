@@ -8,7 +8,7 @@ const { build } = require('../helper');
 test('CDN API', async (t) => {
   const fastify = build(t);
 
-  t.plan(2);
+  t.plan(4);
 
   t.test('upload assets', async (t) => {
     const tarball = await fs.readFile(
@@ -134,5 +134,37 @@ test('CDN API', async (t) => {
     expectedFiles.forEach(file => {
       t.ok(filenames.includes(file), `${file} should be uploaded to the bucket`);
     });
+  });
+
+  t.test('reject invalid expiration string', async (t) => {
+    t.plan(2);
+
+    const res = await fastify.inject({
+      method: 'POST',
+      url: '/cdn',
+      query: { expiration: 'notavalidtime' }
+    });
+
+    t.equal(res.statusCode, 400);
+    t.equal(
+      JSON.parse(res.payload).message,
+      "'notavalidtime' is not a valid expiration value"
+    );
+  });
+
+  t.test('reject expiration shorter than minimum', async (t) => {
+    t.plan(2);
+
+    const res = await fastify.inject({
+      method: 'POST',
+      url: '/cdn',
+      query: { expiration: '1m' }
+    });
+
+    t.equal(res.statusCode, 400);
+    t.equal(
+      JSON.parse(res.payload).message,
+      "Expiration '1m' is less than 5m"
+    );
   });
 });
