@@ -65,8 +65,6 @@ test('CDN API', async (t) => {
     expectedFiles.forEach(file => {
       t.ok(filenames.includes(file), `${file} should be uploaded to the bucket`);
     });
-
-    t.end();
   });
 
   t.test('upload assets with single fingerprint', async (t) => {
@@ -136,7 +134,5 @@ test('CDN API', async (t) => {
     expectedFiles.forEach(file => {
       t.ok(filenames.includes(file), `${file} should be uploaded to the bucket`);
     });
-
-    t.end();
   });
 });

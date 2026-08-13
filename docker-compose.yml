@@ -12,5 +12,5 @@ services:
       - SERVICES=dynamodb,s3
       - DOCKER_HOST=unix:///var/run/docker.sock
     volumes:
-      - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
+      - "${TMPDIR:-/tmp/localstack}:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
