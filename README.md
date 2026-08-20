@@ -274,6 +274,25 @@ wrhs object rollback-head @org/service --env development --version 1.21.4
 
 If `--version` argument is omitted, Warehouse will rollback to the previous version.
 
+## Releasing
+
+1. Make sure your working tree is clean and on `main`:
+   ```bash
+   git checkout main && git pull
+   ```
+
+2. Run the release script, which bumps the version, updates `CHANGELOG.md`, and creates a commit and tag:
+   ```bash
+   npm run release
+   ```
+
+3. Push the commit and tag:
+   ```bash
+   git push --follow-tags origin main
+   ```
+
+The tag push triggers the `release` GitHub Actions workflow, which runs `npm publish` automatically.
+
 ## Development
 
 Warehouse uses [Localstack] and [Docker] for local development.

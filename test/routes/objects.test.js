@@ -17,7 +17,7 @@ const {
 test('Objects API', async (t) => {
   const fastify = build(t);
 
-  t.plan(16);
+  t.plan(19);
 
   t.test('create object', async (t) => {
     t.plan(4);
@@ -843,5 +843,63 @@ test('Objects API', async (t) => {
       body.map((item) => item.version),
       ['1.0.0', '1.0.1', '1.0.2', '1.1.0', '2.0.0', '1.1.0', '2.0.0'].reverse()
     );
+  });
+
+  t.test('rollback returns 404 for non-existent object', async (t) => {
+    t.plan(1);
+
+    const res = await fastify.inject({
+      method: 'PUT',
+      url: '/objects/neverCreatedObject/dev/rollback',
+      headers: { 'Content-type': 'application/json' },
+      payload: JSON.stringify({ hops: 1 })
+    });
+
+    t.equal(res.statusCode, 404);
+  });
+
+  t.test('rollback returns 410 when target version has been deleted', async (t) => {
+    t.plan(1);
+
+    await createObject(fastify, {
+      name: 'rollback410Obj',
+      env: 'test',
+      version: '1.0.0',
+      data: 'data from CDN api'
+    });
+    await setHead(fastify, { name: 'rollback410Obj', env: 'test', version: '1.0.0' });
+
+    await createObject(fastify, {
+      name: 'rollback410Obj',
+      env: 'test',
+      version: '2.0.0',
+      data: 'data from CDN api'
+    });
+    await setHead(fastify, { name: 'rollback410Obj', env: 'test', version: '2.0.0' });
+
+    await fastify.inject({
+      method: 'DELETE',
+      url: '/objects/rollback410Obj/test/1.0.0'
+    });
+
+    const res = await fastify.inject({
+      method: 'PUT',
+      url: '/objects/rollback410Obj/test/rollback',
+      headers: { 'Content-type': 'application/json' },
+      payload: JSON.stringify({ hops: 1 })
+    });
+
+    t.equal(res.statusCode, 410);
+  });
+
+  t.test('get head change logs returns 404 for non-existent object', async (t) => {
+    t.plan(1);
+
+    const res = await fastify.inject({
+      method: 'GET',
+      url: '/logs/neverCreatedObject/dev'
+    });
+
+    t.equal(res.statusCode, 404);
   });
 });
