@@ -13,7 +13,7 @@ const nock = require('nock');
 test('Hooks API', async (t) => {
   const fastify = build(t);
 
-  t.plan(4);
+  t.plan(5);
 
   t.test('create a hook', async (t) => {
     t.plan(2);
@@ -221,6 +221,24 @@ test('Hooks API', async (t) => {
 
     t.equal(scope01.isDone(), true);
     t.equal(scope02.isDone(), true);
+  });
+  t.test('delete non-existent hook returns 404', async (t) => {
+    t.plan(1);
+
+    await createObject(fastify, {
+      name: 'hookObjectD',
+      version: '1.0.0',
+      env: 'test',
+      data: 'data from CDN api',
+      variant: 'en-US'
+    });
+
+    const res = await fastify.inject({
+      method: 'DELETE',
+      url: '/objects/hookObjectD/hooks/00000000-0000-0000-0000-000000000001'
+    });
+
+    t.equal(res.statusCode, 404);
   });
 });
 
