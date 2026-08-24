@@ -2,12 +2,13 @@
 
 /* eslint-disable no-console */
 
+const { DescribeTableCommand, CreateTableCommand } = require('@aws-sdk/client-dynamodb');
 const { tables, tableNames } = require('./dynamo-tables');
 
 /**
- * @typedef {import('aws-sdk').DynamoDB} AwsDynamoDB
+ * @typedef {import('@aws-sdk/client-dynamodb').DynamoDBClient} AwsDynamoDB
  * @typedef {Object<string, AwsDynamoDB>} DynamoClients
- * @typedef {AwsDynamoDB.CreateTableInput} DynamoCreateTableParams
+ * @typedef {import('@aws-sdk/client-dynamodb').CreateTableInput} DynamoCreateTableParams
  */
 
 /* Class for helping creating DynamoDB tables */
@@ -35,9 +36,7 @@ class DynamoTools {
     const client = this._clients[region];
     let status;
     try {
-      const ret = await client
-        .describeTable({ TableName: tableName })
-        .promise();
+      const ret = await client.send(new DescribeTableCommand({ TableName: tableName }));
       status = ret.Table.TableStatus;
       console.log(`Current status for ${region}/${tableName} is ${status}`);
     } catch (error) {
@@ -77,7 +76,7 @@ class DynamoTools {
         TableName: tableName,
         ...createTableParameters
       };
-      await client.createTable(params).promise();
+      await client.send(new CreateTableCommand(params));
     } catch (error) {
       console.error(`createTable ${region}/${tableName} - ${error.message}`);
     }

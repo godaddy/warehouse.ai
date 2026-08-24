@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-const { DynamoDB, S3 } = require('aws-sdk');
+const { DynamoDBClient } = require('@aws-sdk/client-dynamodb');
+const { S3Client } = require('@aws-sdk/client-s3');
 const DynamoTools = require('./dynamo-tools');
 const S3Tools = require('./s3-tools');
 
@@ -15,7 +16,7 @@ const credentials = {
 const endpoint = process.env.LOCALSTACK_URL || 'http://localhost:4566';
 
 const dynamoClients = dynamoRegions.reduce((acc, region) => {
-  acc[region] = new DynamoDB({
+  acc[region] = new DynamoDBClient({
     endpoint,
     credentials,
     region
@@ -30,10 +31,10 @@ const dynamoTools = new DynamoTools({
 
 const s3Region = 'us-west-2';
 const s3Tools = new S3Tools({
-  client: new S3({
+  client: new S3Client({
     endpoint,
     credentials,
-    s3ForcePathStyle: true,
+    forcePathStyle: true,
     region: s3Region
   }),
   region: s3Region

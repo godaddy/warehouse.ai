@@ -2,10 +2,11 @@
 
 /* eslint-disable no-console */
 
+const { HeadBucketCommand, CreateBucketCommand } = require('@aws-sdk/client-s3');
 const { bucketNames } = require('./s3-buckets');
 
 /**
- * @typedef {import('aws-sdk').S3} AwsS3
+ * @typedef {import('@aws-sdk/client-s3').S3Client} AwsS3
  */
 
 /* Class for helping creating S3 buckets */
@@ -31,7 +32,7 @@ class S3Tools {
   async getBucketStatus(bucketName) {
     let status;
     try {
-      await this._client.headBucket({ Bucket: bucketName }).promise();
+      await this._client.send(new HeadBucketCommand({ Bucket: bucketName }));
       status = 'CREATED';
       console.log(
         `Current status for ${this._region}/${bucketName} is ${status}`
@@ -71,7 +72,7 @@ class S3Tools {
           LocationConstraint: this._region
         }
       };
-      await this._client.createBucket(createBucketParameters).promise();
+      await this._client.send(new CreateBucketCommand(createBucketParameters));
     } catch (error) {
       console.error(
         `createBucket ${this._region}/${bucketName} - ${error.message}`
