@@ -1,7 +1,12 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [7.6.1](///compare/7.6.0...7.6.1) (2026-08-24)
+
+### Bug Fixes
+
+* **ci:** migrate to npmjs registry, fix vulnerabilities, modernize tooling ([#158](///issues/158)) 41a8874
 ## [7.5.0](https://github.com/godaddy/warehouse.ai/compare/7.4.2...7.5.0) (2025-10-30)
 
 ## [7.4.2](https://github.com/godaddy/warehouse.ai/compare/7.4.0...7.4.2) (2025-10-29)
