@@ -40,7 +40,8 @@ class DynamoTools {
       status = ret.Table.TableStatus;
       console.log(`Current status for ${region}/${tableName} is ${status}`);
     } catch (error) {
-      console.log(`describeTable ${region}/${tableName} - ${error.message}`);
+      const isExpected = error instanceof RangeError || error.name === 'ResourceNotFoundException';
+      if (!isExpected) console.log(`describeTable ${region}/${tableName} - ${error.message}`);
     }
     return status;
   }

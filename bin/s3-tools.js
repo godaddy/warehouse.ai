@@ -39,7 +39,8 @@ class S3Tools {
       );
     } catch (error) {
       status = 'NOT_CREATED';
-      console.log(`headBucket - ${error.message}`);
+      const isExpected = error instanceof RangeError || error.$metadata?.httpStatusCode === 404 || error.name === 'NotFound';
+      if (!isExpected) console.log(`headBucket - ${error.message}`);
     }
     return status;
   }
