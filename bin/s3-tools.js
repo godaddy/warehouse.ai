@@ -38,9 +38,14 @@ class S3Tools {
         `Current status for ${this._region}/${bucketName} is ${status}`
       );
     } catch (error) {
-      status = 'NOT_CREATED';
-      const isExpected = error instanceof RangeError || error.$metadata?.httpStatusCode === 404 || error.name === 'NotFound';
-      if (!isExpected) console.log(`headBucket - ${error.message}`);
+      if (error instanceof RangeError) {
+        // SDK v3 can't parse LocalStack's Date response header on a 200, but the bucket exists
+        status = 'CREATED';
+      } else {
+        status = 'NOT_CREATED';
+        const isExpected = error.$metadata?.httpStatusCode === 404 || error.name === 'NotFound';
+        if (!isExpected) console.log(`headBucket - ${error.message}`);
+      }
     }
     return status;
   }
