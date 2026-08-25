@@ -38,7 +38,7 @@
     "eslint": "^8.57.0",
     "eslint-config-godaddy": "^7.1.0",
     "fastify": "^3.29.5",
-    "fastify-cli": "^2.3.0",
+    "fastify-cli": "^8.0.0",
     "fastify-plugin": "^4.5.1",
     "nock": "^13.5.4",
     "nodemon": "^2.0.22",
