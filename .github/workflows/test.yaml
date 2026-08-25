@@ -8,16 +8,18 @@ on:
     branches:
       - "main"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     runs-on: ubuntu-latest
     services:
-      localstack:
-        image: localstack/localstack:1.4.0
+      floci:
+        image: floci/floci:latest
         ports:
           - 4566:4566
-        env:
-          SERVICES: dynamodb,s3
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:

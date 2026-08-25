@@ -3,6 +3,7 @@
 const { promises: fs } = require('fs');
 const path = require('path');
 const { test } = require('tap');
+const { ListObjectsV2Command } = require('@aws-sdk/client-s3');
 const { build } = require('../helper');
 
 test('CDN API', async (t) => {
@@ -52,9 +53,9 @@ test('CDN API', async (t) => {
       ]
     });
 
-    const { Contents: files } = await fastify.s3
-      .listObjectsV2({ Bucket: 'warehouse-cdn' })
-      .promise();
+    const { Contents: files } = await fastify.s3.send(
+      new ListObjectsV2Command({ Bucket: 'warehouse-cdn' })
+    );
     const filenames = files.map(({ Key }) => Key);
 
     const expectedFiles = [
@@ -122,9 +123,9 @@ test('CDN API', async (t) => {
       ]
     });
 
-    const { Contents: files } = await fastify.s3
-      .listObjectsV2({ Bucket: 'warehouse-cdn' })
-      .promise();
+    const { Contents: files } = await fastify.s3.send(
+      new ListObjectsV2Command({ Bucket: 'warehouse-cdn' })
+    );
     const filenames = files.map(({ Key }) => Key);
     const expectedFiles = [
       '318a308660ba069e74d756cdc854ca52/main.js',
