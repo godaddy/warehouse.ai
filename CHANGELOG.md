@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [8.0.0](///compare/7.6.1...8.0.0) (2026-08-25)
+
+### ⚠ BREAKING CHANGES
+
+* **aws:** migrate to AWS SDK v3 and replace LocalStack with Floci (#164)
+
+### Features
+
+* **aws:** migrate to AWS SDK v3 and replace LocalStack with Floci ([#164](///issues/164)) 5a23bf3
 ## [7.6.1](///compare/7.6.0...7.6.1) (2026-08-24)
 
 ### Bug Fixes
