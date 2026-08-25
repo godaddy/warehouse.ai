@@ -1,6 +1,6 @@
 {
   "name": "warehouse.ai",
-  "version": "7.6.0",
+  "version": "7.6.1",
   "description": "Scalable Object Ledger and CDN",
   "main": "lib/app.js",
   "directories": {
@@ -25,12 +25,17 @@
     "uuid": "^9.0.1"
   },
   "peerDependencies": {
-    "aws-sdk": ">= 2.800.0 < 3",
+    "@aws-sdk/client-dynamodb": "^3",
+    "@aws-sdk/client-s3": "^3",
+    "@aws-sdk/lib-dynamodb": "^3",
     "fastify": ">= 4 < 5",
     "fastify-plugin": ">= 4 < 5"
   },
   "devDependencies": {
-    "aws-sdk": "^2.1586.0",
+    "@aws-sdk/client-dynamodb": "^3.1116.0",
+    "@aws-sdk/client-s3": "^3.1116.0",
+    "@aws-sdk/lib-dynamodb": "^3.1116.0",
+    "commit-and-tag-version": "^13.0.0",
     "eslint": "^8.57.0",
     "eslint-config-godaddy": "^7.1.0",
     "fastify": "^4.0.0",
@@ -38,7 +43,6 @@
     "nock": "^13.5.4",
     "nodemon": "^2.0.22",
     "pino-pretty": "^10.0.0",
-    "commit-and-tag-version": "^13.0.0",
     "tap": "^21.7.5"
   },
   "scripts": {

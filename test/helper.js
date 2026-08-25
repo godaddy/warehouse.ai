@@ -1,5 +1,6 @@
 const createFastify = require('fastify');
 const fp = require('fastify-plugin');
+const { QueryCommand } = require('@aws-sdk/lib-dynamodb');
 const warehouse = require('../lib/warehouse');
 
 const OBJECT_HISTORY_TABLE = 'warehouse-object-history';
@@ -115,7 +116,7 @@ async function getHistoryRecords(f, { name, env }) {
     },
     TableName: OBJECT_HISTORY_TABLE
   };
-  const { Items: items } = await f.dynamo.query(params).promise();
+  const { Items: items } = await f.dynamo.send(new QueryCommand(params));
   return items;
 }
 
